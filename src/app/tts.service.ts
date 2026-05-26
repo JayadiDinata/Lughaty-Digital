@@ -30,7 +30,12 @@ export class TtsService {
 
   async speak(text: string, lang: string = 'en-US', _rate?: number): Promise<void> {
     if (!text) return;
-    this.stop();
+    await this.stop();
+
+    // iOS cancel is async — small delay to let the engine settle
+    if (this.isIOSWeb) {
+      await new Promise(r => setTimeout(r, 100));
+    }
 
     // iOS native (Capacitor app): AVSpeechSynthesizer
     if (this.isNative && this.isIOS) {
@@ -86,7 +91,7 @@ export class TtsService {
   }
 
   async stop(): Promise<void> {
-    if (this.audioEl) { this.audioEl.pause(); this.audioEl.src = ''; }
+    if (this.audioEl) { this.audioEl.pause(); this.audioEl.src = ''; this.audioEl = null; }
     window.speechSynthesis.cancel();
     if (this.isNative) { try { await TextToSpeech.stop(); } catch {} }
   }
