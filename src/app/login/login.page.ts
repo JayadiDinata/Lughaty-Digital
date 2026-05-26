@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { SupabaseService, UserData, SavedAccount } from '../supabase.service';
 import { ThemeService } from '../theme.service';
 
@@ -12,20 +12,26 @@ import { ThemeService } from '../theme.service';
 export class LoginPage implements OnInit {
   constructor(
     private router: Router,
-    public toastCtrl: ToastController,
+    private snackBar: MatSnackBar,
     private supabase: SupabaseService,
     public theme: ThemeService
   ) {}
+
   showPassword: boolean = false;
   isLogin: boolean = true;
   rememberMe: boolean = true;
   savedAccounts: SavedAccount[] = [];
   selectedAccount: SavedAccount | null = null;
+  showForm: boolean = false;
+  showPasswordOnly: boolean = false;
 
   ngOnInit() {
     this.savedAccounts = this.supabase.getSavedAccounts();
-    if (this.savedAccounts.length > 0 && !this.email) {
-      this.selectAccount(this.savedAccounts[0]);
+    if (this.savedAccounts.length > 0) {
+      this.showForm = false;
+      this.showPasswordOnly = false;
+    } else {
+      this.showForm = true;
     }
   }
 
@@ -39,32 +45,34 @@ export class LoginPage implements OnInit {
   showPass2: boolean = false;
   loading: boolean = false;
 
-  accountClasses(acc: SavedAccount): string {
-    const base = 'w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-medium transition-all text-left cursor-pointer hover:bg-slate-100 dark:hover:bg-gray-700';
+  accountCardClasses(acc: SavedAccount): string {
+    const base = 'MuiCard-root w-full flex items-center gap-3.5 px-4 py-3.5 rounded-xl text-sm font-medium transition-all text-left cursor-pointer border';
     if (this.selectedAccount?.email === acc.email) {
-      return base + ' bg-gold-50 dark:bg-green-900/30 ring-2 ring-gold-500 dark:ring-green-500';
+      return base + ' border-gold-500 dark:border-green-500 bg-gold-50 dark:bg-green-900/30 shadow-md';
     }
-    return base + ' bg-slate-50 dark:bg-gray-700/50';
+    return base + ' border-slate-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm hover:shadow-md hover:border-gold-300 dark:hover:border-green-700';
   }
 
   selectAccount(account: SavedAccount) {
     this.selectedAccount = account;
     this.email = account.email;
     this.password = '';
+    this.showForm = true;
+    this.showPasswordOnly = true;
     setTimeout(() => {
-      const el = document.querySelector<HTMLInputElement>('#passwordInput');
-      el?.focus();
-    }, 100);
+      document.querySelector<HTMLInputElement>('#passwordInput')?.focus();
+    }, 150);
   }
 
   selectOtherAccount() {
     this.selectedAccount = null;
     this.email = '';
     this.password = '';
+    this.showForm = true;
+    this.showPasswordOnly = false;
     setTimeout(() => {
-      const el = document.querySelector<HTMLInputElement>('#emailInput');
-      el?.focus();
-    }, 100);
+      document.querySelector<HTMLInputElement>('#emailInput')?.focus();
+    }, 150);
   }
 
   async removeSaved(email: string, event: Event) {
@@ -73,6 +81,8 @@ export class LoginPage implements OnInit {
     this.savedAccounts = this.supabase.getSavedAccounts();
     if (this.selectedAccount?.email === email) {
       this.selectedAccount = null;
+      this.showForm = this.savedAccounts.length === 0;
+      this.showPasswordOnly = false;
       this.email = '';
       this.password = '';
     }
@@ -88,11 +98,7 @@ export class LoginPage implements OnInit {
 
   async login() {
     if (!this.email || !this.password) {
-      const toast = await this.toastCtrl.create({
-        message: 'Harap isi email dan password',
-        duration: 2000,
-      });
-      toast.present();
+      this.snackBar.open('Harap isi email dan password', 'Tutup', { duration: 3000 });
       return;
     }
 
@@ -100,34 +106,36 @@ export class LoginPage implements OnInit {
     try {
       const { data, error } = await this.supabase.login(this.email, this.password);
       if (error || !data) {
-        const toast = await this.toastCtrl.create({
-          message: 'Login Gagal: Email atau password salah',
-          duration: 3000,
-        });
-        toast.present();
+        this.snackBar.open('Email atau password salah', 'Tutup', { duration: 4000 });
       } else {
         const user: UserData = { id: data.id, username: data.username, email: data.email };
         this.supabase.setCurrentUser(user);
         this.supabase.saveEmail(this.email);
-        this.supabase.saveAccount(user.email, user.username);
-        if (this.rememberMe) {
-          this.supabase.saveUserSession(user);
+
+        this.snackBar.open('Login Berhasil, Selamat datang ' + data.username, 'Tutup', { duration: 3000 });
+
+        const isNew = !this.supabase.getSavedAccounts().some(a => a.email === user.email);
+        if (isNew) {
+          const saveRef = this.snackBar.open('Simpan login pada perangkat ini?', 'Ya', { duration: 10000 });
+          saveRef.onAction().subscribe(() => {
+            this.supabase.saveAccount(user.email, user.username);
+            if (this.rememberMe) {
+              this.supabase.saveUserSession(user);
+            }
+            this.savedAccounts = this.supabase.getSavedAccounts();
+          });
+        } else {
+          if (this.rememberMe) {
+            this.supabase.saveUserSession(user);
+          }
         }
-        const toast = await this.toastCtrl.create({
-          message: 'Login Berhasil, Selamat datang ' + data.username,
-          duration: 2000,
-        });
-        toast.present();
+
         this.email = '';
         this.password = '';
         this.router.navigateByUrl('/tabs/home');
       }
     } catch (err: any) {
-      const toast = await this.toastCtrl.create({
-        message: 'Login Gagal: ' + (err.message || err),
-        duration: 3000,
-      });
-      toast.present();
+      this.snackBar.open('Login Gagal: ' + (err.message || err), 'Tutup', { duration: 5000 });
     } finally {
       this.loading = false;
     }
@@ -152,29 +160,13 @@ export class LoginPage implements OnInit {
 
   async addData() {
     if (this.username == '') {
-      const toast = await this.toastCtrl.create({
-        message: 'Harap isi username',
-        duration: 2000,
-      });
-      toast.present();
+      this.snackBar.open('Harap isi username', 'Tutup', { duration: 3000 });
     } else if (this.regEmail == '') {
-      const toast = await this.toastCtrl.create({
-        message: 'Harap isi email',
-        duration: 2000,
-      });
-      toast.present();
+      this.snackBar.open('Harap isi email', 'Tutup', { duration: 3000 });
     } else if (this.pass1 == '') {
-      const toast = await this.toastCtrl.create({
-        message: 'Harap isi password',
-        duration: 2000,
-      });
-      toast.present();
+      this.snackBar.open('Harap isi password', 'Tutup', { duration: 3000 });
     } else if (this.pass1 != this.pass2) {
-      const toast = await this.toastCtrl.create({
-        message: 'Password Tidak Sama',
-        duration: 2000,
-      });
-      toast.present();
+      this.snackBar.open('Password Tidak Sama', 'Tutup', { duration: 3000 });
     } else {
       this.loading = true;
       try {
@@ -190,17 +182,9 @@ export class LoginPage implements OnInit {
             this.email = this.regEmail;
             this.isLogin = true;
           }
-          const toast = await this.toastCtrl.create({
-            message: 'Registrasi Gagal: ' + msg,
-            duration: 4000,
-          });
-          toast.present();
+          this.snackBar.open('Registrasi Gagal: ' + msg, 'Tutup', { duration: 5000 });
         } else {
-          const toast = await this.toastCtrl.create({
-            message: 'Registrasi Berhasil, silakan login',
-            duration: 3000,
-          });
-          toast.present();
+          this.snackBar.open('Registrasi Berhasil, silakan login', 'Tutup', { duration: 4000 });
           this.email = this.regEmail;
           this.username = '';
           this.regEmail = '';
@@ -209,11 +193,7 @@ export class LoginPage implements OnInit {
           this.isLogin = true;
         }
       } catch (err: any) {
-        const toast = await this.toastCtrl.create({
-          message: 'Registrasi Gagal: ' + (err.message || err),
-          duration: 4000,
-        });
-        toast.present();
+        this.snackBar.open('Registrasi Gagal: ' + (err.message || err), 'Tutup', { duration: 5000 });
       } finally {
         this.loading = false;
       }

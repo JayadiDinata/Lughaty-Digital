@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
 @import "@ionic/angular/css/core.css";
 @import "@ionic/angular/css/normalize.css";
 @import "@ionic/angular/css/structure.css";
@@ -482,6 +484,36 @@ body.dark {
       background: #0a0f1a;
     }
   }
+}
+
+.MuiCard-root {
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.MuiInput-root {
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.MuiButton-root {
+  text-transform: none;
+  letter-spacing: 0.025em;
+}
+
+.mat-mdc-snack-bar-container {
+  --mdc-snackbar-container-color: #1e293b;
+  --mat-mdc-snack-bar-button-color: #C4942C;
+  --mdc-snackbar-supporting-text-color: #f1f5f9;
+  border-radius: 12px !important;
+}
+
+body.dark .mat-mdc-snack-bar-container {
+  --mdc-snackbar-container-color: #334155;
+  --mat-mdc-snack-bar-button-color: #4ade80;
+  --mdc-snackbar-supporting-text-color: #f1f5f9;
+}
+
+.mat-mdc-snack-bar-container .mdc-snackbar__surface {
+  border-radius: 12px !important;
 }
 
 @keyframes fadeInUp {

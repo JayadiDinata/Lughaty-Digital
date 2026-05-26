@@ -38,18 +38,18 @@
         </button>
       </div>
 
-      <!-- Saved Accounts -->
-      <div *ngIf="isLogin && savedAccounts.length > 0" class="mb-5 space-y-2 animate-fade-in-up" style="animation-delay: 450ms">
-        <p class="text-xs font-semibold text-slate-400 dark:text-gray-500 px-1">Akun tersimpan</p>
-        <div class="space-y-1">
+      <!-- Saved Accounts (MUI Card style) -->
+      <div *ngIf="isLogin && savedAccounts.length > 0 && !showForm" class="mb-2 space-y-2 animate-fade-in-up" style="animation-delay: 450ms">
+        <p class="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-gray-500 px-1 mb-3">Akun tersimpan</p>
+        <div class="space-y-2">
           <div *ngFor="let acc of savedAccounts" (click)="selectAccount(acc)"
-            [className]="accountClasses(acc)">
-            <div class="w-9 h-9 rounded-full bg-gold-500 dark:bg-green-600 flex items-center justify-center text-white text-sm font-bold shrink-0">
+            [className]="accountCardClasses(acc)">
+            <div class="w-10 h-10 rounded-full bg-gold-500 dark:bg-green-600 flex items-center justify-center text-white text-sm font-bold shrink-0 shadow-sm">
               {{ acc.username.charAt(0).toUpperCase() }}
             </div>
             <div class="flex-1 min-w-0">
               <div class="font-semibold text-slate-800 dark:text-gray-100 truncate">{{ acc.username }}</div>
-              <div class="text-[11px] text-slate-400 dark:text-gray-500 truncate">{{ acc.email }}</div>
+              <div class="text-xs text-slate-400 dark:text-gray-500 truncate">{{ acc.email }}</div>
             </div>
             <span (click)="removeSaved(acc.email, $event)"
               class="shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all cursor-pointer">
@@ -58,27 +58,39 @@
           </div>
         </div>
         <div (click)="selectOtherAccount()"
-          class="w-full flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-500 dark:text-gray-400 bg-slate-50 dark:bg-gray-700/50 hover:bg-slate-100 dark:hover:bg-gray-700 transition-all cursor-pointer">
+          class="MuiCard-root mt-3 w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-medium text-slate-500 dark:text-gray-400 border border-dashed border-slate-300 dark:border-gray-600 bg-transparent hover:bg-slate-50 dark:hover:bg-gray-700/50 transition-all cursor-pointer">
           <ion-icon name="person-add-outline" class="text-lg"></ion-icon>
           <span>Gunakan akun lain</span>
         </div>
       </div>
 
-      <!-- Login Form -->
-      <form *ngIf="isLogin" (ngSubmit)="login()" class="space-y-4">
-        <div class="animate-fade-in-up" style="animation-delay: 500ms">
+      <!-- Login Form (hidden when saved accounts shown) -->
+      <form *ngIf="isLogin && showForm" (ngSubmit)="login()" class="space-y-4">
+        <!-- Email - hidden when account selected (pre-filled) -->
+        <div *ngIf="!showPasswordOnly" class="animate-fade-in-up" style="animation-delay: 500ms">
           <label class="block mb-2 text-sm font-medium text-slate-700 dark:text-gray-300">Email</label>
           <input #emailInput type="email" [(ngModel)]="email" name="email" required id="emailInput"
-            class="bg-slate-50 dark:bg-gray-900 border border-slate-300 dark:border-gray-600 text-slate-900 dark:text-gray-100 text-sm rounded-xl focus:ring-gold-500 focus:border-gold-500 dark:focus:ring-green-500 dark:focus:border-green-500 block w-full px-4 py-3 placeholder-slate-400 dark:placeholder-gray-500 transition-all duration-200 focus:scale-[1.01]" />
+            class="MuiInput-root bg-slate-50 dark:bg-gray-900 border border-slate-300 dark:border-gray-600 text-slate-900 dark:text-gray-100 text-sm rounded-xl focus:ring-2 focus:ring-gold-500 dark:focus:ring-green-500 focus:border-transparent block w-full px-4 py-3 placeholder-slate-400 dark:placeholder-gray-500 transition-all" />
         </div>
 
+        <!-- Password - always visible -->
         <div class="relative animate-fade-in-up" style="animation-delay: 600ms">
-          <label class="block mb-2 text-sm font-medium text-slate-700 dark:text-gray-300">Password</label>
+          <label class="block mb-2 text-sm font-medium text-slate-700 dark:text-gray-300">
+            {{ showPasswordOnly ? 'Masukkan password untuk ' + selectedAccount?.username : 'Password' }}
+          </label>
           <input #passwordInput id="passwordInput" [(ngModel)]="password" name="password" [type]="showPassword ? 'text' : 'password'" required
-            class="bg-slate-50 dark:bg-gray-900 border border-slate-300 dark:border-gray-600 text-slate-900 dark:text-gray-100 text-sm rounded-xl focus:ring-gold-500 focus:border-gold-500 dark:focus:ring-green-500 dark:focus:border-green-500 block w-full px-4 py-3 pr-12 placeholder-slate-400 dark:placeholder-gray-500 transition-all duration-200 focus:scale-[1.01]" />
+            class="MuiInput-root bg-slate-50 dark:bg-gray-900 border border-slate-300 dark:border-gray-600 text-slate-900 dark:text-gray-100 text-sm rounded-xl focus:ring-2 focus:ring-gold-500 dark:focus:ring-green-500 focus:border-transparent block w-full px-4 py-3 pr-12 placeholder-slate-400 dark:placeholder-gray-500 transition-all" />
           <button type="button" (click)="showPassword = !showPassword"
             class="absolute right-3 top-[38px] text-slate-400 dark:text-gray-400 hover:text-slate-600 dark:hover:text-gray-300">
             <ion-icon [name]="showPassword ? 'eye-off-outline' : 'eye-outline'" class="text-xl"></ion-icon>
+          </button>
+        </div>
+
+        <!-- Back to accounts link (when account was selected) -->
+        <div *ngIf="showPasswordOnly" class="text-center -mt-2 animate-fade-in-up" style="animation-delay: 650ms">
+          <button type="button" (click)="showForm = false; showPasswordOnly = false; selectedAccount = null; email = ''; password = ''"
+            class="text-xs font-medium text-gold-500 dark:text-green-400 hover:underline transition-all">
+            Ganti akun
           </button>
         </div>
 
@@ -90,7 +102,7 @@
 
         <div class="animate-fade-in-up" style="animation-delay: 700ms">
           <button type="submit" [disabled]="loading"
-            class="w-full text-white bg-gold-500 hover:bg-gold-600 focus:ring-4 focus:ring-gold-300 dark:bg-green-700 dark:hover:bg-green-800 dark:focus:ring-green-800 font-bold rounded-xl text-base px-5 py-3.5 text-center transition-all disabled:opacity-60 active:scale-[0.97] hover:shadow-lg">
+            class="MuiButton-root w-full text-white bg-gold-500 hover:bg-gold-600 focus:ring-4 focus:ring-gold-300 dark:bg-green-700 dark:hover:bg-green-800 dark:focus:ring-green-800 font-bold rounded-xl text-base px-5 py-3.5 text-center transition-all disabled:opacity-60 active:scale-[0.97] hover:shadow-lg">
             Masuk
           </button>
         </div>
@@ -108,19 +120,19 @@
         <div class="animate-fade-in-up" style="animation-delay: 500ms">
           <label class="block mb-2 text-sm font-medium text-slate-700 dark:text-gray-300">Username</label>
           <input type="text" [(ngModel)]="username" name="username" required
-            class="bg-slate-50 dark:bg-gray-900 border border-slate-300 dark:border-gray-600 text-slate-900 dark:text-gray-100 text-sm rounded-xl focus:ring-gold-500 focus:border-gold-500 dark:focus:ring-green-500 dark:focus:border-green-500 block w-full px-4 py-3 placeholder-slate-400 dark:placeholder-gray-500 transition-all duration-200 focus:scale-[1.01]" />
+            class="MuiInput-root bg-slate-50 dark:bg-gray-900 border border-slate-300 dark:border-gray-600 text-slate-900 dark:text-gray-100 text-sm rounded-xl focus:ring-2 focus:ring-gold-500 dark:focus:ring-green-500 focus:border-transparent block w-full px-4 py-3 placeholder-slate-400 dark:placeholder-gray-500 transition-all" />
         </div>
 
         <div class="animate-fade-in-up" style="animation-delay: 600ms">
           <label class="block mb-2 text-sm font-medium text-slate-700 dark:text-gray-300">Email</label>
           <input type="email" [(ngModel)]="regEmail" name="regEmail" required
-            class="bg-slate-50 dark:bg-gray-900 border border-slate-300 dark:border-gray-600 text-slate-900 dark:text-gray-100 text-sm rounded-xl focus:ring-gold-500 focus:border-gold-500 dark:focus:ring-green-500 dark:focus:border-green-500 block w-full px-4 py-3 placeholder-slate-400 dark:placeholder-gray-500 transition-all duration-200 focus:scale-[1.01]" />
+            class="MuiInput-root bg-slate-50 dark:bg-gray-900 border border-slate-300 dark:border-gray-600 text-slate-900 dark:text-gray-100 text-sm rounded-xl focus:ring-2 focus:ring-gold-500 dark:focus:ring-green-500 focus:border-transparent block w-full px-4 py-3 placeholder-slate-400 dark:placeholder-gray-500 transition-all" />
         </div>
 
         <div class="relative animate-fade-in-up" style="animation-delay: 700ms">
           <label class="block mb-2 text-sm font-medium text-slate-700 dark:text-gray-300">Password</label>
           <input [type]="showPass1 ? 'text' : 'password'" [(ngModel)]="pass1" name="pass1" required
-            class="bg-slate-50 dark:bg-gray-900 border border-slate-300 dark:border-gray-600 text-slate-900 dark:text-gray-100 text-sm rounded-xl focus:ring-gold-500 focus:border-gold-500 dark:focus:ring-green-500 dark:focus:border-green-500 block w-full px-4 py-3 pr-12 placeholder-slate-400 dark:placeholder-gray-500 transition-all duration-200 focus:scale-[1.01]" />
+            class="MuiInput-root bg-slate-50 dark:bg-gray-900 border border-slate-300 dark:border-gray-600 text-slate-900 dark:text-gray-100 text-sm rounded-xl focus:ring-2 focus:ring-gold-500 dark:focus:ring-green-500 focus:border-transparent block w-full px-4 py-3 pr-12 placeholder-slate-400 dark:placeholder-gray-500 transition-all" />
           <button type="button" (click)="showPass1 = !showPass1"
             class="absolute right-3 top-[38px] text-slate-400 dark:text-gray-400 hover:text-slate-600 dark:hover:text-gray-300">
             <ion-icon [name]="showPass1 ? 'eye-off-outline' : 'eye-outline'" class="text-xl"></ion-icon>
@@ -130,7 +142,7 @@
         <div class="relative animate-fade-in-up" style="animation-delay: 800ms">
           <label class="block mb-2 text-sm font-medium text-slate-700 dark:text-gray-300">Konfirmasi Password</label>
           <input [type]="showPass2 ? 'text' : 'password'" [(ngModel)]="pass2" name="pass2" required
-            class="bg-slate-50 dark:bg-gray-900 border border-slate-300 dark:border-gray-600 text-slate-900 dark:text-gray-100 text-sm rounded-xl focus:ring-gold-500 focus:border-gold-500 dark:focus:ring-green-500 dark:focus:border-green-500 block w-full px-4 py-3 pr-12 placeholder-slate-400 dark:placeholder-gray-500 transition-all duration-200 focus:scale-[1.01]" />
+            class="MuiInput-root bg-slate-50 dark:bg-gray-900 border border-slate-300 dark:border-gray-600 text-slate-900 dark:text-gray-100 text-sm rounded-xl focus:ring-2 focus:ring-gold-500 dark:focus:ring-green-500 focus:border-transparent block w-full px-4 py-3 pr-12 placeholder-slate-400 dark:placeholder-gray-500 transition-all" />
           <button type="button" (click)="showPass2 = !showPass2"
             class="absolute right-3 top-[38px] text-slate-400 dark:text-gray-400 hover:text-slate-600 dark:hover:text-gray-300">
             <ion-icon [name]="showPass2 ? 'eye-off-outline' : 'eye-outline'" class="text-xl"></ion-icon>
@@ -139,7 +151,7 @@
 
         <div class="animate-fade-in-up" style="animation-delay: 900ms">
           <button type="submit" [disabled]="loading"
-            class="w-full text-white bg-gold-500 hover:bg-gold-600 focus:ring-4 focus:ring-gold-300 dark:bg-green-700 dark:hover:bg-green-800 dark:focus:ring-green-800 font-bold rounded-xl text-base px-5 py-3.5 text-center transition-all disabled:opacity-60 active:scale-[0.97] hover:shadow-lg">
+            class="MuiButton-root w-full text-white bg-gold-500 hover:bg-gold-600 focus:ring-4 focus:ring-gold-300 dark:bg-green-700 dark:hover:bg-green-800 dark:focus:ring-green-800 font-bold rounded-xl text-base px-5 py-3.5 text-center transition-all disabled:opacity-60 active:scale-[0.97] hover:shadow-lg">
             Daftar
           </button>
         </div>
