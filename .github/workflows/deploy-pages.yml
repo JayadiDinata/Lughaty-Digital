@@ -15,10 +15,12 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
-      - run: npx ng build --configuration=production --base-href=/Lughaty-Digital/
+      - run: npx ng build --configuration=production --base-href=/
       - run: cp www/index.html www/404.html
       - name: Add .nojekyll
         run: touch www/.nojekyll
+      - name: Add CNAME for custom domain
+        run: echo 'lughaty-digital.applab.my.id' > www/CNAME
       - uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
