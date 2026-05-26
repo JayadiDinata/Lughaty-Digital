@@ -18,7 +18,15 @@ export class LoginPage implements OnInit {
   ) {}
   showPassword: boolean = false;
   isLogin: boolean = true;
-  ngOnInit() {}
+  rememberMe: boolean = true;
+
+  ngOnInit() {
+    const { savedEmail } = this.supabase.loadSession();
+    if (savedEmail) {
+      this.email = savedEmail;
+    }
+  }
+
   public email: any = '';
   public password: any = '';
   public username: any = '';
@@ -59,6 +67,10 @@ export class LoginPage implements OnInit {
       } else {
         const user: UserData = { id: data.id, username: data.username, email: data.email };
         this.supabase.setCurrentUser(user);
+        this.supabase.saveEmail(this.email);
+        if (this.rememberMe) {
+          this.supabase.saveUserSession(user);
+        }
         const toast = await this.toastCtrl.create({
           message: 'Login Berhasil, Selamat datang ' + data.username,
           duration: 2000,

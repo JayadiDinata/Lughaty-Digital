@@ -60,9 +60,9 @@
         <span>{{ darkModeLabel }}</span>
       </button>
 
-      <button routerLink="/login" routerDirection="root"
-        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-700 dark:text-gray-200 hover:bg-slate-100 dark:hover:bg-gray-700 transition-all">
-        <ion-icon name="log-out-outline" class="text-xl text-slate-400 dark:text-gray-400"></ion-icon>
+      <button (click)="logout()"
+        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all">
+        <ion-icon name="log-out-outline" class="text-xl text-red-500 dark:text-red-400"></ion-icon>
         <span>Keluar</span>
       </button>
     </div>
@@ -82,7 +82,7 @@
         <ion-button (click)="toggleDarkMode()">
           <ion-icon [name]="darkModeIcon" slot="icon-only" class="text-slate-600 dark:text-gray-300"></ion-icon>
         </ion-button>
-        <ion-button routerLink="/login" routerDirection="root">
+        <ion-button (click)="logout()">
           <ion-icon name="log-out-outline" slot="icon-only" class="text-slate-600 dark:text-gray-300"></ion-icon>
         </ion-button>
       </ion-buttons>

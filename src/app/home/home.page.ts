@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonMenu } from '@ionic/angular';
+import { Router } from '@angular/router';
 import { SupabaseService } from '../supabase.service';
 import { ThemeService } from '../theme.service';
 import { StorageService } from '../storage.service';
@@ -17,6 +18,7 @@ export class HomePage {
     public supabase: SupabaseService,
     public theme: ThemeService,
     public progress: StorageService,
+    private router: Router,
   ) {}
 
   get username(): string {
@@ -58,4 +60,10 @@ export class HomePage {
   }
 
   toggleDarkMode() { this.theme.toggle(); }
+
+  logout() {
+    this.supabase.clearSession();
+    this.supabase.setCurrentUser(null);
+    this.router.navigateByUrl('/login');
+  }
 }

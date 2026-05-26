@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { SupabaseService } from '../supabase.service';
 
 @Component({
   selector: 'app-splash',
@@ -9,14 +10,24 @@ import { Router } from '@angular/router';
 export class SplashPage implements OnInit {
   fadeOut: boolean = false;
 
-  constructor(public router: Router) {}
+  constructor(
+    public router: Router,
+    private supabase: SupabaseService,
+  ) {}
 
   ngOnInit() {
-    setTimeout(() => {
-      this.fadeOut = true;
-    }, 2500);
-    setTimeout(() => {
-      this.router.navigateByUrl('/login');
-    }, 3200);
+    setTimeout(() => { this.fadeOut = true; }, 2500);
+
+    const { user } = this.supabase.loadSession();
+    if (user) {
+      this.supabase.setCurrentUser(user);
+      setTimeout(() => {
+        this.router.navigateByUrl('/tabs/home', { replaceUrl: true });
+      }, 3200);
+    } else {
+      setTimeout(() => {
+        this.router.navigateByUrl('/login', { replaceUrl: true });
+      }, 3200);
+    }
   }
 }

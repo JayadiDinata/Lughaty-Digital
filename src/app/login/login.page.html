@@ -56,6 +56,12 @@
           </button>
         </div>
 
+        <div class="flex items-center gap-2 animate-fade-in-up" style="animation-delay: 650ms">
+          <input type="checkbox" id="rememberMe" [(ngModel)]="rememberMe" name="rememberMe"
+            class="w-4 h-4 rounded border-slate-300 dark:border-gray-600 text-gold-500 dark:text-green-500 focus:ring-gold-500 dark:focus:ring-green-500 bg-slate-50 dark:bg-gray-900 cursor-pointer" />
+          <label for="rememberMe" class="text-sm text-slate-600 dark:text-gray-300 cursor-pointer select-none">Ingat Saya</label>
+        </div>
+
         <div class="animate-fade-in-up" style="animation-delay: 700ms">
           <button type="submit" [disabled]="loading"
             class="w-full text-white bg-gold-500 hover:bg-gold-600 focus:ring-4 focus:ring-gold-300 dark:bg-green-700 dark:hover:bg-green-800 dark:focus:ring-green-800 font-bold rounded-xl text-base px-5 py-3.5 text-center transition-all disabled:opacity-60 active:scale-[0.97] hover:shadow-lg">
