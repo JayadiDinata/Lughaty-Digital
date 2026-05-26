@@ -1,0 +1,214 @@
+swiper-container {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+}
+
+swiper-slide {
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.conversation-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+body.dark .conversation-card {
+  background: #1e293b;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.conversation-title {
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid #e2e8f0;
+  text-align: center;
+}
+
+body.dark .conversation-title {
+  border-bottom-color: #334155;
+}
+
+.conversation-title h2 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #C4942C;
+  margin: 0;
+}
+
+body.dark .conversation-title h2 {
+  color: #2E7D32;
+}
+
+.dialogue-list {
+  padding: 8px 12px;
+  max-height: 380px;
+  overflow-y: auto;
+}
+
+.dialogue-item {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 8px;
+  border-bottom: 1px solid #f1f5f9;
+  animation: fadeInUp 0.4s ease-out forwards;
+  opacity: 0;
+}
+.dialogue-item:last-child {
+  border-bottom: none;
+}
+.dialogue-item:nth-child(1) { animation-delay: 0.05s; }
+.dialogue-item:nth-child(2) { animation-delay: 0.1s; }
+.dialogue-item:nth-child(3) { animation-delay: 0.15s; }
+.dialogue-item:nth-child(4) { animation-delay: 0.2s; }
+.dialogue-item:nth-child(5) { animation-delay: 0.25s; }
+.dialogue-item:nth-child(6) { animation-delay: 0.3s; }
+.dialogue-item:nth-child(7) { animation-delay: 0.35s; }
+.dialogue-item:nth-child(8) { animation-delay: 0.4s; }
+.dialogue-item:nth-child(9) { animation-delay: 0.45s; }
+.dialogue-item:nth-child(10) { animation-delay: 0.5s; }
+.dialogue-item:nth-child(11) { animation-delay: 0.55s; }
+.dialogue-item:nth-child(12) { animation-delay: 0.6s; }
+
+body.dark .dialogue-item {
+  border-bottom-color: #334155;
+}
+
+.arabic-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-end;
+  direction: rtl;
+  font-family: 'Noto Naskh Arabic', 'Traditional Arabic', 'Amiri', serif;
+  font-size: 17px;
+  line-height: 1.7;
+  color: #1e293b;
+  padding: 6px 0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+body.dark .arabic-line {
+  color: #f1f5f9;
+}
+
+.arabic-line:hover {
+  background: rgba(196, 148, 44, 0.06);
+}
+
+body.dark .arabic-line:hover {
+  background: rgba(46, 125, 50, 0.08);
+}
+
+.arabic-line .ar-text {
+  direction: rtl;
+  text-align: right;
+  unicode-bidi: bidi-override;
+  flex: 1;
+}
+
+.arabic-line .play-icon {
+  font-size: 20px;
+  opacity: 0.4;
+  transition: opacity 0.2s, transform 0.2s;
+  flex-shrink: 0;
+  order: -1;
+}
+
+.arabic-line:hover .play-icon {
+  opacity: 1;
+}
+
+.arabic-line:active .play-icon {
+  transform: scale(1.2);
+}
+
+.arabic-line.playing .play-icon {
+  opacity: 1;
+}
+
+.indonesian-line {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #64748b;
+  padding: 3px 4px 3px 24px;
+  text-align: left;
+}
+
+body.dark .indonesian-line {
+  color: #94a3b8;
+}
+
+.indonesian-line b {
+  font-weight: 700;
+  color: #475569;
+}
+
+body.dark .indonesian-line b {
+  color: #cbd5e1;
+}
+
+.dialogue-list::-webkit-scrollbar {
+  width: 3px;
+}
+
+.dialogue-list::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+body.dark .dialogue-list::-webkit-scrollbar-thumb {
+  background: #475569;
+}
+
+.slide-number {
+  text-align: center;
+  padding: 10px 0 4px;
+}
+
+.page-badge {
+  display: inline-block;
+  background: #C4942C;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 14px;
+  border-radius: 20px;
+}
+
+body.dark .page-badge {
+  background: #2E7D32;
+}
+
+.perspective-\[1200px\] {
+  perspective: 1200px;
+}
+
+.nav-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 6px 0 10px;
+}
+
+.nav-btn {
+  --padding-start: 8px;
+  --padding-end: 8px;
+  width: 44px;
+  height: 44px;
+}
+
+.nav-hint {
+  font-size: 11px;
+  color: #94a3b8;
+  font-weight: 500;
+}

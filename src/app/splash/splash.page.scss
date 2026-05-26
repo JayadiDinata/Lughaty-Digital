@@ -1,0 +1,113 @@
+ion-content {
+  --overflow: hidden;
+  --background: #ffffff;
+}
+
+.splash-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(196, 148, 44, 0.08) 0%, rgba(46, 125, 50, 0.05) 100%);
+}
+
+.splash-accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #C4942C, #2E7D32, #C4942C);
+  animation: accentSlide 1.2s ease-out forwards;
+}
+
+@keyframes accentSlide {
+  0% { transform: scaleX(0); transform-origin: left; }
+  100% { transform: scaleX(1); transform-origin: left; }
+}
+
+.splash-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 40px;
+}
+
+.splash-content.fade-out {
+  opacity: 0;
+  transform: translateY(-20px) scale(0.95);
+  transition: all 0.5s ease-in;
+}
+
+.splash-logo {
+  width: 200px;
+  height: auto;
+  margin-bottom: 28px;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1));
+}
+
+.splash-title {
+  font-size: 36px;
+  font-weight: 800;
+  color: #C4942C;
+  margin: 0 0 12px;
+  letter-spacing: -0.5px;
+  animation: splashFadeInUp 0.6s ease-out both;
+}
+
+.splash-tagline {
+  font-size: 15px;
+  font-weight: 600;
+  color: #2E7D32;
+  margin: 0;
+  text-align: center;
+  line-height: 1.5;
+  animation: splashFadeInUp 0.6s ease-out both;
+}
+
+.splash-sub {
+  font-size: 13px;
+  font-weight: 400;
+  color: #94a3b8;
+  margin: 4px 0 0;
+  text-align: center;
+  font-style: italic;
+  animation: splashFadeInUp 0.6s ease-out both;
+}
+
+.splash-loader {
+  position: absolute;
+  bottom: 60px;
+  width: 200px;
+  height: 3px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  overflow: hidden;
+  animation: splashFadeInUp 0.6s ease-out both;
+}
+
+.loader-bar {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #C4942C, #2E7D32);
+  border-radius: 4px;
+  animation: loadBar 2.5s ease-in-out forwards;
+}
+
+@keyframes splashFadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes loadBar {
+  0% { width: 0; }
+  70% { width: 70%; }
+  100% { width: 100%; }
+}

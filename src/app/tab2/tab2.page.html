@@ -1,0 +1,2049 @@
+﻿<ion-header class="app-header">
+  <ion-toolbar class="bg-white dark:bg-gray-800 border-b border-slate-200 dark:border-gray-700">
+    <ion-buttons slot="start">
+      <div routerLink="/tabs/home" routerDirection="root"
+        class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-gray-700 text-slate-500 dark:text-gray-400 transition-all">
+        <ion-icon name="home-outline" class="text-xl"></ion-icon>
+      </div>
+    </ion-buttons>
+    <ion-title class="text-gold-500 dark:text-green-400 font-bold text-lg">Al-Kalam</ion-title>
+    <ion-buttons slot="end">
+      <div (click)="toggleDarkMode()"
+        class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-gray-700 text-slate-500 dark:text-gray-400 transition-all">
+        <ion-icon [name]="darkModeIcon" class="text-xl"></ion-icon>
+      </div>
+      <div routerLink="/login" routerDirection="root"
+        class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-gray-700 text-slate-500 dark:text-gray-400 transition-all">
+        <ion-icon name="log-out-outline" class="text-xl"></ion-icon>
+      </div>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="[--background:#f8fafc] dark:[--background:#0f172a]" scrollEvents="true">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- Progress Indicator -->
+  <div class="px-4 pt-2">
+    <div class="flex items-center gap-2">
+      <div class="flex-1 h-1.5 bg-slate-200 dark:bg-gray-700 rounded-full overflow-hidden">
+        <div class="h-full bg-gradient-to-r from-teal-400 to-emerald-500 dark:from-teal-500 dark:to-emerald-400 rounded-full transition-all duration-500" [style.width.%]="skillProgress"></div>
+      </div>
+      <span class="text-xs font-semibold text-slate-500 dark:text-gray-400">{{ skillProgress }}%</span>
+    </div>
+  </div>
+
+  <!-- Page Illustration Header -->
+  <div class="flex flex-col items-center py-4 px-4 animate-fade-in-up">
+    <span class="text-gold-500 dark:text-green-400 inline-block w-28 h-28 md:w-36 md:h-36 animate-float">
+      <svg viewBox="0 0 200 200" fill="none" class="w-full h-full">
+        <circle cx="100" cy="100" r="90" fill="currentColor" opacity="0.08"/>
+        <circle cx="100" cy="100" r="65" fill="currentColor" opacity="0.15"/>
+        <path d="M65 85c0-8.3 6.7-15 15-15h40c8.3 0 15 6.7 15 15v30c0 8.3-6.7 15-15 15h-8l-15 12v-12h-17c-8.3 0-15-6.7-15-15V85z" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M80 90h30" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <path d="M80 100h25" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <path d="M80 110h15" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="125" cy="80" r="2" fill="currentColor"/>
+        <circle cx="132" cy="74" r="2" fill="currentColor"/>
+        <circle cx="136" cy="66" r="2" fill="currentColor"/>
+      </svg>
+    </span>
+    <p class="text-xs text-slate-400 dark:text-gray-500 mt-2 font-medium">Keterampilan Berbicara</p>
+  </div>
+
+  <div class="book-wrapper">
+  <swiper-container #swiperEX initial-slide="0" speed="400" css-mode="true" [autoplay]="false" [keyboard]="true" grab-cursor="true">
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'>
+  <h2>فِي مَوْقِفِ الَّسَيَّارَةِ</h2>
+  
+</div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">زكي : مَسَاءُ الْخَيْرِ يَا فَائِزُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Zaki :</b> "Sore Faiz."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فائز : مَسَاءُ النُّوْرِ يَا زَكِي</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Faiz :</b> "Ya, saya mengendarai mobil sendiri."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">زكي : هَلْ تَرْكَبُ السَّيَّارَةَ مُنْفَرِدًا ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Zaki :</b> "Boleh saya ikut denganmu?"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فائز : نَعَمْ. أَرْكَبُهَا مُنْفَرِدًا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Faiz :</b>"Tentu. Memangnya kemana mobilmu?"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">زكي : هَلْ جَازَ لِيْ أَنْ أَتْبَعُكَ يَا فَائِزُ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Zaki :</b> "Mobil saya rusak dan harus dibawa ke bengkel."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فائز : بِكُلِّ سُرُوْرٍ يَا زَكِيْ. أَيْنَ سَيَّارَتُكَ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Faiz :</b> "Baiklah mari masuk."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">زكي : كَانَتْ سَيَّارَتِيْ فَاسِدَةً وَ هِيَ فِي الْمَرْأَبِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Zaki :</b> "Terimakasih Faiz."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فائز : يَا سَلَام ! تَفَضَّلْ بِالدُّخُوْلِ أَخِيْ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Faiz :</b> "Sama-sama Zaki."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">زكي : شُكْرًا كَثِيْرًا يَا فَائِز</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Zaki :</b> "Terimakasih banyak Faiz."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فائز : عَفْوًا يَا زَكِي</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Faiz :</b> "Sama-sama Zaki."</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>1</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>فِيْ مَكَانِ التَّسْجِيْلِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text"><span class="ar-text">سلمان : نَهَارُكَ سَعِيْدٌ يَا سَيِّدِيْ</span></span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Salman :</b> "Selamat siang pak."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الحارس : سَعِيْدٌ مُبَارَكٌ. أَيُّ خِدْمَةٍ يَا أَخِيْ ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Petugas :</b> "Siang kak. Ada yang bisa saya bantu?"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">سلمان : أَنَا سَلْمَان. سَأَسْأَلُ عَنِ إِجْرَاءَاتِ التَّسْجِيْلِ فِي الْجَامِعَةِ جُوَانْدَا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Salman :</b> "Saya Salman. Saya mau bertanya terkait prosedur pendaftaran masuk Universitas Ibn Khaldun."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الحارس : بِكُلِّ سُرُوْرٍ. تَفَضَّلْ يَا أَخِيْ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Petugas :</b>"Silahkan kak."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">سلمان : هَلْ هُنَا مِنْحَةٌ دِرَاسِيَةٌ لِحَافِظِ الْقُرْآنِ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Salman :</b> "Apakah ada program beasiswa bagi penghapal Al-Qur'an?"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الحارس : طَبْعًا يَا أَخِيْ. هُنَا مَعَايِيْرٌ لِنَيْلِهَا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Petugas :</b> "Tentu ada. Ada beberapa kriteria beasiswa bagi penghapal Al-Qur'an."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">سلمان : مَا هِيَ يَا سَيِّدِيْ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Salman :</b>"Apa saja?"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الحارس : لِحَافِظِ الْقُرْآنِ عَشْرَةَ جُزْءًا فَخَلَصَ مِنْ قِسْطِ الدِّرَاسِيّ أَرْبَعَةَ الْفُصُوْلِ الدِّرَاسِيَّةِ. وَ لِحَافِظِ الْقُرْآنِ عِشْرِيْنَ جُزْءًا فَخَلَصَ مِنْهُ سِتَّةَ الْفُصُوْلِ الدِّرَاسِيَّةِ. وَ لِحَافِظِ الْقُرْآنِ ثَلَاثِيْنَ جُزْءًا فَخَلَصَ مِنْهُ ثَمَانِيَةَ الفُصُوْلِ الدِّرَاسِيَّةِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Petugas :</b> "Bagi penghapal Al-Qur'an 10 juz gratis SPP 4 semester, 20 juz gratis SPP 6 semester dan bagi penghapal 30 juz gratis SPP 8 semester."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">سلمان : مَا الْشُرُوْطُ لِنَيْلِهِ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Salman :</b>"Apa saja syaratnya?"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الحارس : بِإِلْحَاقِ الشَّهَادَةِ وَ اتِّبَاعِ امْتِحَانِ القِرَاءَةِ فَحَسْبُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Petugas :</b>"Cukup dengan melampirkan ijazah hafalan dan mengikuti tes bacaan saja."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">سلمان : شُكْرًا عَلَى كُلِّ شَيْءٍ يَا سَيِّدِيْ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Salman :</b>"Baik terimakasih atas infonya."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الحارس : عَفْوًا يَا أَخِيْ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Petugas :</b>"Sama-sama."</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>2</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>فِي الْمَيْدَانِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حسن : السَّلَامُ عَلَيْكُمْ يَا وِلْدَانُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>"Assalamualaikum Wildan"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">ولدان : وَ عَلَيْكُمُ السَّلَامُ يَا حَسَنُ. كَيْفَ حَالُكَ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Wildan :</b> "Waalaikumsalam Hasan. Apa kabar?"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حسن : الْحَمْدُ لِلَّهِ إِنِّيْ بِخَيْرٍ. وَ كَيْفَ حَالُكَ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b> "Alhamdulillah baik. Bagaimana denganmu?"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">ولدان : الْحَمْدُ لِلَّهِ إِنِّيْ بِخَيْرٍ. هَلْ سَتُشَاهِدُ لَعْبَةَ كُرَّةِ الْقَدَمِ هَذا الْيَوْمَ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Wildan :</b>"Alhamdulillah baik. Kamu mau menonton pertandingan sepak bola hari ini?"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حسن : بِالتَأْكِيْدِ يَا وِلْدَانُ. اَنَا لَا اُصْبِرُلِأُشَاهِدُهُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b> "Tentu. Saya sangat tidak sabar untuk menyaksikan pertandingan tersebut."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">ولدان : مَا رَئْيُكَ عَنِ الْفِرْقَةِ جُوَانْدَى مِنَ الْفَائِزِيْنَ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Wildan :</b>"Menurutmu apakah tim Universitas Ibn Khaldun akan menang."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حسن : رَئْيِيْ أَنَّهُمْ سَيُرْبِحُوْنَ الْمُبَارَةَ. قَدْ مَرَّنُوْا بِالْجِدِّ وَ الاِجْتِهَادِ. وَ شَعُرْتُ أَنَّهُمْ يَقْدِرُوْنَ أَنْ يَنْتَصِرُوْا عَلَى مُعَارِضِهِمْ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b> "Menurutku mereka akan menang. Mereka sudah berlatih cukup keras dan saya rasa mereka akan mampu memenangkan pertandingan."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">ولدان : أَنَا مُوَافِقٌ يَا حَسَنُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Wildan :</b> "Saya juga berfikir demikian."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حسن : يَا وِلْدَانْ اُنْظُرْ. قَدْ دَخَلُوْا الرِّيَاضِيُّوْنَ هَيَّا بِنَا نُشَاهِدُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b> "Wildan, pemain sudah memasuki lapangan mari kita tonton."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">ولدان : طَيِّبٌ حَسَنُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Wildan :</b> "Baik Hasan."</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>3</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>فِي الْقَاعَةِ الْاِجْتِمَاعِيَّةِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">خديجة : السَّلَامُ عَلَيْكُمْ يَا فَاطِمَةُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Khodijah :</b> "Assalamualaikum Fathimah"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فاطمة : وَ عَلَيْكُمُ السَّلَامُ يَا خَدِيْجَةُ. اتَّضَحَ أَنَّك تَتَّبِعِيْنَ فِيْ هَذِهِ النَّدْوَةِ اَيْضًا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fathimah :</b> "Waalaikumsalam Khodijah, ternyata kamu ikut seminar ini juga."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">خديجة : طَبْعًا. اِذَا لَا اَتْبَعُ هَذِهِ النَّدْوَةِ شَعُرْتُ بِالْخَسَارَةِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Khodijah :</b> "Tentu saja. Jika saya tidak mengikuti seminar ini, saya merasa rugi."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فاطمة : هَذِهِ النَّدْوَةُ مُثِيْرَةً لِلْاِهْتِمَامِ. لَقَدْ كُنْتُ مُتَحَمِّسَةً جِدًّا لِسِمَاعِ الْمَوَادِّ الَّتِيْ قَدَّمَتْهَا الرَّاوِيَةُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fathimah :</b>"Seminar ini sangat menarik sekali. Saya sangat antusias mendengar materi yang disampaikan narasumber tadi."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">خديجة : شَعُرْتُ أَنَّنَا يَجِبُ أَنْ نَحْضُرَ النَّدْوَةَ فِيْ كَثِيْرٍ مِنَ الْأَحْيَانِ. وَ بِصَرْفِ النَّظْرِ عَنْ إِضَافَةِ الْبَصِيْرَةِ فَإِنَّهُ يَزِيْدُ مِنَ الْعَلَاقَاتِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Khodijah :</b>"Saya rasa kita memang harus sering mengikuti seminar seperti ini. Selain bisa menambah wawasan, juga untuk memperbanyak relasi."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فاطمة : وَ الْحَمْدُ لِلَّهِ تُعَقِّدُ الْجَامِعَةُ جُوَانْدَا النَّدْوَاتِ الْوَطَنِيَةَ غَالِبًا بِالْمُحَدِّثِيْنَ الْمُلْهِمِيْنَ وَ الرَّائِعِيْنَ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fathimah :</b> "Dan beruntungnya Universitas Ibn Khaldun sering mengadakan seminar-seminar nasional dengan narasumber-narasumber inspiratif dan hebat."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">خديجة : صَحِيْحٌ. وَ الْمُنْشَأَةُ كَهَذِهِ الْقَاعَةِ الرَّغِيْدَةِ وَ الْوَاسِعَةِ تَزِيْدُ حَلَاوَتَنَا فِي اتِّبَاعِ النَّدْوَةِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Khodijah :</b> "Benar sekali. Fasilitas aula yang nyaman dan luas juga menambah kenyamanan kita untuk mengikuti seminar."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فاطمة : أَنَا مُوَافِقٌ. مَعَ السَّلَامَةِ يَا خَدِيْخَة</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fathimah:</b> "Saya setuju sekali. Sampai jumpa Khodijah."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">خديجة : اللهُ يُسَلِّمُكَ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Khodijah :</b> "Sampai jumpa."</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>4</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>فِي الْفَصْلِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فضلا : صَبَاحُ الْخَيْرِ يَا فَوْزِيْ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fadlan :</b> "Selamat pagi Fauzi."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فوزي : صَبَاحُ النُّوْرِ يَا فَضَلًا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fauzi :</b> "Pagi Fadlan."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فضلا : هَلْ حَضَرْتَ فِيْ مُحَاضَرَةِ الاِسْتِمَاعِ قَبْلَهُ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fadlan :</b> "Apakah kamu masuk pada pertemuan mata kuliah Istima' sebelumnya?"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فوزي : نَعَمْ. حَضَرْتُ فِيْهَا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fauzi :</b>"Ya, saya masuk pada pertemuan sebelumnya."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فضلا : لَوْ سَمَحْتَ أَنْ تُعَلِّمُنِيْ الْمَادَّةَ الَّذِيْ عَلَّمُهُ الْأُسْتَاذ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fadlan :</b>"Bisakah kamu memberitahu saya materi yang diberikan dosen?"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فوزي : طَبْعًا يَا فَضْلًا. لِمَاذَا لَا تَحْضُرُ فِي الِّقَاءِ الْقَدِيْمِ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fauzi :</b> "Tentu. Ngomong-ngomong kenapa kamu tidak hadir minggu lalu?"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فضلا : لَا بُدَّ عَلَيَّ أَنْ أَذْهَبَ إِلَى خَارِجِ الْمَدِيْنَةِ لِاتِّبَاعِ النَّدْوَةَ الدُّوَالِيَةَ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fadlan :</b> "Saya harus keluar kota untuk mengikuti seminar internasional."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فوزي : مَا شَاءَ اللهُ. بَلْ لِلْأَسِفِ لَا يَحْضُرُ مُحَاضِرُ الْاِسْتِمَاعِ الْيَوْمَ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fauzi :</b> "Waaah keren sekali. Tapi sayangnya hari ini dosen Istima' tidak dapat hadir."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فضلا : مَا السَّبَبُ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fadlan :</b> "Kenapa?"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فوزي : يَخْبَرَنِيْ أَنَّهُ مَرِيْدٌ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fauzi :</b>"Beliau mengabarkan pada saya bahwa beliau sedang sakit."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فضلا : شَفَاهُ اللهُ. إِذَنْ هَلْ يُمْكِنُ أَنْ نَتَعَلَّمَ الْمَادَّةَ السَّابِقَةَ مَعِيْ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fadlan :</b> "Semoga Allah angkat penyakitnya. Kalau begitu apa kamu bersedia belajar Bersama saya terkait materi sebelumnya?"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فوزي : طَبْعًا. سَأَسْأَلُكَ اَيْضًا عَنِ الْمَادَّةِ الْكِتَابَةِ. كُنْتُ الْمُقَدَّمَ لِهَذِهِ الْمُحَاضَرَةِ الْيَوْمَ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fauzi :</b>"Tentu. Saya juga ingin bertanya mengenai materi Kitabah, hari ini saya persentasi di kelas ini."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فضلا : طَيِّبٌ يَا فَوْزِيْ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fadlan :</b> "Baiklah kalau begitu."</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>5</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>فِي الْمَقْصَفِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الطالب : نَهَارُكِ سَعِيْدَة يَا سَيِّدَةٌ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Mahasiswa :</b>"Selamat siang Bu."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">البائعة : سَعِيْدَةٌ مُبَارَكٌ يَا أَخِيْ. أَيُّ خِدْمَةٍ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Penjual :</b>"Siang nak."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الطالب : أَيُّ عَصِيْرٍ تَبِيْعِيْنَهَا؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Mahasiswa :</b>"Ada jus apa saja bu?"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">البائعة : أَبِيْعُ عَصِيْرَ الْبُرْتُقَالُ وَ التُّفَّاحَةِ وَ الْمَنْجَا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Penjual :</b> "Ada jus jeruk, apel, dan mangga"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الطالب : أُرِيْدُ عَصِيْرَ الْبُرْتُقَالِ وَ التُّفَّاحَةِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Mahasiswa :</b>"Saya mau satu jus jeruk dan satu jus apel."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">البائعة : طَيِّبٌ. هَلْ هُنَاكَ الْآخَرُ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Penjual :</b>"Baik nak. Apa ada lagi?"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الطالب : يَكْفِيْ. بِكَمِ الثَّمَنَ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Mahasiswa :</b>"Sudah bu. Berapa harganya?"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">البائعة : عِشْرُوْنَ اَلْفِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Penjual :</b>"Dua puluh ribu rupiah."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الطالب : لَوْ سَمَحَتِ أَنْ تُوَدِّعِيْ إِلَى الْخِوَانِ الرَّقْمُ التَّاسِعُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Mahasiswa :</b>"Apakah bisa diantar ke meja no Sembilan?"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">البائعة : بِكُلِّ سُرُوْرٍ. انْتَظِرْ هُنَاكَ. سَأُوَدِّعُهُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Penjual :</b>"Tentu saja. Nanti akan saya antar."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الطالب : شُكُرًا يَا سَيِّدَةُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Mahasiswa :</b>"Terimakasih bu."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">البائعة : مَعَ شُكْرِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Penjual :</b>"Sama-sama nak."</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>6</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>فِي الْمَكْتَبَةِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">أمير : نَهَارُكِ سَعِيْدَة يَا أُسْتَاذَةُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Amir :</b>"Selamat siang bu."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الحارسة : سَعِيْدَةٌ مُبَارَكٌ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Petugas :</b> "Siang."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">أمير : اِسْمِيْ أَمِيْرُ. كُنْتُ طَالِبًا مِنْ قِسْمِ تَعْلِيْمِ اللُّغَةِ الْعَرَيِيَّةِ. أَرِيْدُ أَنْ أَسْتَعِيْرَ كِتَابَ النَّحْوِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Amir :</b>"Saya Amir mahasiswa PBA ingin meminjam buku nahwu."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الحارسة : تَفَضَّلْ. ابْحَثْ فِيْ رَفٍّ الرَّقْمُ السَّابِعُ هُنَاكَ عَدَدٌ مِنَ الْكُتُبِ اللُّغَوِيَةِ. هَلْ سَتَقْرَأُ فِي الْمَكْتَبَةِ أَوْ فِيْ دَارِكَ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Petugas :</b>"Silahkan cari di rak nomor tujuh, disana ada banyak buku tentang bahasa. Kamu mau membaca disini atau dibawa pulang?"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">أمير : أُرِيْدُ أَنْ أَحْمِلَهَا. سَأسْتَخْدِمُهُ كَالْمَرَاجِعِ لِوَظِيْفَتِيْ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Amir :</b> "Saya ingin membawanya pulang. Untuk referensi tugas saya."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الحارسة : فَابْحَثْ وَ احْمِلْ إِلَيَّ لِلْبَيَانَاتِ. وَ لَا تَنْسَ لِتَقَدِيْمِ بِطَاقَةِ الْمَكْتَبَةِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Petugas :</b>"Kalau begitu silahkan cari, lalu bawa kesini untuk kami data. Jangan lupa Kartu Perpustakaan."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">أمير : طَيِّبٌ يَا أُسْتَاذَةُ. كَمْ هُوَ الْمَوْعِدُ النِّهَائِيْ لِلْقَرْضِ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Amir :</b>"Baik bu. Berapa lama tenggat waktunya?"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الحارسة : ثَلَاثَةُ أَيَّامٍ كَحَدٍّ أَقْصَى. لَا بُدَّ عَلَيْكَ الْإِعَادَةُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Petugas :</b> "Paling lama tiga hari."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">أمير : بِالتَّأْكِيْدِ يَا أُسْتَاذَةُ. شُكْرًا جَزِيْلًا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Amir :</b> "Baik bu. Terimakasih"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الحارسة : عَفْوًا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Petugas :</b> "Sama-sama."</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>7</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>فِيْ الْمَعْمَلِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حافظ : يَا حَافِظُ هَلْ نَظَرْتَ الْقِمَعَ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Iqbal :</b> "Hafidz, apa kamu melihat corong?"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">إقبال : وَضَعْتُهُ عَلَى رَفٍّ. هَلْ انْتَهَيْتَ مِنْ اسْتِخْدَامِ الْمِهْجَرِ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hafidz :</b>"Saya letakkan di rak. Apakah kamu sudah selesai menggunakan mikroskop?"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حافظ : نَعَمْ، اِسْتَعْمَلْتُ. كَيْفَ تَأْخُذُ الْمَحْلُوْلَ بِقَدْرٍ مُعَيَّنٍ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Iqbal :</b>"Ya. Bagaimana cara mengambil larutan dengan jumlah tertentu?"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">إقبال : أَسْتَخْدِمُ قِطَّارَةِ قِيَاسٍ. لَهَا حَجَمٌ دَقِيْقٌ فَحَجَمُ الْمَحْلُوْلِ أَكْثَرُ دِقَّةٍ. هَلْ تَحْتَاجُهَا؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hafidz :</b>"Saya menggunakan pipet ukur. Ukurannya presisi. Apakah kamu membutuhkannya?"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حافظ : نَعَمْ أَحْتَاجُهَا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Iqbal :</b> "Ya saya membutuhkannya."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">إقبال : إِنَّهَا جَنِبَ رَفِّ أُنْبُوْبِ الْاِخْتِبَارِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hafidz :</b>"Ada di samping rak tabung reaksi."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حافظ : طَيِّبٌ. سَأَخُذُهَا. شُكْرًا يَا حَافِظُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Iqbal :</b>"Baiklah. Terimakasih Hafidz."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">إقبال : عَفْوًا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hafidz :</b> "Sama-sama."</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>8</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>فِيْ غُرْفَةِ الْإِدَارَةِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الطالب : صَبَاحُ الْخَيْرِ يَا أُسْتَاذُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Mahasiswa :</b>"Selamat pagi pak."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الموظف : صَبَاحُ النُّوْرِ. أَيُّ خِدْمَةٍ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Pegawai :</b>"Pagi. Ada yang bisa dibantu?"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الطالب : سَأَسْأَلُ عَنْ مَعْلُوْمَاتِ الْمِنْحَةِ الدِّرَاسِيَةِ الدُّوَالِيَّةِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Mahasiswa :</b>"Saya mau tanya info beasiswa internasional."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الموظف : تَفَضَّلْ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Pegawai :</b>"Silahkan."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الطالب : مَا الشُّرُوْطُ فِيْ تَسْجِيْلِهَا؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Mahasiswa :</b>"Apa saja syarat mendaftar?"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الموظف : لَا بُدَّ عَلَى الطَّالِبِ أَنْ يَجْمَعَ شَرِيْطَةَ الْإِدَارِيَّةِ كَبِطَاقَةِ هَوِيَةِ الطَّالِبِ وَ خِطَابِ الْبَيَانِ مِنَ الْجَامِعَةِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Pegawai :</b>"Kumpulkan berkas administrasi seperti KTM dan surat aktif kuliah."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الطالب : ثُمَّ ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Mahasiswa :</b>"Lalu?"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الموظف : عَلَى الْمُسَجِّلِ أَنْ يُقَدِّمَ رِسَالَةَ الْاِقْتِرَاحِ مِنْ رَئِيْسِ الْقِسْمِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Pegawai :</b>"Lampirkan surat rekomendasi kepala jurusan."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الطالب : هَلْ وَجَبَ أَنْ نَكْتُبَ صَحِيْفَةً؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Mahasiswa :</b>"Apa harus membuat jurnal?"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الموظف : نَعَمْ. عَلَى الْمُسَجِّلِ أَنْ يَكْتُبَ صَحِيْفَةً مُتَعَلِّقَةً بِقِسْمِهِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Pegawai :</b>"Ya, sesuai jurusan masing-masing."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الطالب : هَلْ هُنَاكَ نِظَامٌ فِيْ كِتَابَتِهَا؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Mahasiswa :</b>"Ada ketentuan penulisan?"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الموظف : طَبْعًا. يُمْكِنُ الْوُصُوْلُ إِلَى النِّظَامِ مِنَ الرَّابِطِ الْمُتَقَدِّمِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Pegawai :</b>"Tentu. Bisa diakses dari link yang tertera."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الطالب : جَزَاكَ اللهُ يَا أُسْتَاذُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Mahasiswa :</b>"Terimakasih pak."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الموظف : وَ إِيَّاكَ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Pegawai :</b>"Sama-sama."</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>9</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>فِي الْمُوَاصَلَاتِ الْعَامَةِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">خديجة : عَفْوًا يَا سَيِّدِيْ. لِيْ سُؤَالاً</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Khodijah :</b>"Permisi pak, mau bertanya."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">أحمد : تَفَضَّلِيْ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ahmad :</b>"Ada apa nak?"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">خديجة : هَلْ يَذْهَبُ هَذَا الْقِطَارُ إِلَى بوجور؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Khodijah :</b>"Apa kereta ini ke Bogor?"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">أحمد : لَا. بَلْ يَذْهَبُ هَذَا الْقِطَارُ إِلَى نمبو. هَلْ سَتَذْهَبِيْنَ إِلَى بوجور؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ahmad :</b>"Bukan, ini ke Nambo. Kamu mau ke Bogor?"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">خديجة : صَحِيْحٌ. سَأَذْهَبُ إِلَى بوجور</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Khodijah :</b>"Betul pak."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">أحمد : يَأْتِي الْقِطَارُ بَعْدَ خَمْسَ عَشْرَةَ دَقِيْقَةٍ. عَلَيْكِ الْانْتِظَارُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ahmad :</b>"Kereta ke Bogor 15 menit lagi."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">خديجة : طَيِّبٌ يَا سَيِّدِيْ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Khodijah :</b>"Baik pak."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">أحمد : هَلْ تَذْهَبِيْنَ إِلَى بوجور فِيْ أَوَّلِ مَرَّةٍ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ahmad :</b>"Pertama kali ke Bogor?"</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">خديجة : لَا ذَهَبْتُ غَالِبًا. وَلَكِنِّيْ أَرْكَبُ السَّيَّارَةَ. وَهَذَا أَوَّلُ مَرَّةً أَرْكَبُ الْقِطَارَ. أَشْكُرُكَ عَلَى إِجَابَتِكَ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Khodijah :</b>"Tidak, tapi biasa naik mobil. Ini pertama naik kereta. Terimakasih."</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">أحمد : عَفْوًا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ahmad :</b>"Sama-sama."</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>10</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>فِيْ غُرْفَةِ الْإِدَارَةِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فاطمة : يَا زَهَرَةُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fathimah :</b>Hai Zahra.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">زهرة : يَا سَلَامُ فَاطِمَةُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Zahra :</b>Hai Fathimah.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فاطمة : هَلْ سَتَأْخُذِيْنَ بِطَاقَةَ الْاِمْتِحَانِ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fathimah :</b>Apa kamu hendak mengambil kartu ujian?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">زهرة : نَعَمْ. وَ هَلْ أَنْتِ كَذَالِكَ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Zahra :</b>Ya, bagaimana dengan kamu?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فاطمة : نَعَمْ. أَنَا أَيْضًا. وَ رُبَّمَا الْمُوَظَّفُوْنَ فِي اسْتِرَاحَةِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fathimah :</b>Saya juga. Tapi sepertinya pegawai TU sedang istirahat.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">زهرة : فَكَّرْتُ كَذَالِكَ. فِيْ أَيِّ سَاعَةٍ غُرْفَةُ الْإِدَارَةِ مَفْتُوْحَةً؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Zahra :</b>Sepertinya begitu. Jam berapa TU buka lagi?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فاطمة : سَنَفْتَحُ فِيْ سَاعَةِ الثَّالِثَةَ عَشَرَ وَ تُغْلَقُ فِيْ سَاعَةِ السَّادِسَةَ عَشَرَ. هَلْ سَتَنْتَظِرِيْنَ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fathimah :</b>Jam 13.00 tutup jam 16.00. Mau menunggu?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">زهرة : نَعَمْ، سَأَنْتَظِرُهُ. سَوْفَ تُفْتَحُ بَعْدَ قَلِيْلٍ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Zahra :</b>Ya, sebentar lagi buka.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فاطمة : حَسَنًا يَا زَهْرَةُ. فَأَنَا أَيْضًا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fathimah :</b>Baiklah. Saya juga disini.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>11</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>فِي الْحَمَّامِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فوزية : يَا عَائِشَةُ، مَاذَا تَعْمَلِيْنَ؟ أَلَسْتِ فِي الْمُحَاضَرَةِ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fauziyah :</b>Hai Aisyah, bukankah kamu sedang ada kuliah?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عائشة : اِسْتَأْذَنْتُ إِلَى الْحَمَّامِ. وَ كَيْفَ كُنْتِ يَا فَوْزِيَةُ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Aisyah :</b>Saya izin ke toilet. Bagaimana denganmu?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فوزية : أُرِيْدُ أَنْ أَبُوْلَ. بَلْ الْحَمَّامُ مُمْتَلِئُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fauziyah :</b>Saya ingin buang air kecil, tapi toilet penuh.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عائشة : نَعَمْ. فِيْ كُلِّ حَمَّامٍ شَخْصٌ. أَحْسَنُ لَكِ أَنْ تَذْهَبِي إِلَى الْحَمَّامِ الْآخَرِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Aisyah :</b>Setiap toilet ada orang. Coba toilet lain.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فوزية : لَا بَأْسَ. أَنَا أَنْتَظِرُ فَقَطْ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fauziyah :</b>Tidak perlu, saya tunggu saja.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عائشة : حَسَنًا يَا فَوْزِيَةُ. سَأَرْجِعُ إِلِى الفَصْلِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Aisyah :</b>Baiklah. Saya kembali ke kelas.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فوزية : نَعَمْ تَفَضَّلِيْ يَا عَائِشَةُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fauziyah :</b>Baik.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>12</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>فِيْ غُرْفَةِ الْمُحَاضِرِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فخري : السَّلَامُ عَلَيْكُمْ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fahri :</b>Assalamualaikum.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">المحاضر : وَ عَلَيْكُمُ السَّلَامُ. تَفَضَّلْ بِالدُّخُوْلِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Dosen :</b>Waalaikumsalam. Silahkan masuk.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فخري : شُكْرًا يَا أُسْتَاذُ. أَنَا فَخْرِيْ. سَأَجْمَعُ الْوَظِيْفَةَ لِدَرْسِ الْقِرَاءَةِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fahri :</b>Saya Fahri, mau mengumpulkan tugas Al-Qira'ah.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">المحاضر : أَلَيْسَ قُمْنَا بِالْمُحَاضَرَةِ أَمْسِ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Dosen :</b>Bukankah kemarin perkuliahan?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فخري : صَحِيْحٌ. لَكِنْ أَصَابَنِي الْمَرَضُ بِالْأَمْسِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fahri :</b>Benar, saya sakit kemarin.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">المحاضر : أَيُّ مَرَضٍ يَا فَخْرِيْ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Dosen :</b>Sakit apa?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فخري : شَعُرْتُ بِالْحُمَى</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fahri :</b>Demam pak.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">المحاضر : وَ هَلْ شُفِعْتَ الْآنَ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Dosen :</b>Sekarang sudah sembuh?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فخري : كُنْتُ فِيْ صِحَّةٍ يَا أُسْتَاذُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fahri :</b>Sudah lebih baik.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">المحاضر : الْحَمْدُ للهِ. ضَعِ الْوَظِيْفَةَ عَلَى مَكْتَبِيْ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Dosen :</b>Alhamdulillah. Letakkan di meja saya.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فخري : شُكْرًا جَزِيْلًا يَا أُسْتَاذُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fahri :</b>Terimakasih pak.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>13</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>فِيْ الْمَتْجَرِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">البائعة : عَفْوًا، هَلْ يُمْكِنُنِيْ مُسَاعَدَتُكَ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Penjual :</b>Ada yang bisa dibantu?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">المشترية : سَأَبْحَثُ الْخُبْزَ وَ الْجُبْنَ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Pembeli :</b>Saya cari roti dan keju.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">البائعة : كِلَاهُمَا فِيْ رَفِّ الطَّعَامِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Penjual :</b>Ada di rak makanan.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">المشترية : طَيِّبٌ شُكْرًا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Pembeli :</b>Baik, terimakasih.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">البائعة : هَلْ شَيْئٌ آخَرٌ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Penjual :</b>Ada lagi?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">المشترية : هَلْ يُوْجَدُ تَخْفِيْضٌ فِيْ شِرَاءِ الصَّابُوْنِ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Pembeli :</b>Apa ada diskon sabun?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">البائعة : طَبْعًا. بِخِصْمِ عِشْرِيْنَ بِالْمِائَةِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Penjual :</b>Tentu, diskon 20%.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">المشترية : سَأَشْتَرِيْ الصَّابُوْنَ الْآنَ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Pembeli :</b>Saya beli sekarang.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>14</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>فِيْ مَسْكَنِ الْجَامِعَةِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">رضوان : يَا فَارِدُ لِيْ سُؤَالٌ لَكَ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ridwan :</b>Farid, mau tanya.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فارد : تَفَضَّلْ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Farid :</b>Silakan.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">رضوان : هَلْ فَتَّشَ الْمُشْرِفُ حُجْرَتَكَ فِي الصَّبَاحِ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ridwan :</b>Apa kamarmu diperiksa pembimbing tadi pagi?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فارد : نَعَمْ فُتِشَتْ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Farid :</b>Ya, diperiksa.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">رضوان : هَلْ كُلَّ يَوْمٍ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ridwan :</b>Setiap hari?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فارد : لَا. مَرَّةً فِيْ كُلِّ أُسْبُوْعٍ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Farid :</b>Tidak, seminggu sekali.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">رضوان : لِمَاذَا؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ridwan :</b>Kenapa?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فارد : لِلْمَنْعِ مِنْ مُخَالَفَةِ النِّظَامِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Farid :</b>Agar tidak melanggar aturan.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">رضوان : أَشْكُرُكَ يَا فَارِدُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ridwan :</b>Terimakasih Farid.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فارد : لَا شُكْرَ عَلَى الْوَاجِبِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Farid :</b>Sama-sama.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>15</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>فِيْ السُّلَّمِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">رضا : يَا أَحْمَدُ، هَلْ أَنْتَ مُشْتَغِلٌ بَعْدَ هَذِهِ الْمَادَّةِ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ridho :</b>Ahmad, apa kamu sibuk setelah kuliah?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">أحمد : لاَ، بَلْ أنَا فَارِغٌ. لِمَاذَا؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ahmad :</b>Tidak, kenapa?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">رضا : سَأَسْأَلُكَ عَنِ الدَّرْسِ الْمَاضِى. هَلْ مُمْكِنٌ أَنْ تُبَيِّنَهُ لِيْ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ridho :</b>Bisa terangkan pelajaran kemarin?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">أحمد : أَيُّ مَادَّةٍ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ahmad :</b>Mata kuliah apa?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">رضا : دَرْسُ عِلْمِ النَّحْوِ، بَابُ نَصْبُ الْفِعْلِ الْمُضَارِعِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ridho :</b>Ilmu Nahwu, bab nashab fi'il mudhari'.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">أحمد : طَيِّبٌ، بِكُلِّ سُرُوْرٍ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ahmad :</b>Baiklah, dengan senang hati.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">رضا : شُكْرًا جَزِيْلاً يَا أَحْمَدُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ridho :</b>Terimakasih Ahmad.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">أحمد : لَا شُكْرَ عَلَى الْوَاجِبِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ahmad :</b>Sama-sama.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>16</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>فِيْ غُرْفَةِ الْمُنَظَّمَةِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عزيز : يَا حنيف كَيْفَ حَالُكَ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Aziz :</b>Hanif, apa kabar?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حنيف : الحَمْدُ لله إِنِّيْ بِخَيْرٍ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hanif :</b>Alhamdulillah baik.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عزيز : كَيْفَ اسْتِعْدَادُ الْبَرْنَامِجِ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Aziz :</b>Persiapan acara bagaimana?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حنيف : يَسِيْرُ سَيْرًا جَمِيِلاً، وَمَا لَدَيْنَا إِلاَّ مُشْكِلَةٌ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hanif :</b>Baik, cuma ada satu masalah.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عزيز : مَا الْمُشْكِلَةُ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Aziz :</b>Apa masalahnya?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حنيف : لَمْ يُرْسَلْ بَعْضُ رَسَائِلِ الدَّعْوَةِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hanif :</b>Surat undangan belum dikirim.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عزيز : سَأُرْسِلُهَا بَعْدُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Aziz :</b>Saya kirim nanti.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حنيف : جَزَاكَ اللهُ خَيْرًا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hanif :</b>Jazakallah khair.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>17</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>فِيْ الْمُدَوَّنَةِ الصَّوْتِيَّةِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فيصال : هَلْ مُكَبِّرُ الصَّوْتِ فَاسِدٌ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Faisal :</b>Microphonenya rusak?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">زائد : لاَ، بَلْ صَلَّحْتُهُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Zaid :</b>Tidak, sudah saya perbaiki.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فيصال : سَكَبَ أَحَدُ الضُّيُوْفِ شُرْبَهُ فَأَصَابَ الْمَاءُ مُكَبِّرَ الصَّوْتِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Faisal :</b>Tamu tidak sengaja menumpahkan minuman.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">زائد : لَا بُدَّ أَنْ نَحْتَرِزَ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Zaid :</b>Kita harus lebih hati-hati.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فيصال : هَذِهِ الْغُرْفَةُ تَحْتَاجُ تَنْظِيْفًا وَتَنْظِيْمًا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Faisal :</b>Ruangan perlu dibersihkan dan ditata.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">زائد : أَنَا فِيْ نَفْسِ الْفِكْرَةِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Zaid :</b>Saya setuju.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>18</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>فِيْ مَجْلِسِ الْاِقْتِرَاحِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">معارف : مِنْ أَيْنَ أَنْتَ؟ تَكَادُ تَكُوْنُ مُتَأَخِّرًا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ma'arif :</b>Kamu hampir terlambat.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">مفتاح : عُذْرًا، الطَّرِيْقُ مُزْدَحِمٌ جِدًّا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Miftah :</b>Maaf, macet parah.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">معارف : اسْتَعِدَّ، دَوْرُكَ بَعْدَ هَذَا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ma'arif :</b>Persiapkan diri, giliranmu setelah ini.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">مفتاح : صَحِيْحٌ؟ إِنِّيْ قَلِقٌ وَمُتَرَدِّدٌ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Miftah :</b>Benarkah? Saya ragu.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">معارف : إنِ اجْتَهَدْتَ فَلَا تَقْلِقْ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ma'arif :</b>Jika sudah berusaha jangan bimbang.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">مفتاح : عَسَى اللهُ أَنْ يُيَسِّرَ أَمْرِيْ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Miftah :</b>Semoga Allah memudahkan.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>19</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>فِيْ مَجْلِسِ الْبَحْثِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فهمي : هَلْ جَاءَ الْمُمْتَحِنُ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fahmi :</b>Dosen penguji sudah datang?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">علي : لَمْ يَجِئْ، سَيَجِيْءُ بَعْدَ قَلِيْلٍ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ali :</b>Belum, sebentar lagi.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فهمي : كَمْ عَدَدُ صَفْحَةِ بَحْثِكَ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fahmi :</b>Skripsimu berapa halaman?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">علي : ثَلَاثُوْنَ صَفْحَةً</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ali :</b>Tiga puluh halaman.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فهمي : أَمَّا بَحْثِيْ بَلَغَ خَمْسِيْنَ صَفْحَةً</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fahmi :</b>Skripsiku lebih dari lima puluh.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">علي : إِنَّكَ مُجْتَهِدٌ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ali :</b>Kamu sungguh-sungguh.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>20</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>عِنْدَ طَلَبِ تَوْقِيِعِ الْمُشْرِفِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فائز : مِنْ فَضْلِكُمْ يَا أُسْتَاذُ، قَدْ نَقَّحْتُ بَحْثِيْ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Faiz :</b>Permisi pak, saya sudah revisi skripsi.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">سلمان : لِمَاذَا اسْتَخْدَمْتَ هَذَا الْمَنْهَجَ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Salman :</b>Kenapa pilih metode ini?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فائز : لِأَنَّهُ يُنَاسِبُ الْبَحْثَ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Faiz :</b>Karena paling relevan.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">سلمان : بَحْثُكَ جَيِّدٌ وَلَكِنْ نَقِّحْ كِتَابَةَ الْمَرَاجِعِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Salman :</b>Skripsimu bagus, revisi daftar pustaka.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فائز : سَأُنَقِّحُهُ يَا أُسْتَاذُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Faiz :</b>Baik pak.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">سلمان : سَأُوَقِّعُ الْآنَ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Salman :</b>Saya tanda tangan sekarang.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فائز : شُكْرًا جَزِيْلًا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Faiz :</b>Terimakasih banyak.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">سلمان : عَفْوًا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Salman :</b>Sama-sama.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>21</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>حَفْلَةُ التَّخَرُّجِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حميد : مَا أَجْمَلَ هَذَا الْيَوْمَ!</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hamid :</b>Betapa indahnya hari ini!</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عزيز : يَنْبَغِيْ لَنَا أَنْ نَفْتَخِرَ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Aziz :</b>Kita patut bangga.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حميد : حَيَّ نَتَصَوِّرُ بَعْدَ الْحَفْلَةِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hamid :</b>Ayo foto setelah acara.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عزيز : فِيْ أَيْنَ سَنَلْتَقِطُ الصُّوَرَ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Aziz :</b>Dimana?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حميد : أَمَامَ نَصْبِ الْجَامِعَةِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hamid :</b>Di depan tugu kampus.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عزيز : قَدْ حَضَرَ رَئِيْسُ الْجَلْسَةِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Aziz :</b>Acara akan segera dimulai.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>22</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>الْاِمْتِحَانُ نِصْفَ الدِّرَاسَةِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">شريف : مَا رَأْيُكَ فِي الْاِمْتِحَانِ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Syarif :</b>Pendapatmu tentang ujian tadi?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">أحمد : صَعْبٌ جِدًّا، مَا أَجَبْتُ إِلَّا ثَلَاثَةً</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ahmad :</b>Sulit sekali, cuma jawab tiga.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">شريف : أَجَبْتُ نِصْفَهُ مُتَأَكِّدًا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Syarif :</b>Saya jawab setengahnya dengan yakin.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">أحمد : هَلْ لَنَا امْتِحَانٌ بَعْدَ هَذَا؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ahmad :</b>Masih ada ujian lagi?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">شريف : نَعَمْ، مَادَّةُ الْبَلَاغَةِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Syarif :</b>Ya, Balaghoh.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">أحمد : يَا لَيْتَنِيْ تَعَلَّمْتُ قَبْلُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ahmad :</b>Andai saya belajar sebelumnya.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>23</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>عِنْدَ اتِّخَاذِ الْإِجَازَةِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">مُنِيْرٌ : مَا خُطَّتُكَ بَعْدَ التَّخَرُّجِ يَا حَسَنُ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Munir :</b>Apa rencanamu setelah lulus?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَنٌ : سَأُوَاصِلُ الدِّرَاسَةَ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Mau lanjut studi.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">مُنِيْرٌ : عَزَمْتُ عَلَى كَسْبِ الْعَمَلِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Munir :</b>Saya mau cari kerja.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَنٌ : إِذَا احْتَجْتَ عَوْنًا فَلَا تَتَرَدَّدْ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Butuh bantuan, hubungi saya.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">مُنِيْرٌ : شُكْرًا، لَنْ أَنْسَى جَمِيْلَكَ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Munir :</b>Terimakasih, takkan kulupakan.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>24</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>تَسْلِيْمُ الْوَاجِبَة</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَنِيْفٌ : أَسَلَّمْتَ الْوَاجِبَةَ النَّحْوِيَّةَ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hanif :</b>Sudah kumpul tugas Nahwu?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">إِبْرَاهِيْمُ : نَسِيْتُ. مَتَى الْمَوْعِدُ النِّهَائِيُّ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ibrahim :</b>Lupa. Kapan batas akhir?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَنِيْفٌ : هَذَا الصَّبَاحُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hanif :</b>Pagi ini.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">إِبْرَاهِيْمُ : هَلْ سَلَّمْتَ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ibrahim :</b>Apa kamu sudah kumpul?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَنِيْفٌ : قُمْتُ بِهَا وَلَمْ أُسَلِّمْ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hanif :</b>Saya sudah kerjakan tapi belum kumpul.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">إِبْرَاهِيْمُ : أَرِنِيْ وَاجِبَتَكَ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ibrahim :</b>Tunjukkan tugasmu.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَنِيْفٌ : لَا تَنْسَى وَاجِبَكَ فِي الْمَرَّةِ الْقَادِمَةِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hanif :</b>Lain kali jangan lupa.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">إِبْرَاهِيْمُ : شُكْرًا جَزِيْلًا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ibrahim :</b>Terimakasih banyak.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>25</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>شِرَاءُ حِصَّةِ الْإِنْتِرْنِتْ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">أَمِيْرٌ : يَاهَاشِمُ، أَتَعْرِفُ دُكَّانًا؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Amir :</b>Hasyim, tahu warung terdekat?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">هَاشِمٌ : لِشِرَاءِ الْأَطْعِمَةِ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasyim :</b>Mau beli makanan?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">أَمِيْرٌ : لَا، حِصَّةَ الْإِنْتِرْنِتْ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Amir :</b>Bukan, mau beli kuota.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">هَاشِمٌ : إِنِّيْ بَائِعُهَا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasyim :</b>Saya juga jual kuota.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">أَمِيْرٌ : أُرِيْدُ خَمْسَةَ غِيْغَابَايِتْ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Amir :</b>Saya mau 5 GB.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">هَاشِمٌ : سَأُرْسِلُهَا إِلَى رَقْمِكَ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasyim :</b>Saya kirim ke nomormu.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">أَمِيْرٌ : كَمِ الثَّمَنُ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Amir :</b>Berapa harganya?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">هَاشِمٌ : خَمْسَةٌ وَعِشْرُوْنَ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasyim :</b>25 ribu.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>26</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>عِنْدَ اتِّخَاذِ لِبَاسِ التَّخَرُّجِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">سَلِيْمٌ : مَا حَجْمُ مَلَابِسِكَ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Salim :</b>Ukuran baju kamu berapa?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فَاضِلٌ : حَجْمِي XL</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fadhil :</b>XL.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">سَلِيْمٌ : سَآخُذُ XL أَيْضًا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Salim :</b>Saya ambil XL juga.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">فَاضِلٌ : XL كَبِيرٌ لَكَ، L أَفْضَلُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Fadhil :</b>XL kebesaran, L lebih pas.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">سَلِيْمٌ : شُكْرًا، سَآخُذُ L</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Salim :</b>Baik, terimakasih.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>27</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>الْإِمْتِحَانُ النِّهَائِيُّ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَبِيْب : لَدَيْنَا امْتِحَانٌ غَدًا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Habib :</b>Kita ujian besok.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَمْزَة : أَيُّ مَادَّةٍ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hamzah :</b>Mata kuliah apa?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَبِيْب : النَّحْوُ فِي الْحِصَّةِ الثَّالِثَةِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Habib :</b>Nahwu jam ke-3.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَمْزَة : يَجِبُ أَنْ نَكُوْنَ مُسْتَعِدِّيْنَ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hamzah :</b>Kita harus siap.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَبِيْب : نَعَمْ، لَا نُكَرِّرُ الْخَطَأَ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Habib :</b>Jangan sampai gagal lagi.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَمْزَة : حَيَّ نَدْرُسُ مَعًا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hamzah :</b>Ayo belajar bersama.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَبِيْب : أَنَا مُوَافِقٌ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Habib :</b>Setuju.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>28</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>طَلَبُ الْبَضَائِعِ فِي التَّطْبِيْقِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">أَحْمَدُ : كَيْفَ اسْتِخْدَامُ تَطْبِيْقِ التَّسَوُّقِ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ahmad :</b>Pakai aplikasi belanja ini gimana?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَلِيْمٌ : سَهْلٌ جِدًّا. مَاذَا تُرِيْدُ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Halim :</b>Gampang. Mau beli apa?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">أَحْمَدُ : أُرِيْدُ سُتْرَةً</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ahmad :</b>Jaket.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَلِيْمٌ : اخْتَرْ وَأَضِفْ إِلَى السَّلَّةِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Halim :</b>Pilih, tambah ke keranjang, bayar.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">أَحْمَدُ : لَيْسَ صَعْبًا. هَلْ تَسْتَخْدِمُهُ كَثِيْرًا؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ahmad :</b>Ternyata mudah. Sering pakai?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَلِيْمٌ : أَحْيَانًا فِي الْعُرُوْضِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Halim :</b>Sesekali kalau ada promo.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>29</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>تَحِيَّةُ الْأُسْتَاذِ فِي الشَّارِعِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">رَشِيْدٌ : السَّلَامُ عَلَيْكُمْ يَا أُسْتَاذُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Rosyid :</b>Assalamualaikum pak.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">أُسْتَاذٌ : وَعَلَيْكُمُ السَّلَامُ. إِلَى أَيْنَ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Dosen :</b>Waalaikum. Mau kemana?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">رَشِيْدٌ : إِلَى الْجَامِعَةِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Rosyid :</b>Ke kampus.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">أُسْتَاذٌ : ارْكَبْ مَعِيْ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Dosen :</b>Ikut saya saja.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">رَشِيْدٌ : شُكْرًا، سَأَسْتَقِلُّ الْعَامَّةَ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Rosyid :</b>Terimakasih, naik angkutan umum saja.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">أُسْتَاذٌ : كُنْ حَذِرًا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Dosen :</b>Hati-hati di jalan.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>30</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>فِي الْمُسْتَوْصَفِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : صَبَاحُ الْخَيْرِ يَا طَبِيْبُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Selamat pagi dok.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حُسَيْن : صَبَاحُ النُّوْرِ. أَيُّ خِدْمَةٍ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Husein :</b>Pagi. Ada keluhan?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : أَلَمٌ شَدِيْدٌ فِي الْبَطْنِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Sakit perut.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حُسَيْن : أَنْتَ مُصَابٌ بِالْإِسْهَالِ. احْفَظْ نَظَافَةَ الْأَكْلِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Husein :</b>Diare. Jaga kebersihan makanan.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : سَأُعْطِيْكَ وَصْفَةً</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Saya resepkan obat.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حُسَيْن : شُكْرًا يَا طَبِيْبُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Husein :</b>Terimakasih dok.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : مَعَ الشِّفَاءِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Semoga lekas sembuh.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>31</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>فِي الْمَكْتَبَةِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : هَلْ هُنَا تَرْجَمَةُ كِتَابِ الْحُكْمِ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Ada terjemah kitab Al-Hikam?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حُسَيْن : نَعَمْ، فِي الرَّفِّ الثَّانِي</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Husein :</b>Ya, rak kedua.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : هَلْ أَسْتَعِيرُهُ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Bisa dipinjam?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حُسَيْن : نَعَمْ، بَعْدَ التَّسْجِيْلِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Husein :</b>Bisa, setelah registrasi.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : أَيْنَ التَّسْجِيْلُ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Dimana registrasi?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حُسَيْن : فِي الدَّوْرِ الْأَسْفَلِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Husein :</b>Lantai bawah.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>32</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>فِي مَكْتَبِ رَئِيْسِ الْقِسْمِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : أُرِيْدُ مُقَابَلَةَ سَيْفِ اللَّهِ لِلتَّوْقِيْعِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Mau ketemu Pak Saefullah.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حُسَيْن : هُوَ مُسَافِرٌ الْيَوْمَ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Husein :</b>Beliau keluar kota hari ini.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : مَتَى أَلْقَاهُ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Kapan bisa bertemu?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حُسَيْن : غَدًا فِي الْجَامِعَةِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Husein :</b>Besok di kampus.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : طَيِّبٌ، شُكْرًا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Baik, terimakasih.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حُسَيْن : خُذْ غَدًا فِي السَّابِعَةِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Husein :</b>Besok jam 7.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>33</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>فِي غُرْفَةِ الْكُلِّيَّةِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : هَلْ يُوْجَدُ جَدْوَلٌ فَارِغٌ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Ada jadwal kosong?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حُسَيْن : مِنْ أَيِّ فَصْلٍ أَنْتَ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Husein :</b>Kamu dari kelas apa?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : مِنْ فَصْلِ الدَّالِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>PBA D.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حُسَيْن : الْمَبْنَى مُسْتَخْدَمٌ كُلُّهُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Husein :</b>Gedung penuh semua.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : هَلْ يُمْكِنُ التَّبَادُلُ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Bisa tukar?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حُسَيْن : هُنَاكَ فِئَةٌ إِدَارَةٌ D3</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Husein :</b>Ada kelas Manajemen D3.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : شُكْرًا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Terimakasih.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>34</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>فِي غُرْفَةِ مُدِيْرِ الْجَامِعَةِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : السَّلَامُ عَلَيْكُمْ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Assalamualaikum.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : وَعَلَيْكُمُ السَّلَامُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Waalaikum.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : إِلَى أَيْنَ تَذْهَبُ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Mau kemana?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : إِلَى نَائِبِ الْمُدِيْرِ لِخِطَابِ التَّوْصِيَةِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Ke Wakil Rektor minta rekomendasi.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : وَأَنَا إِلَى الْأُسْتَاذِ عَبْدُولْ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Saya ke Pak Abdul.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : غُرْفَتُهُ بِجِوَارِ نَائِبِ الْمُدِيْرِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Ruangnya bersebelahan.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>35</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>فِي غُرْفَةِ الْعَلَاقَاتِ الْعَامَّةِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : هَلْ تَمَّ تَوْقِيْعُ الشَّرِيْكِ الْإِعْلَامِيِّ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Media partner sudah ditandatangani?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حُسَيْن : لِمَاذَا نَجْوَى شِهَابٍ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Husein :</b>Kenapa pilih Najwa Shihab?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : لِأَنَّهَا قَادِرَةٌ عَلَى جَذْبِ النَّاسِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Beliau bisa tarik minat masyarakat.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حُسَيْن : فِكْرَتُكَ ذَكِيَّةٌ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Husein :</b>Ide yang bagus.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : شُكْرًا يَا سَيِّدِيْ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Terimakasih pak.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>36</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>فِي الْمَسْجِدِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : مَا الدَّرْسُ الَّذِي تَعَلَّمْتَهُ الْيَوْمَ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Apa hikmah kajian hari ini?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : أَنْ أَكُوْنَ إِنْسَانًا مُفِيْدًا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Menjadi manusia bermanfaat.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : خَيْرُ النَّاسِ أَنْفَعُهُمْ لِلنَّاسِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Sebaik-baik manusia yang bermanfaat.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : هَلْ تَذْهَبُ إِلَى الْفَصْلِ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Mau ke kelas?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : لَا، سَأَقْرَأُ الْقُرْآنَ هُنَا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Tidak, saya baca Al-Quran dulu.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : سَأَذْهَبُ أَوَّلًا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Saya duluan.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>37</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>فِي مَحَطَّةِ الْحَافِلَاتِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : إِلَى أَيْنَ يَا حَبِيْبُ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Mau kemana Habib?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَبِيْب : إِلَى جَرَامِيْدِيَا فِي الْفَرَاغِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Habib :</b>Ke Gramedia, jam kosong.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : هَلْ مَرَّتِ الْحَافِلَةُ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Bus sudah lewat?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَبِيْب : نَعَمْ، مُمْتَلِئَةٌ. انتَظِرْ ١٠ دَقَائِقَ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Habib :</b>Ya, penuh. Tunggu 10 menit.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : هَلْ تَرْكَبُهَا كَثِيْرًا؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Sering naik bus?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَبِيْب : نَعَمْ، رَخِيْصَةٌ وَمُرِيْحَةٌ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Habib :</b>Ya, murah dan nyaman.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : شُكْرًا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Terimakasih.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>38</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>فِي غُرْفَةِ الْإِدَارَةِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : أَطْلُبُ رَقْمَ هَاتِفِ مُشْرِفِي</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Minta nomor wali dosen.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : اتَّصِلْ بِـ 0812****</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Coba 0812***.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : هَذَا الرَّقْمُ لَا يَتَّصِلُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Nomor itu tidak aktif.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : جَرِّبْ 0815****</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Coba 0815***.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : سَأُجَرِّبُ، شُكْرًا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Akan saya coba, terimakasih.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>39</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>فِي جَازِيْبُو الْحَرَمِ الْجَامِعِي</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : هَلْ سَمِعْتَ عَنِ الْخَبَرِ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Dengar berita demo?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : نَعَمْ، دِيْمَقْرَاطِيَةُ زِيَادَةِ الرَّسُوْمِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Ya, demo kenaikan UKT.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : هَلْ وَافَقْتَ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Kamu setuju?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : لَا، كَتَبْتُ انْتِقَادًا رَسْمِيًّا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Tidak, saya tulis kritik resmi.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : أَنْتَ ذَكِيٌّ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Kamu cerdas.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>40</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>فِي مَكْتَبِ نَائِبِ الْعَمِيْدِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">سَلِيْمٌ : أَخَذْتُ مَوْعِدًا لِلْمُقَابَلَةِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Salim :</b>Saya sudah janji ketemu.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">نَائِبُ الْعَمِيْدِ : تَفَضَّلْ بِالْجُلُوْسِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Wakil Dekan :</b>Silakan duduk.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">سَلِيْمٌ : أُرِيْدُ تَوْصِيَةً لِتَدْرِيْسِ الْعَرَبِيَّةِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Salim :</b>Minta rekomendasi ngajar bahasa Arab.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">نَائِبُ الْعَمِيْدِ : قَدِّمْ أَوْرَاقَكَ اَيُّهَا الطَّالِبُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Wakil Dekan :</b>Serahkan berkasnya.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">سَلِيْمٌ : هَذِهِ الْأَوْرَاقُ يَا سَيِّدِيْ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Salim :</b>Ini berkasnya pak.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">نَائِبُ الْعَمِيْدِ : ارْجِعْ بَعْدَ ثَلَاثَةِ أَيَّامٍ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Wakil Dekan :</b>Kembali 3 hari lagi.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>41</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>فِي غُرْفَةِ الْمَعْمَلِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : أُرِيْدُ أَنْ أَطْبَعَ مَقَالًا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Saya mau print makalah.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : كَمْ عَدَدُ الصَّفَحَاتِ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Berapa halaman?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : خَمْسَ عَشْرَةَ صَفْحَةً</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>15 halaman.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : سَأَطْبَعُهَا لَكَ قَرِيْبًا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Sebentar saya print-kan.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : أَخْرُجْ مِنَ الْغُرْفَةِ قَلِيْلًا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Saya keluar dulu.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>42</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>عِنْدَ شِرَاءِ كِتَابٍ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : أُرِيْدُ كِتَابَ التَّفْسِيْرِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Saya mau buku Tafsir.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الْبَائِعُ : هَلْ تُرِيْدُ الطَّبْعَةَ الْجَدِيْدَةَ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Penjual :</b>Cetakan baru?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : نَعَمْ، الْأَسْعَارُ مَكْتُوْبَةٌ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Ya, harganya sudah tertulis?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الْبَائِعُ : نَعَمْ، ثَمَنُهُ ٨٠ أَلْفًا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Penjual :</b>Ya, 80 ribu.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : أَيْنَ أَدْفَعُ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Bayar di mana?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الْبَائِعُ : عِنْدَ الْخَزِيْنَةِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Penjual :</b>Di kasir.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>43</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>عِنْدَ دَفْعِ الْكَفَالَةِ الْجَامِعِيَّةِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">سَلِيْمٌ : أُرِيْدُ دَفْعَ الْكَفَالَةِ الْجَامِعِيَّةِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Salim :</b>Saya mau bayar UKT.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الْمُوَظَّفُ : لَدَيْنَا خَمْسَةُ خَيَارَاتٍ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Petugas :</b>Ada 5 pilihan.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">سَلِيْمٌ : أَخْتَارُ التَّقْسِيْطَ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Salim :</b>Saya pilih cicilan.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الْمُوَظَّفُ : سَدِّدْ فِي كُلِّ شَهْرٍ ٣٠٠ أَلْفٍ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Petugas :</b>Bayar per bulan 300rb.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">سَلِيْمٌ : طَيِّبٌ. هَلْ أَسْتَطِيْعُ الدَّفْعَ الْآنَ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Salim :</b>Baik. Bisa bayar sekarang?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الْمُوَظَّفُ : نَعَمْ، أَدْخِلْ رَقْمَ الطَّالِبِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Petugas :</b>Ya, masukin NIM.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>44</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>بَيْعُ كُتُبِ الْفُرْصَةِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : بَارَكَ اللَّهُ فِيْكَ يَا عَلِيُّ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Barakallah, Ali.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَلِيٌّ : وَفِيْكَ بَارَكَ. رُبَّمَا تُرِيْدُ تَبَادُلَ الْكُتُبِ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ali :</b>Wa fiika barak. Mau tukar buku?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : نَعَمْ، أَحْتَاجُ كِتَابَ الصَّرْفِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Saya butuh buku Sharaf.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَلِيٌّ : عِنْدِيْ. مَا الثَّمَنُ الْمُنَاسِبُ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ali :</b>Ada. Berapa harga pantas?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : سَأَشْتَرِيْهِ بِعِشْرِيْنَ أَلْفًا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Saya beli 20rb.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَلِيٌّ : بِعْتُ. هَذَا الْكِتَابُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Ali :</b>Deal. Ini bukunya.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>45</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>يَوْمُ اللَّوْنِ الْوَطَنِيِّ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : هَذَا يَوْمٌ تَارِيْخِيٌّ يَا جَمَاعَةُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Ini hari bersejarah kawan.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : نَعَمْ، إِنْدُوْنِيْسِيَّا جَمِيْلَةٌ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Ya, Indonesia indah.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : سَنَشْتَرِكُ فِي الذِّكْرَى</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Kita akan meriahkan HUT RI.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : أَيْنَ الْمُنَاسَبَةُ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Dimana acaranya?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : فِي السَّاحَةِ الرَّئِيْسِيَّةِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Di alun-alun.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : سَنَذْهَبُ إِلَى الْحَفْلَةِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Ayo meriahkan.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>46</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>فِي الْمَبْنَى الْإِدَارِيِّ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : أَطْلُبُ نَتَائِجَ الْمُسَابَقَةِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Mau lihat hasil lomba.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الْمُوَظَّفُ : النَّتِيْجَةُ مُعْلَنَةٌ هُنَا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Petugas :</b>Hasilnya diumumkan di sini.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : أَيْنَ الْإِعْلَانُ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Dimana pengumumannya?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الْمُوَظَّفُ : فِي لَوْحَةِ الْإِعْلَانَاتِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Petugas :</b>Di papan pengumuman.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : فَزْتُ يَا نَجْمُ الدِّيْنِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Najmuddin, saya menang!</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الْمُوَظَّفُ : مَبْرُوْكٌ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Petugas :</b>Selamat.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>47</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>الْحَاجَةُ إِلَى الْجَوَازِ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : أُرِيْدُ مَعْلُوْمَاتٍ عَنِ الْجَوَازِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Info paspor pak.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الْمُوَظَّفُ : هَلْ قَدَّمْتَ الْوَثَائِقَ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Petugas :</b>Sudah siapkan dokumen?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : لَمْ أُقَدِّمْ بَعْدُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Belum.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الْمُوَظَّفُ : جَهِّزْ صُوْرَةَ الشَّخْصِيَّةِ أَوَّلًا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Petugas :</b>Siapkan KTP dulu.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : كَمْ يَسْتَغْرِقُ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Berapa lama?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">الْمُوَظَّفُ : أُسْبُوْعَانِ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Petugas :</b>Dua minggu.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>48</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>الْجِهَازُ الْمَحْمُوْلُ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : لَا يَصْلُحُ جِهَازِيْ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Laptopku rusak.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : لَعَلَّهُ الْفَيْرُوْسُ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Mungkin kena virus.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : هَلْ تَعْرِفُ مَحَلَّ صِيَانَةٍ؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Tahu tempat service?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : فِي شَارِعِ الْأَحْمَدِيِّ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Di Jl. Ahmad Yani.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : شُكْرًا</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Terimakasih.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>49</span></div>
+    </swiper-slide>
+    <swiper-slide>
+      <div class='conversation-card'>
+        <div class='conversation-title'><h2>الْكَارِثَةُ الطَّبِيْعِيَّةُ</h2>
+    
+  </div>
+        <div class='dialogue-list' (click)="playLine($event)">
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : وَقَعَتْ كَارِثَةٌ فِي السَّاحِلِ الْجَنُوْبِيِّ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Bencana di pesisir selatan.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : نَعَمْ، زِلْزَالٌ بِقُوَّةِ ٦.٢</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>Gempa 6.2 SR.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : هَلْ هُنَاكَ ضَحَايَا؟</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Ada korban?</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">حَسَن : نَعَمْ، ١٠ أَشْخَاصٍ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Hasan :</b>10 orang.</div>
+          </div>
+          <div class='dialogue-item'>
+            <div class='arabic-line'><span class="ar-text">عَبْدُ اللَّهِ : إِنَّا لِلَّهِ وَإِنَّا إِلَيْهِ رَاجِعُوْنَ</span><ion-icon name="volume-high-outline" class="play-icon"></ion-icon></div>
+            <div class='indonesian-line'><b>Abdullah :</b>Innalillahi.</div>
+          </div>
+        </div>
+      </div>
+      <div class='slide-number'><span class='page-badge'>50</span></div>
+    </swiper-slide>
+  </swiper-container>
+   <div class="nav-footer">
+    <ion-button class="nav-btn" fill="clear" (click)="prevSlide()">
+      <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
+    </ion-button>
+    <span class="nav-hint">Geser atau tekan panah</span>
+    <ion-button class="nav-btn" fill="clear" (click)="nextSlide()">
+      <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
+    </ion-button>
+  </div>
+</div>
+
+</ion-content>
+
+

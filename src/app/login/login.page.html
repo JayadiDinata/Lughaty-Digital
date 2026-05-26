@@ -1,0 +1,124 @@
+<ion-content class="[--background:#f8fafc] dark:[--background:#0f172a]">
+  <button (click)="toggleDarkMode()"
+    class="fixed top-4 right-4 z-20 w-10 h-10 rounded-full bg-white dark:bg-gray-800 text-gold-500 dark:text-green-400 shadow-md flex items-center justify-center hover:scale-110 transition-all">
+    <ion-icon [name]="darkModeIcon" class="text-xl"></ion-icon>
+  </button>
+
+  <div class="max-w-md mx-auto px-5 py-8 md:py-16">
+    <!-- Logo -->
+    <div class="text-center mb-6 animate-bounce-in">
+      <img src="assets/img/logo_uika.png" alt="UIKA Bogor" class="w-44 h-auto mx-auto mb-4 object-contain" />
+    </div>
+
+    <!-- Title -->
+    <div class="text-center mb-8 animate-fade-in-down" style="animation-delay: 150ms">
+      <h1 class="text-3xl font-extrabold text-gold-500 dark:text-green-400 tracking-tight mb-1">Lughaty Digital</h1>
+      <p class="text-sm text-slate-500 dark:text-slate-400">Media Komunikasi Dakwah Digital</p>
+    </div>
+
+    <!-- Form Card -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl px-6 py-8 shadow-sm dark:shadow-md animate-fade-in-up" style="animation-delay: 300ms">
+      <!-- Tab header -->
+      <div class="flex bg-slate-100 dark:bg-gray-700 rounded-xl p-1 mb-7 animate-fade-in-up" style="animation-delay: 400ms">
+        <button (click)="isLogin = true"
+          class="flex-1 py-2.5 text-sm font-semibold rounded-lg transition-all"
+          [class.bg-white]="isLogin" [class.shadow-sm]="isLogin"
+          [class.text-gold-500]="isLogin" [class.text-slate-400]="!isLogin"
+          [class.dark:bg-gray-800]="isLogin" [class.dark:text-green-400]="isLogin"
+          [class.dark:text-gray-400]="!isLogin">
+          Masuk
+        </button>
+        <button (click)="isLogin = false"
+          class="flex-1 py-2.5 text-sm font-semibold rounded-lg transition-all"
+          [class.bg-white]="!isLogin" [class.shadow-sm]="!isLogin"
+          [class.text-gold-500]="!isLogin" [class.text-slate-400]="isLogin"
+          [class.dark:bg-gray-800]="!isLogin" [class.dark:text-green-400]="!isLogin"
+          [class.dark:text-gray-400]="isLogin">
+          Daftar
+        </button>
+      </div>
+
+      <!-- Login Form -->
+      <form *ngIf="isLogin" (ngSubmit)="login()" class="space-y-4">
+        <div class="animate-fade-in-up" style="animation-delay: 500ms">
+          <label class="block mb-2 text-sm font-medium text-slate-700 dark:text-gray-300">Email</label>
+          <input type="email" [(ngModel)]="email" name="email" required
+            class="bg-slate-50 dark:bg-gray-900 border border-slate-300 dark:border-gray-600 text-slate-900 dark:text-gray-100 text-sm rounded-xl focus:ring-gold-500 focus:border-gold-500 dark:focus:ring-green-500 dark:focus:border-green-500 block w-full px-4 py-3 placeholder-slate-400 dark:placeholder-gray-500 transition-all duration-200 focus:scale-[1.01]" />
+        </div>
+
+        <div class="relative animate-fade-in-up" style="animation-delay: 600ms">
+          <label class="block mb-2 text-sm font-medium text-slate-700 dark:text-gray-300">Password</label>
+          <input [(ngModel)]="password" name="password" [type]="showPassword ? 'text' : 'password'" required
+            class="bg-slate-50 dark:bg-gray-900 border border-slate-300 dark:border-gray-600 text-slate-900 dark:text-gray-100 text-sm rounded-xl focus:ring-gold-500 focus:border-gold-500 dark:focus:ring-green-500 dark:focus:border-green-500 block w-full px-4 py-3 pr-12 placeholder-slate-400 dark:placeholder-gray-500 transition-all duration-200 focus:scale-[1.01]" />
+          <button type="button" (click)="showPassword = !showPassword"
+            class="absolute right-3 top-[38px] text-slate-400 dark:text-gray-400 hover:text-slate-600 dark:hover:text-gray-300">
+            <ion-icon [name]="showPassword ? 'eye-off-outline' : 'eye-outline'" class="text-xl"></ion-icon>
+          </button>
+        </div>
+
+        <div class="animate-fade-in-up" style="animation-delay: 700ms">
+          <button type="submit" [disabled]="loading"
+            class="w-full text-white bg-gold-500 hover:bg-gold-600 focus:ring-4 focus:ring-gold-300 dark:bg-green-700 dark:hover:bg-green-800 dark:focus:ring-green-800 font-bold rounded-xl text-base px-5 py-3.5 text-center transition-all disabled:opacity-60 active:scale-[0.97] hover:shadow-lg">
+            Masuk
+          </button>
+        </div>
+
+        <div class="animate-fade-in-up" style="animation-delay: 800ms">
+          <button type="button" (click)="clr()"
+            class="w-full text-slate-600 dark:text-gray-300 bg-slate-100 dark:bg-gray-700 hover:bg-slate-200 dark:hover:bg-gray-600 focus:ring-4 focus:ring-slate-200 dark:focus:ring-gray-600 font-semibold rounded-xl text-base px-5 py-3.5 text-center transition-all active:scale-[0.97]">
+            Batal
+          </button>
+        </div>
+      </form>
+
+      <!-- Register Form -->
+      <form *ngIf="!isLogin" (ngSubmit)="addData()" class="space-y-4">
+        <div class="animate-fade-in-up" style="animation-delay: 500ms">
+          <label class="block mb-2 text-sm font-medium text-slate-700 dark:text-gray-300">Username</label>
+          <input type="text" [(ngModel)]="username" name="username" required
+            class="bg-slate-50 dark:bg-gray-900 border border-slate-300 dark:border-gray-600 text-slate-900 dark:text-gray-100 text-sm rounded-xl focus:ring-gold-500 focus:border-gold-500 dark:focus:ring-green-500 dark:focus:border-green-500 block w-full px-4 py-3 placeholder-slate-400 dark:placeholder-gray-500 transition-all duration-200 focus:scale-[1.01]" />
+        </div>
+
+        <div class="animate-fade-in-up" style="animation-delay: 600ms">
+          <label class="block mb-2 text-sm font-medium text-slate-700 dark:text-gray-300">Email</label>
+          <input type="email" [(ngModel)]="regEmail" name="regEmail" required
+            class="bg-slate-50 dark:bg-gray-900 border border-slate-300 dark:border-gray-600 text-slate-900 dark:text-gray-100 text-sm rounded-xl focus:ring-gold-500 focus:border-gold-500 dark:focus:ring-green-500 dark:focus:border-green-500 block w-full px-4 py-3 placeholder-slate-400 dark:placeholder-gray-500 transition-all duration-200 focus:scale-[1.01]" />
+        </div>
+
+        <div class="relative animate-fade-in-up" style="animation-delay: 700ms">
+          <label class="block mb-2 text-sm font-medium text-slate-700 dark:text-gray-300">Password</label>
+          <input [type]="showPass1 ? 'text' : 'password'" [(ngModel)]="pass1" name="pass1" required
+            class="bg-slate-50 dark:bg-gray-900 border border-slate-300 dark:border-gray-600 text-slate-900 dark:text-gray-100 text-sm rounded-xl focus:ring-gold-500 focus:border-gold-500 dark:focus:ring-green-500 dark:focus:border-green-500 block w-full px-4 py-3 pr-12 placeholder-slate-400 dark:placeholder-gray-500 transition-all duration-200 focus:scale-[1.01]" />
+          <button type="button" (click)="showPass1 = !showPass1"
+            class="absolute right-3 top-[38px] text-slate-400 dark:text-gray-400 hover:text-slate-600 dark:hover:text-gray-300">
+            <ion-icon [name]="showPass1 ? 'eye-off-outline' : 'eye-outline'" class="text-xl"></ion-icon>
+          </button>
+        </div>
+
+        <div class="relative animate-fade-in-up" style="animation-delay: 800ms">
+          <label class="block mb-2 text-sm font-medium text-slate-700 dark:text-gray-300">Konfirmasi Password</label>
+          <input [type]="showPass2 ? 'text' : 'password'" [(ngModel)]="pass2" name="pass2" required
+            class="bg-slate-50 dark:bg-gray-900 border border-slate-300 dark:border-gray-600 text-slate-900 dark:text-gray-100 text-sm rounded-xl focus:ring-gold-500 focus:border-gold-500 dark:focus:ring-green-500 dark:focus:border-green-500 block w-full px-4 py-3 pr-12 placeholder-slate-400 dark:placeholder-gray-500 transition-all duration-200 focus:scale-[1.01]" />
+          <button type="button" (click)="showPass2 = !showPass2"
+            class="absolute right-3 top-[38px] text-slate-400 dark:text-gray-400 hover:text-slate-600 dark:hover:text-gray-300">
+            <ion-icon [name]="showPass2 ? 'eye-off-outline' : 'eye-outline'" class="text-xl"></ion-icon>
+          </button>
+        </div>
+
+        <div class="animate-fade-in-up" style="animation-delay: 900ms">
+          <button type="submit" [disabled]="loading"
+            class="w-full text-white bg-gold-500 hover:bg-gold-600 focus:ring-4 focus:ring-gold-300 dark:bg-green-700 dark:hover:bg-green-800 dark:focus:ring-green-800 font-bold rounded-xl text-base px-5 py-3.5 text-center transition-all disabled:opacity-60 active:scale-[0.97] hover:shadow-lg">
+            Daftar
+          </button>
+        </div>
+
+        <div class="animate-fade-in-up" style="animation-delay: 1000ms">
+          <button type="button" (click)="clr()"
+            class="w-full text-slate-600 dark:text-gray-300 bg-slate-100 dark:bg-gray-700 hover:bg-slate-200 dark:hover:bg-gray-600 focus:ring-4 focus:ring-slate-200 dark:focus:ring-gray-600 font-semibold rounded-xl text-base px-5 py-3.5 text-center transition-all active:scale-[0.97]">
+            Batal
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ion-content>

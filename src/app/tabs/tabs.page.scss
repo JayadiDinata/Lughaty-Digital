@@ -1,0 +1,28 @@
+ion-tab-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 3px;
+  background: #C4942C;
+  border-radius: 0 0 4px 4px;
+  transition: width 0.2s;
+}
+
+body.dark ion-tab-button::before {
+  background: #2E7D32;
+}
+
+ion-tab-button.tab-selected::before {
+  width: 24px;
+}
+
+ion-tab-button:active ion-icon {
+  transform: scale(0.9);
+}
+
+ion-tab-button ion-icon {
+  transition: transform 0.2s;
+}

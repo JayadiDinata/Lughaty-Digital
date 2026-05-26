@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Lughaty Digital</string>
+    <string name="title_activity_main">Lughaty Digital</string>
+    <string name="package_name">ac.id.uika.lughatydigital</string>
+    <string name="custom_url_scheme">ac.id.uika.lughatydigital</string>
+</resources>

@@ -1,0 +1,524 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "@ionic/angular/css/core.css";
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import '@ionic/angular/css/display.css';
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+ion-content {
+  --background: #f8fafc;
+}
+
+ion-toolbar {
+  --border-width: 0 0 1px 0;
+  --border-color: #e2e8f0;
+}
+
+ion-card {
+  border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  margin: 16px;
+}
+
+ion-button {
+  --border-radius: 12px;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+}
+
+ion-input, ion-textarea {
+  --border-radius: 12px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --color: #1e293b;
+  --placeholder-color: #64748b;
+  --placeholder-opacity: 1;
+  --background: transparent;
+}
+
+ion-input.input-has-focus, ion-textarea.input-has-focus,
+ion-input.ion-focused, ion-textarea.ion-focused,
+ion-input.item-has-focus, ion-textarea.item-has-focus {
+  --background: transparent;
+}
+
+.native-input, .native-textarea {
+  background: transparent !important;
+  caret-color: #1e293b;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #f8fafc inset !important;
+  -webkit-text-fill-color: #1e293b !important;
+  caret-color: #1e293b;
+}
+
+ion-item {
+  --border-radius: 12px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --min-height: 52px;
+}
+
+.app-header {
+  ion-toolbar {
+    --background: #ffffff;
+    padding: 0 4px;
+  }
+
+  ion-title {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-align: center;
+  }
+}
+
+.header-icon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s;
+  color: var(--ion-color-medium);
+
+  &:hover {
+    background: #f1f5f9;
+    color: #C4942C;
+  }
+}
+
+.page-background {
+  --background: #f8fafc;
+}
+
+ion-app {
+  max-width: 480px;
+  margin: 0 auto;
+  border-left: 1px solid #e2e8f0;
+  border-right: 1px solid #e2e8f0;
+  min-height: 100vh;
+  box-shadow: 0 0 20px rgba(0,0,0,0.05);
+}
+
+@media (min-width: 768px) {
+  body {
+    background: #f1f5f9;
+  }
+}
+
+body.dark {
+  ion-content {
+    --background: #0f172a !important;
+  }
+
+  ion-toolbar {
+    --border-color: #1e293b;
+  }
+
+  ion-card {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+
+  .app-header {
+    ion-toolbar {
+      --background: #1e293b !important;
+    }
+  }
+
+  .header-icon:hover {
+    background: #334155;
+  }
+
+  .page-background {
+    --background: #0f172a;
+  }
+
+  ion-app {
+    border-color: #1e293b;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+  }
+
+  ion-tab-bar {
+    --background: #1e293b !important;
+    --border: 1px solid #334155 !important;
+    box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.2);
+  }
+
+  ion-tab-button {
+    --color: #94a3b8 !important;
+    --color-selected: #2E7D32 !important;
+
+    &::before {
+      background: #2E7D32;
+    }
+  }
+
+  ion-input, ion-textarea {
+    --color: #f1f5f9 !important;
+    --placeholder-color: #cbd5e1 !important;
+    --placeholder-opacity: 1 !important;
+    --background: transparent !important;
+  }
+
+  ion-input.input-has-focus, ion-textarea.input-has-focus,
+  ion-input.ion-focused, ion-textarea.ion-focused,
+  ion-input.item-has-focus, ion-textarea.item-has-focus {
+    --background: transparent !important;
+  }
+
+  .native-input, .native-textarea {
+    background: #0f172a !important;
+    color: #f1f5f9 !important;
+    caret-color: #f1f5f9 !important;
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #0f172a inset !important;
+    -webkit-text-fill-color: #f1f5f9 !important;
+    caret-color: #f1f5f9 !important;
+  }
+
+  ion-label {
+    color: #cbd5e1 !important;
+  }
+
+  .login-content {
+    --background: #0f172a;
+  }
+
+  .auth-card {
+    background: #1e293b !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+
+  .tab-header {
+    background: #334155 !important;
+  }
+
+  .tab-btn {
+    color: #94a3b8;
+
+    &.active {
+      background: #1e293b !important;
+      color: #2E7D32;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  .form-group ion-item {
+    --background: #0f172a !important;
+    --border-color: #334155 !important;
+    --color: #f1f5f9 !important;
+
+    &.item-has-focus {
+      --background: #1e293b !important;
+      box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2);
+    }
+  }
+
+  .password-field .toggle-pass {
+    color: #94a3b8;
+  }
+
+  .logo-section {
+    h1 {
+      color: #2E7D32;
+    }
+    p {
+      color: #94a3b8;
+    }
+  }
+
+  .theme-float {
+    background: #1e293b;
+    color: #2E7D32;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+
+  .offline-banner {
+    --background: #450a0a;
+    --border-color: #991b1b;
+    color: #fca5a5;
+  }
+
+  .section-header {
+    color: #f1f5f9;
+    ion-icon { color: #2E7D32; }
+  }
+
+  .lang-row ion-item {
+    --background: #1e293b;
+  }
+
+  .input-card {
+    background: #1e293b !important;
+
+    ion-item {
+      --background: #0f172a !important;
+      --border-color: #334155 !important;
+
+      &.item-has-focus {
+        --background: #1e293b !important;
+        box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2);
+      }
+    }
+  }
+
+  .word-display {
+    background: #1e293b;
+  }
+
+  .word-chip {
+    color: #94a3b8;
+    background: #0f172a;
+
+    &.active {
+      background: #2E7D32;
+      color: #0f172a;
+    }
+
+    &.done {
+      color: #94a3b8;
+    }
+  }
+
+  .playback-controls {
+    background: #1e293b;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .lang-selector ion-item {
+    --background: #1e293b !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+
+  .lang-selector .swap-btn {
+    color: #2E7D32;
+  }
+
+  .writing-card {
+    background: #1e293b !important;
+
+    ion-item {
+      --background: #0f172a !important;
+      --border-color: #334155 !important;
+
+      &.item-has-focus {
+        --background: #1e293b !important;
+        box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2);
+      }
+    }
+  }
+
+  .result-card {
+    background: #1e293b !important;
+
+    .result-text {
+      color: #2E7D32;
+    }
+  }
+
+  details.dictionary-section {
+    background: #1e293b;
+
+    summary {
+      color: #f1f5f9;
+    }
+
+    .dict-item {
+      &:hover { background: #0f172a; }
+
+      .dict-id { color: #cbd5e1; }
+      .dict-ar { color: #2E7D32; }
+    }
+  }
+
+
+
+  .nav-btn {
+    --color: #2E7D32 !important;
+    --background: #1e293b !important;
+    --background-hover: #334155 !important;
+    --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .nav-hint {
+    color: #94a3b8;
+  }
+
+  .map-header {
+    h2 { color: #f1f5f9; }
+    p { color: #94a3b8; }
+
+    .skor-badge {
+      background: #064e3b;
+      color: #6ee7b7;
+      ion-icon { color: #10b981; }
+    }
+  }
+
+  .level-box {
+    background: #1e293b !important;
+    .level-num { color: #f1f5f9; }
+
+    &.locked {
+      background: #0f172a !important;
+      .level-num { color: #64748b; }
+    }
+
+    &.unlocked {
+      border-color: #2E7D32;
+      .level-icon { color: #2E7D32; }
+      .level-num { color: #2E7D32; }
+    }
+
+    &.correct {
+      background: #022c22 !important;
+      border-color: #10b981;
+      .level-num { color: #6ee7b7; }
+    }
+
+    &.wrong {
+      background: #450a0a !important;
+      border-color: #ef4444;
+      .level-num { color: #fca5a5; }
+    }
+  }
+
+  .soal-card {
+    background: #1e293b !important;
+
+    .arabic-large { color: #f1f5f9; }
+  }
+
+  .jawaban-list ion-item {
+    --background: #1e293b !important;
+  }
+
+  .instruction-card {
+    background: #1e293b !important;
+
+    .nav-word { color: #f1f5f9; }
+    .nav-arrow { color: #2E7D32; }
+  }
+
+  .canvas-wrapper {
+    background: #1e293b !important;
+
+    canvas {
+      background: #1e293b;
+    }
+  }
+
+  .tool-btn.active {
+    --background: #2E7D32;
+  }
+
+  .score-card {
+    background: #1e293b !important;
+
+    .score-label { color: #94a3b8; }
+  }
+
+  .about-card {
+    background: #1e293b !important;
+
+    h2 { color: #f1f5f9; }
+    p { color: #cbd5e1; }
+  }
+
+  .tech-item {
+    strong { color: #f1f5f9; }
+    p { color: #94a3b8; }
+  }
+
+  .feature-item {
+    color: #cbd5e1;
+  }
+
+  .user-profile {
+    border-bottom-color: #334155;
+  }
+  .user-profile h3 { color: #f1f5f9; }
+  .user-profile p { color: #94a3b8; }
+  .menu-list ion-item ion-icon { color: #94a3b8; }
+  .menu-list ion-item ion-label { color: #f1f5f9; }
+
+  .section-title { color: #f1f5f9; }
+  .progress-card {
+    background: #1e293b !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  .pbar { background: #334155; }
+
+  .skill-item {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  .skill-name { color: #f1f5f9; }
+  .skill-locked { background: #334155; }
+  .spbar { background: #334155; }
+
+  @media (min-width: 768px) {
+    body {
+      background: #0a0f1a;
+    }
+  }
+}
+
+@keyframes fadeInUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@keyframes fadeInDown {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@keyframes fadeInLeft {
+  from { transform: translateX(-20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes fadeInRight {
+  from { transform: translateX(20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes scaleIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+@keyframes bounceIn {
+  0% { transform: scale(0.3); opacity: 0; }
+  50% { transform: scale(1.08); }
+  70% { transform: scale(0.92); }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes pulseSubtle {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}

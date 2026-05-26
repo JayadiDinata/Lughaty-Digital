@@ -1,0 +1,121 @@
+<ion-header class="app-header">
+  <ion-toolbar class="bg-white dark:bg-gray-800 border-b border-slate-200 dark:border-gray-700">
+    <ion-buttons slot="start">
+      <div *ngIf="view === 'levels'" routerLink="/tabs/home" routerDirection="root"
+        class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-gray-700 text-slate-500 dark:text-gray-400 transition-all">
+        <ion-icon name="home-outline" class="text-xl"></ion-icon>
+      </div>
+      <div *ngIf="view === 'quiz'" (click)="backToLevels()"
+        class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-gray-700 text-slate-500 dark:text-gray-400 transition-all">
+        <ion-icon name="arrow-back-outline" class="text-xl"></ion-icon>
+      </div>
+    </ion-buttons>
+    <ion-title class="text-gold-500 dark:text-green-400 font-bold text-lg">{{ view === 'levels' ? 'Al-Qiroah' : 'Level ' + currentLevel?.id }}</ion-title>
+    <ion-buttons slot="end">
+      <div (click)="toggleDarkMode()"
+        class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-gray-700 text-slate-500 dark:text-gray-400 transition-all">
+        <ion-icon [name]="darkModeIcon" class="text-xl"></ion-icon>
+      </div>
+      <div routerLink="/login" routerDirection="root"
+        class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-gray-700 text-slate-500 dark:text-gray-400 transition-all">
+        <ion-icon name="log-out-outline" class="text-xl"></ion-icon>
+      </div>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="[--background:#f8fafc] dark:[--background:#0f172a]">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- Progress Indicator -->
+  <div class="px-4 pt-2">
+    <div class="flex items-center gap-2">
+      <div class="flex-1 h-1.5 bg-slate-200 dark:bg-gray-700 rounded-full overflow-hidden">
+        <div class="h-full bg-gradient-to-r from-purple-400 to-purple-600 dark:from-purple-500 dark:to-purple-400 rounded-full transition-all duration-500" [style.width.%]="skillProgress"></div>
+      </div>
+      <span class="text-xs font-semibold text-slate-500 dark:text-gray-400">{{ skillProgress }}%</span>
+    </div>
+  </div>
+
+  <div class="px-3 py-5 animate-fade-in-up" *ngIf="view === 'levels'">
+    <div class="text-center mb-5">
+      <h2 class="text-2xl font-extrabold text-slate-900 dark:text-gray-100 mb-1">Peta Level</h2>
+      <p class="text-xs text-slate-500 dark:text-gray-400 mb-2">Pilih level untuk memulai latihan</p>
+      <div class="inline-flex items-center gap-1.5 bg-yellow-100 dark:bg-green-900/30 text-yellow-800 dark:text-green-200 px-4 py-1.5 rounded-full text-sm font-bold animate-pulse-subtle">
+        <ion-icon name="star" class="text-lg text-yellow-500 dark:text-green-400"></ion-icon>
+        <span>Skor: {{ totalScore }}/80</span>
+      </div>
+    </div>
+    <div class="grid grid-cols-5 gap-2 max-w-[450px] mx-auto">
+      <div *ngFor="let level of levels; let i = index"
+        (click)="startLevel(level)"
+        class="flex flex-col items-center justify-center gap-0.5 p-3 rounded-xl min-h-[72px] cursor-pointer transition-all duration-250 active:scale-[0.93] animate-scale-in"
+        [style.animation-delay]="(i * 50) + 'ms'"
+        [class.bg-white]="level.status === 'unlocked' || level.status === 'locked'"
+        [class.dark:bg-gray-800]="level.status === 'unlocked' || level.status === 'locked'"
+        [class.shadow-sm]="level.status === 'unlocked' || level.status === 'locked'"
+        [class.border-2]="level.status === 'unlocked' || level.status === 'correct' || level.status === 'wrong'"
+        [class.border-gold-500]="level.status === 'unlocked'"
+        [class.border-green-500]="level.status === 'correct'"
+        [class.border-red-500]="level.status === 'wrong'"
+        [class.bg-green-50]="level.status === 'correct'"
+        [class.dark-bg-green-900]="level.status === 'correct'"
+        [class.bg-red-50]="level.status === 'wrong'"
+        [class.dark-bg-red-900]="level.status === 'wrong'"
+        [class.bg-slate-100]="level.status === 'locked'"
+        [class.dark:bg-gray-700]="level.status === 'locked'"
+        [class.opacity-70]="level.status === 'locked'"
+        [class.cursor-not-allowed]="level.status === 'locked'">
+        <div class="text-xl">
+          <ion-icon *ngIf="level.status === 'locked'" name="lock-closed-outline" class="text-slate-400"></ion-icon>
+          <ion-icon *ngIf="level.status === 'unlocked'" name="play-outline" class="text-gold-500"></ion-icon>
+          <ion-icon *ngIf="level.status === 'correct'" name="checkmark-circle" class="text-green-500"></ion-icon>
+          <ion-icon *ngIf="level.status === 'wrong'" name="close-circle" class="text-red-500"></ion-icon>
+        </div>
+        <span class="text-sm font-extrabold"
+          [class.text-gold-500]="level.status === 'unlocked'"
+          [class.text-green-700]="level.status === 'correct'"
+          [class.dark:text-green-400]="level.status === 'correct'"
+          [class.text-red-700]="level.status === 'wrong'"
+          [class.dark:text-red-400]="level.status === 'wrong'"
+          [class.text-slate-400]="level.status === 'locked'"
+          [class.text-slate-900]="level.status !== 'unlocked' && level.status !== 'correct' && level.status !== 'wrong'">
+          {{ level.id }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="px-4 py-5 max-w-[500px] mx-auto animate-fade-in-up" *ngIf="view === 'quiz' && currentLevel">
+    <div class="bg-white dark:bg-gray-800 rounded-2xl px-5 py-7 pb-5 shadow-sm dark:shadow-md mb-5">
+      <div class="text-[11px] font-semibold text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-4">Level {{ currentLevel.id }} — {{ currentLevel.title }}</div>
+      <div class="flex items-center gap-3 mb-2">
+        <ion-icon name="volume-high-outline" (click)="playArabic(currentLevel.soal.soal)"
+          class="text-2xl text-gold-500 dark:text-green-400 cursor-pointer shrink-0 p-1.5 rounded-full hover:bg-gold-500/10 transition-all active:scale-90"></ion-icon>
+        <span class="text-2xl font-bold text-slate-900 dark:text-gray-100 leading-relaxed direction-rtl font-arabic">{{ currentLevel.soal.soal }}</span>
+      </div>
+      <div class="text-xs text-slate-400 dark:text-gray-500 mt-1">Pilih arti yang tepat!</div>
+    </div>
+
+    <div class="flex flex-col gap-2.5">
+      <div *ngFor="let opt of ['A','B','C','D']; let i = index"
+        (click)="pilihJawaban(opt)"
+        class="flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-medium cursor-pointer transition-all active:scale-[0.98] shadow-sm animate-fade-in-left"
+        [style.animation-delay]="(i * 80 + 100) + 'ms'"
+        [class.bg-white]="!touchedAnswers[opt]"
+        [class.dark:bg-gray-800]="!touchedAnswers[opt]"
+        [style.--bg-color]="getWarna(opt)"
+        [class]="touchedAnswers[opt] === 'correct' ? 'bg-green-50 dark:bg-green-900/20' : touchedAnswers[opt] === 'wrong' ? 'bg-red-50 dark:bg-red-900/20' : ''">
+        <ion-icon [name]="getIcon(opt)"
+          class="text-2xl"
+          [class.text-green-500]="touchedAnswers[opt] === 'correct'"
+          [class.text-red-500]="touchedAnswers[opt] === 'wrong'"
+          [class.text-slate-400]="!touchedAnswers[opt]">
+        </ion-icon>
+        <span class="text-slate-700 dark:text-gray-200">{{ opt }}. {{ currentLevel.soal[opt] }}</span>
+      </div>
+    </div>
+  </div>
+</ion-content>

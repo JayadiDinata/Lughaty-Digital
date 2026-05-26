@@ -1,0 +1,169 @@
+<ion-menu contentId="main-content" side="start">
+  <ion-header mode="md">
+    <ion-toolbar class="bg-white dark:bg-gray-800">
+      <ion-title class="text-gold-500 dark:text-green-400 font-bold text-center">Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="[--background:#f8fafc] dark:[--background:#0f172a]">
+    <div class="text-center px-4 py-6 border-b border-slate-200 dark:border-gray-700 mb-3">
+      <div class="w-16 h-16 rounded-full mx-auto mb-3 overflow-hidden border-2 border-gold-400 dark:border-green-500 shadow-sm">
+        <img [src]="avatarSrc" alt="avatar" class="w-full h-full object-cover" />
+      </div>
+      <h3 class="text-lg font-bold text-slate-800 dark:text-gray-100 mb-1">{{ username }}</h3>
+      <p *ngIf="isLoggedIn" class="text-xs text-slate-500 dark:text-gray-400">{{ supabase.currentUser?.email }}</p>
+      <p *ngIf="!isLoggedIn" routerLink="/login" routerDirection="root"
+         class="text-xs font-semibold text-gold-500 dark:text-green-400 cursor-pointer">Login untuk mengakses fitur</p>
+    </div>
+
+    <div class="px-3 space-y-1 animate-fade-in-left">
+      <button (click)="toggleAbout()"
+        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-700 dark:text-gray-200 hover:bg-slate-100 dark:hover:bg-gray-700 transition-all">
+        <ion-icon name="information-circle-outline" class="text-xl text-slate-400 dark:text-gray-400"></ion-icon>
+        <span class="flex-1 text-left">Tentang Aplikasi</span>
+        <ion-icon [name]="showAbout ? 'chevron-up-outline' : 'chevron-down-outline'" class="text-slate-400"></ion-icon>
+      </button>
+
+      <div *ngIf="showAbout" class="px-1 space-y-2 mb-2">
+        <div class="bg-slate-100 dark:bg-gray-700 rounded-xl p-3.5">
+          <h2 class="text-sm font-bold text-gold-500 dark:text-green-400 mb-2">Lughaty Digital</h2>
+          <p class="text-xs text-slate-600 dark:text-gray-300 leading-relaxed">Pengembangan Bahan Ajar Bahasa Arab Interaktif sebagai Media Komunikasi Dakwah Digital.</p>
+        </div>
+        <div class="bg-slate-100 dark:bg-gray-700 rounded-xl p-3.5">
+          <h2 class="text-sm font-bold text-gold-500 dark:text-green-400 mb-2">Teknologi</h2>
+          <div class="space-y-1.5">
+            <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-300"><ion-icon name="code-slash-outline" class="text-gold-500 dark:text-green-400 shrink-0"></ion-icon><span>Ionic 7 + Angular 17</span></div>
+            <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-300"><ion-icon name="server-outline" class="text-gold-500 dark:text-green-400 shrink-0"></ion-icon><span>Supabase Database</span></div>
+            <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-300"><ion-icon name="phone-portrait-outline" class="text-gold-500 dark:text-green-400 shrink-0"></ion-icon><span>Capacitor 5</span></div>
+            <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-300"><ion-icon name="flame-outline" class="text-gold-500 dark:text-green-400 shrink-0"></ion-icon><span>Axios &amp; Swiper</span></div>
+          </div>
+        </div>
+        <div class="bg-slate-100 dark:bg-gray-700 rounded-xl p-3.5">
+          <h2 class="text-sm font-bold text-gold-500 dark:text-green-400 mb-2">Fitur</h2>
+          <div class="space-y-1.5">
+            <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-300"><ion-icon name="headset-outline" class="text-gold-500 dark:text-green-400 shrink-0"></ion-icon><span>Al-Istima - Mendengar</span></div>
+            <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-300"><ion-icon name="chatbubbles-outline" class="text-gold-500 dark:text-green-400 shrink-0"></ion-icon><span>Al-Kalam - Berbicara</span></div>
+            <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-300"><ion-icon name="help-outline" class="text-gold-500 dark:text-green-400 shrink-0"></ion-icon><span>Al-Qiroah - Membaca</span></div>
+            <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-300"><ion-icon name="create-outline" class="text-gold-500 dark:text-green-400 shrink-0"></ion-icon><span>Al-Kitabah - Menulis</span></div>
+          </div>
+        </div>
+        <div class="bg-slate-100 dark:bg-gray-700 rounded-xl p-3.5">
+          <h2 class="text-sm font-bold text-gold-500 dark:text-green-400 mb-2">Pengembang</h2>
+          <p class="text-xs text-slate-600 dark:text-gray-300 mb-1">Mahasiswa Universitas Ibn Khaldun (UIKA) Bogor</p>
+          <p class="text-xs text-slate-600 dark:text-gray-300">Fakultas Agama Islam - Pendidikan Bahasa Arab</p>
+          <p class="text-[11px] text-slate-400 dark:text-gray-500 mt-1">Versi 1.0.0</p>
+        </div>
+      </div>
+
+      <button (click)="toggleDarkMode()"
+        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-700 dark:text-gray-200 hover:bg-slate-100 dark:hover:bg-gray-700 transition-all">
+        <ion-icon [name]="darkModeIcon" class="text-xl text-slate-400 dark:text-gray-400"></ion-icon>
+        <span>{{ darkModeLabel }}</span>
+      </button>
+
+      <button routerLink="/login" routerDirection="root"
+        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-700 dark:text-gray-200 hover:bg-slate-100 dark:hover:bg-gray-700 transition-all">
+        <ion-icon name="log-out-outline" class="text-xl text-slate-400 dark:text-gray-400"></ion-icon>
+        <span>Keluar</span>
+      </button>
+    </div>
+  </ion-content>
+</ion-menu>
+
+<div class="ion-page" id="main-content">
+  <ion-header mode="md">
+    <ion-toolbar class="bg-white dark:bg-gray-800 border-b border-slate-200 dark:border-gray-700">
+      <ion-buttons slot="start">
+        <ion-button (click)="openMenu()">
+          <ion-icon name="menu-outline" slot="icon-only" class="text-slate-600 dark:text-gray-300"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title class="text-gold-500 dark:text-green-400 font-bold text-lg text-center">Lughaty Digital</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="toggleDarkMode()">
+          <ion-icon [name]="darkModeIcon" slot="icon-only" class="text-slate-600 dark:text-gray-300"></ion-icon>
+        </ion-button>
+        <ion-button routerLink="/login" routerDirection="root">
+          <ion-icon name="log-out-outline" slot="icon-only" class="text-slate-600 dark:text-gray-300"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="[--background:#f5f7fa] dark:[--background:#0f172a]">
+    <!-- Hero Card -->
+    <div class="mx-4 mt-4 bg-gradient-to-br from-gold-500 to-gold-400 dark:from-green-700 dark:to-green-600 rounded-2xl p-7 text-center text-white shadow-lg animate-fade-in-up">
+      <div class="w-16 h-16 rounded-full mx-auto mb-3 overflow-hidden border-[3px] border-white/50 shadow-md">
+        <img [src]="avatarSrc" alt="avatar" class="w-full h-full object-cover" />
+      </div>
+      <p class="text-lg font-arabic mb-0.5">{{ arabicGreeting }}</p>
+      <h2 class="text-xl font-extrabold tracking-tight mb-1">{{ username }}</h2>
+      <div class="flex justify-center gap-3 mb-3">
+        <span class="text-xs font-bold bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full">Hari ke-{{ progress.daysUsed$ | async }}</span>
+      </div>
+      <p class="text-sm text-white/80 mb-4">Semangat belajar hari ini</p>
+      <div class="flex justify-center gap-5">
+        <div class="flex items-center gap-1.5 text-sm font-bold bg-white/20 backdrop-blur-sm px-3.5 py-1.5 rounded-full">
+          <ion-icon name="flame" class="text-base"></ion-icon>
+          <span>{{ progress.streak$ | async }} يوم</span>
+        </div>
+        <div class="flex items-center gap-1.5 text-sm font-bold bg-white/20 backdrop-blur-sm px-3.5 py-1.5 rounded-full">
+          <ion-icon name="star" class="text-base"></ion-icon>
+          <span>{{ progress.xp$ | async }} XP</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Daily Goal -->
+    <div class="flex justify-between items-center px-5 pt-5 pb-2 text-base font-bold text-slate-800 dark:text-gray-100 animate-fade-in-up" style="animation-delay: 100ms">
+      <span>Target Harian</span>
+      <span class="text-xs font-semibold text-gold-500 dark:text-green-400 bg-gold-500/10 dark:bg-green-700/20 px-2.5 py-1 rounded-full">{{ progress.dailyXp$ | async }}/{{ progress.dailyGoal }} XP</span>
+    </div>
+
+    <div class="mx-5 mb-2 bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm dark:shadow-md animate-fade-in-up" style="animation-delay: 150ms">
+      <div class="h-2.5 bg-slate-100 dark:bg-gray-700 rounded-full overflow-hidden">
+        <div class="h-full bg-gradient-to-r from-gold-500 to-gold-400 dark:from-green-700 dark:to-green-600 rounded-full transition-all duration-500" [style.width.%]="progress.xpPercent"></div>
+      </div>
+    </div>
+
+    <!-- Skill List -->
+    <div class="flex justify-between items-center px-5 pt-3 pb-2 text-base font-bold text-slate-800 dark:text-gray-100 animate-fade-in-up" style="animation-delay: 200ms">
+      <span>Pilih Pelajaran</span>
+    </div>
+
+    <div class="px-4 pb-6 space-y-2.5">
+      <div *ngFor="let skill of progress.skills$ | async; let i = index"
+        [routerLink]="'/tabs/tab' + (i + 1)" routerDirection="root"
+        class="flex items-center gap-3.5 bg-white dark:bg-gray-800 rounded-2xl p-3.5 shadow-sm dark:shadow-md border border-slate-100 dark:border-gray-700 active:scale-[0.98] transition-all cursor-pointer animate-fade-in-up"
+        [style.animation-delay]="(i * 100 + 250) + 'ms'">
+
+        <div class="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center"
+          [class.bg-gradient-to-br]="!skill.completed"
+          [class.from-gold-500]="!skill.completed"
+          [class.to-gold-400]="!skill.completed"
+          [class.dark:from-green-700]="!skill.completed"
+          [class.dark:to-green-600]="!skill.completed"
+          [class.bg-green-700]="skill.completed">
+          <ion-icon [name]="i===0?'headset-outline':i===1?'chatbubbles-outline':i===2?'book-outline':'create-outline'" class="text-xl text-white"></ion-icon>
+        </div>
+
+        <div class="flex-1 min-w-0">
+          <div class="flex justify-between items-center mb-0.5">
+            <span class="text-sm font-bold text-slate-800 dark:text-gray-100">{{ skill.name }}</span>
+            <span class="text-[11px] font-bold px-2.5 py-1 rounded-lg shrink-0 text-white"
+              [class.bg-green-700]="skill.completed"
+              [class.bg-gold-500]="!skill.completed">
+              <span *ngIf="skill.completed">Selesai</span>
+              <span *ngIf="!skill.completed">Mulai</span>
+            </span>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="flex-1 h-1 bg-slate-100 dark:bg-gray-700 rounded-full overflow-hidden">
+              <div class="h-full bg-gradient-to-r from-gold-500 to-gold-400 dark:from-green-700 dark:to-green-600 rounded-full transition-all duration-500" [style.width.%]="skill.progress"></div>
+            </div>
+            <span class="text-[11px] font-semibold text-slate-400 dark:text-gray-500 min-w-[30px] text-right">{{ skill.progress }}%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</div>
