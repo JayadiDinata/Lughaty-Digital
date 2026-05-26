@@ -8,6 +8,11 @@ export interface UserData {
   email: string;
 }
 
+export interface SavedAccount {
+  email: string;
+  username: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -16,6 +21,7 @@ export class SupabaseService {
   private _currentUser: UserData | null = null;
   private readonly SESSION_KEY = 'lughaty_session';
   private readonly EMAIL_KEY = 'lughaty_saved_email';
+  private readonly ACCOUNTS_KEY = 'lughaty_accounts';
 
   constructor() {
     this.supabase = createClient(environment.supabase.url, environment.supabase.anonKey);
@@ -55,6 +61,28 @@ export class SupabaseService {
   /** Clears full user session (on logout) */
   clearSession(): void {
     localStorage.removeItem(this.SESSION_KEY);
+  }
+
+  /** Returns list of saved accounts (email + username) for the account picker */
+  getSavedAccounts(): SavedAccount[] {
+    try {
+      const raw = localStorage.getItem(this.ACCOUNTS_KEY);
+      if (raw) return JSON.parse(raw) as SavedAccount[];
+    } catch {}
+    return [];
+  }
+
+  /** Save or move account to top of list (max 5) */
+  saveAccount(email: string, username: string): void {
+    const accounts = this.getSavedAccounts().filter(a => a.email !== email);
+    accounts.unshift({ email, username });
+    localStorage.setItem(this.ACCOUNTS_KEY, JSON.stringify(accounts.slice(0, 5)));
+  }
+
+  /** Remove a specific saved account */
+  removeAccount(email: string): void {
+    const accounts = this.getSavedAccounts().filter(a => a.email !== email);
+    localStorage.setItem(this.ACCOUNTS_KEY, JSON.stringify(accounts));
   }
 
   async register(username: string, email: string, password: string) {

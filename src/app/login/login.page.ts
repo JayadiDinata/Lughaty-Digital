@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
-import { SupabaseService, UserData } from '../supabase.service';
+import { SupabaseService, UserData, SavedAccount } from '../supabase.service';
 import { ThemeService } from '../theme.service';
 
 @Component({
@@ -19,11 +19,13 @@ export class LoginPage implements OnInit {
   showPassword: boolean = false;
   isLogin: boolean = true;
   rememberMe: boolean = true;
+  savedAccounts: SavedAccount[] = [];
+  selectedAccount: SavedAccount | null = null;
 
   ngOnInit() {
-    const { savedEmail } = this.supabase.loadSession();
-    if (savedEmail) {
-      this.email = savedEmail;
+    this.savedAccounts = this.supabase.getSavedAccounts();
+    if (this.savedAccounts.length > 0 && !this.email) {
+      this.selectAccount(this.savedAccounts[0]);
     }
   }
 
@@ -36,6 +38,45 @@ export class LoginPage implements OnInit {
   showPass1: boolean = false;
   showPass2: boolean = false;
   loading: boolean = false;
+
+  accountClasses(acc: SavedAccount): string {
+    const base = 'w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-medium transition-all text-left cursor-pointer hover:bg-slate-100 dark:hover:bg-gray-700';
+    if (this.selectedAccount?.email === acc.email) {
+      return base + ' bg-gold-50 dark:bg-green-900/30 ring-2 ring-gold-500 dark:ring-green-500';
+    }
+    return base + ' bg-slate-50 dark:bg-gray-700/50';
+  }
+
+  selectAccount(account: SavedAccount) {
+    this.selectedAccount = account;
+    this.email = account.email;
+    this.password = '';
+    setTimeout(() => {
+      const el = document.querySelector<HTMLInputElement>('#passwordInput');
+      el?.focus();
+    }, 100);
+  }
+
+  selectOtherAccount() {
+    this.selectedAccount = null;
+    this.email = '';
+    this.password = '';
+    setTimeout(() => {
+      const el = document.querySelector<HTMLInputElement>('#emailInput');
+      el?.focus();
+    }, 100);
+  }
+
+  async removeSaved(email: string, event: Event) {
+    event.stopPropagation();
+    this.supabase.removeAccount(email);
+    this.savedAccounts = this.supabase.getSavedAccounts();
+    if (this.selectedAccount?.email === email) {
+      this.selectedAccount = null;
+      this.email = '';
+      this.password = '';
+    }
+  }
 
   togglePasswordVisibility(passwordNumber: number) {
     if (passwordNumber === 1) {
@@ -68,6 +109,7 @@ export class LoginPage implements OnInit {
         const user: UserData = { id: data.id, username: data.username, email: data.email };
         this.supabase.setCurrentUser(user);
         this.supabase.saveEmail(this.email);
+        this.supabase.saveAccount(user.email, user.username);
         if (this.rememberMe) {
           this.supabase.saveUserSession(user);
         }
