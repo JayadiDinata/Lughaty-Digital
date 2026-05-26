@@ -201,7 +201,8 @@ export class Tab3Page implements OnDestroy {
 
   private playSound(type: 'correct' | 'wrong') {
     try {
-      const ctx = new AudioContext();
+      const ctx = this.tts.getAudioContext();
+      if (!ctx) return;
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.connect(gain);
