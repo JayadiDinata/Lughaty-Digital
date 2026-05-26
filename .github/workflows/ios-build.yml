@@ -43,5 +43,5 @@ jobs:
       - name: Upload IPA
         uses: actions/upload-artifact@v4
         with:
-          name: Lughaty_Digital.ipa
+          name: Lughaty-Digital.ipa
           path: ios/App/build/Build/Products/Release-iphoneos/*.app

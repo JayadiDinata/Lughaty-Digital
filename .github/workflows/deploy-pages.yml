@@ -29,7 +29,7 @@ jobs:
         run: npm ci
 
       - name: Build Angular
-        run: npx ng build --configuration=production --base-href=/Lughaty_Digital/
+        run: npx ng build --configuration=production --base-href=/Lughaty-Digital/
 
       - name: Copy 404.html for SPA routing
         run: cp www/index.html www/404.html
