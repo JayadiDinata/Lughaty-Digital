@@ -32,11 +32,6 @@ export class TtsService {
     if (!text) return;
     await this.stop();
 
-    // iOS cancel is async — small delay to let the engine settle
-    if (this.isIOSWeb) {
-      await new Promise(r => setTimeout(r, 100));
-    }
-
     // iOS native (Capacitor app): AVSpeechSynthesizer
     if (this.isNative && this.isIOS) {
       try {
@@ -65,7 +60,7 @@ export class TtsService {
         utterance.onend = () => resolve();
         utterance.onerror = () => resolve();
         window.speechSynthesis.speak(utterance);
-        setTimeout(() => resolve(), 10000);
+        setTimeout(() => resolve(), 5000);
       });
     }
 
@@ -94,5 +89,11 @@ export class TtsService {
     if (this.audioEl) { this.audioEl.pause(); this.audioEl.src = ''; this.audioEl = null; }
     window.speechSynthesis.cancel();
     if (this.isNative) { try { await TextToSpeech.stop(); } catch {} }
+    // iOS cancel is async — poll until done (usually <50ms)
+    if (this.isIOSWeb) {
+      while (window.speechSynthesis.speaking) {
+        await new Promise(r => setTimeout(r, 10));
+      }
+    }
   }
 }
