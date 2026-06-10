@@ -1,9 +1,10 @@
 const express = require('express');
 const cors = require('cors');
+const serverless = require('serverless-http');
 const { Pool } = require('pg');
 
 const pool = new Pool({
-  connectionString: 'postgresql://neondb_owner:npg_c92avTimgzkB@ep-winter-queen-aqukbdlw-pooler.c-8.us-east-1.aws.neon.tech/neondb?sslmode=verify-full',
+  connectionString: process.env.DATABASE_URL || 'postgresql://neondb_owner:npg_c92avTimgzkB@ep-winter-queen-aqukbdlw-pooler.c-8.us-east-1.aws.neon.tech/neondb?sslmode=verify-full',
   ssl: { rejectUnauthorized: false },
 });
 
@@ -54,8 +55,7 @@ app.get('/api/users/count', async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 3000;
-
+// Auto-create table on cold start
 pool.query(`
   CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
@@ -65,10 +65,18 @@ pool.query(`
   )
 `).then(() => {
   console.log('Table "users" ready');
+}).catch(err => {
+  console.error('Failed to create table:', err);
+});
+
+// Local dev: listen on port
+if (!process.env.VERCEL) {
+  const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   });
-}).catch(err => {
-  console.error('Failed to create table:', err);
-  process.exit(1);
-});
+}
+
+// Vercel: export handler
+module.exports = app;
+module.exports.handler = serverless(app);

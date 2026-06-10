@@ -74,3 +74,5 @@ Thumbs.db
 android/app/uika-keystore.jks
 android/key.properties
 android/app/build/outputs/
+
+.vercel
