@@ -59,6 +59,9 @@ app.get('/api/users/count', async (req, res) => {
   }
 });
 
+// YouTube RSS proxy — disabled because YouTube blocks Vercel IPs
+// Channel uploads are embedded directly from the frontend using the playlist embed.
+
 // Auto-create table on cold start
 pool.query(`
   CREATE TABLE IF NOT EXISTS users (

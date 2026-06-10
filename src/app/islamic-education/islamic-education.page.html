@@ -24,68 +24,35 @@
         <ion-icon name="school-outline" class="text-3xl text-white"></ion-icon>
       </div>
       <h1 class="text-xl font-extrabold text-slate-800 dark:text-gray-100">Pendidikan Islam</h1>
-      <p class="text-xs text-slate-500 dark:text-gray-400 mt-1">Video edukasi islami pilihan untuk menambah ilmu</p>
+      <p class="text-xs text-slate-500 dark:text-gray-400 mt-1">Media Islam Jakarta</p>
     </div>
 
-    <!-- Category Chips -->
-    <div class="flex flex-wrap gap-2 mb-5 animate-fade-in-up" style="animation-delay: 80ms">
-      <button (click)="filterByCategory('')"
-        class="px-4 py-2 text-xs font-bold rounded-full transition-all"
-        [class.bg-gold-500]="!selectedCategory"
-        [class.text-white]="!selectedCategory"
-        [class.bg-slate-200]="selectedCategory"
-        [class.text-slate-600]="selectedCategory"
-        [class.dark:bg-gray-700]="selectedCategory"
-        [class.dark:text-gray-300]="selectedCategory">
-        Semua
-      </button>
-      <button *ngFor="let cat of categories" (click)="filterByCategory(cat)"
-        class="px-4 py-2 text-xs font-bold rounded-full transition-all"
-        [class.bg-gold-500]="selectedCategory === cat"
-        [class.text-white]="selectedCategory === cat"
-        [class.bg-slate-200]="selectedCategory !== cat"
-        [class.text-slate-600]="selectedCategory !== cat"
-        [class.dark:bg-gray-700]="selectedCategory !== cat"
-        [class.dark:text-gray-300]="selectedCategory !== cat">
-        {{ cat }}
-      </button>
-    </div>
-
-    <!-- Videos Grid -->
-    <div class="space-y-4 animate-fade-in-up" style="animation-delay: 120ms">
-      <div *ngFor="let video of videos; let i = index"
-        class="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm dark:shadow-md animate-fade-in-up"
-        [style.animation-delay]="(i * 80) + 'ms'">
-        <div class="relative pb-[56.25%] bg-slate-900">
-          <iframe [src]="'https://www.youtube.com/embed/' + video.id + '?rel=0' | safeUrl"
-            class="absolute inset-0 w-full h-full"
-            frameborder="0"
-            allowfullscreen>
-          </iframe>
-        </div>
-        <div class="p-4">
-          <h3 class="text-sm font-bold text-slate-800 dark:text-gray-100 mb-1 line-clamp-2">{{ video.title }}</h3>
-          <div class="flex items-center justify-between">
-            <span class="text-xs text-slate-400 dark:text-gray-500">
-              <ion-icon name="person-outline" class="mr-1 align-text-bottom"></ion-icon>
-              {{ video.channel }}
-            </span>
-            <span class="text-[10px] font-semibold px-2 py-1 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300">
-              {{ video.category }}
-            </span>
-          </div>
-        </div>
+    <!-- Channel Embed -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm dark:shadow-md animate-fade-in-up" style="animation-delay: 80ms">
+      <div class="relative pb-[56.25%] bg-slate-900">
+        <iframe [src]="playlistUrl | safeUrl"
+          class="absolute inset-0 w-full h-full"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen>
+        </iframe>
       </div>
-    </div>
-
-    <div *ngIf="videos.length === 0" class="text-center py-12">
-      <ion-icon name="videocam-off-outline" class="text-5xl text-slate-300 dark:text-gray-600 mb-3"></ion-icon>
-      <p class="text-sm text-slate-400 dark:text-gray-500">Tidak ada video untuk kategori ini</p>
+      <div class="p-4">
+        <h3 class="text-sm font-bold text-slate-800 dark:text-gray-100 mb-1">Media Islam Jakarta</h3>
+        <p class="text-xs text-slate-500 dark:text-gray-400 leading-relaxed">
+          Channel dakwah Islam yang menyajikan konten-konten edukatif seputar ajaran Islam, kisah inspiratif, dan kajian ilmu syar'i.
+        </p>
+        <a href="https://www.youtube.com/@mediaislamjakarta" target="_blank"
+          class="inline-flex items-center gap-1.5 mt-3 px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-full transition-all">
+          <ion-icon name="logo-youtube" class="text-base"></ion-icon>
+          Kunjungi Channel
+        </a>
+      </div>
     </div>
 
     <!-- Footer Note -->
     <div class="text-center mt-6 mb-4 text-[10px] text-slate-400 dark:text-gray-600">
-      Sumber video dari YouTube. Klik untuk menonton langsung.
+      Klik playlist di sudut kiri atas video untuk melihat semua video
     </div>
   </div>
 </ion-content>
