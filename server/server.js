@@ -12,6 +12,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.get('/', (req, res) => {
+  res.json({ status: 'ok', message: 'Lughaty API server', endpoints: ['POST /api/register', 'POST /api/login', 'GET /api/users/count'] });
+});
+
 app.post('/api/register', async (req, res) => {
   const { username, email, password } = req.body;
   try {
