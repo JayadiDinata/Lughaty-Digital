@@ -18,17 +18,17 @@
 
 <ion-content class="[--background:#f5f7fa] dark:[--background:#0f172a]">
   <div class="px-4 py-5 max-w-[600px] mx-auto">
-    <div class="text-center mb-5 animate-fade-in-up">
+    <div class="text-center mb-4 animate-fade-in-up">
       <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 dark:from-sky-600 dark:to-blue-700 flex items-center justify-center mx-auto mb-3 shadow-lg">
         <ion-icon name="search-outline" class="text-3xl text-white"></ion-icon>
       </div>
       <h1 class="text-xl font-extrabold text-slate-800 dark:text-gray-100">Pencarian</h1>
-      <p class="text-xs text-slate-500 dark:text-gray-400 mt-1">Cari materi penyiaran dan dakwah Islam</p>
+      <p class="text-xs text-slate-500 dark:text-gray-400 mt-1">Cari video YouTube, artikel Islam, lokasi masjid, dan konten aplikasi</p>
     </div>
 
-    <div class="relative mb-5 animate-fade-in-up" style="animation-delay: 80ms">
+    <div class="relative mb-3 animate-fade-in-up" style="animation-delay: 80ms">
       <ion-icon name="search-outline" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-gray-500 text-lg pointer-events-none"></ion-icon>
-      <input [(ngModel)]="query" (keyup.enter)="search()" placeholder="Cari..."
+      <input [(ngModel)]="query" (keyup.enter)="search()" placeholder="Cari video, artikel, masjid..."
         class="w-full pl-10 pr-4 py-3 bg-white dark:bg-gray-800 rounded-xl text-sm text-slate-800 dark:text-gray-200 border border-slate-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-sky-400 dark:focus:ring-blue-500 transition-all">
       <button (click)="search()"
         class="absolute right-1.5 top-1/2 -translate-y-1/2 px-4 py-1.5 bg-sky-500 hover:bg-sky-600 dark:bg-blue-600 dark:hover:bg-blue-700 text-white text-xs font-bold rounded-lg transition-all">
@@ -36,9 +36,38 @@
       </button>
     </div>
 
-    <div *ngIf="!searched" class="text-center py-12 text-slate-400 dark:text-gray-500 animate-fade-in-up" style="animation-delay: 120ms">
+    <div class="flex gap-2 mb-4 overflow-x-auto pb-1 animate-fade-in-up" style="animation-delay: 100ms">
+      <button (click)="setFilter('all')"
+        class="px-3 py-1.5 text-xs font-bold rounded-full whitespace-nowrap transition-all"
+        [ngClass]="activeFilter==='all' ? 'bg-sky-500 text-white' : 'bg-slate-200 dark:bg-gray-700 text-slate-600 dark:text-gray-300'">
+        Semua
+      </button>
+      <button (click)="setFilter('app')"
+        class="px-3 py-1.5 text-xs font-bold rounded-full whitespace-nowrap transition-all"
+        [ngClass]="activeFilter==='app' ? 'bg-sky-500 text-white' : 'bg-slate-200 dark:bg-gray-700 text-slate-600 dark:text-gray-300'">
+        Aplikasi
+      </button>
+      <button (click)="setFilter('youtube')"
+        class="px-3 py-1.5 text-xs font-bold rounded-full whitespace-nowrap transition-all"
+        [ngClass]="activeFilter==='youtube' ? 'bg-red-500 text-white' : 'bg-slate-200 dark:bg-gray-700 text-slate-600 dark:text-gray-300'">
+        YouTube
+      </button>
+      <button (click)="setFilter('post')"
+        class="px-3 py-1.5 text-xs font-bold rounded-full whitespace-nowrap transition-all"
+        [ngClass]="activeFilter==='post' ? 'bg-emerald-500 text-white' : 'bg-slate-200 dark:bg-gray-700 text-slate-600 dark:text-gray-300'">
+        Postingan
+      </button>
+      <button (click)="setFilter('mosque')"
+        class="px-3 py-1.5 text-xs font-bold rounded-full whitespace-nowrap transition-all"
+        [ngClass]="activeFilter==='mosque' ? 'bg-amber-500 text-white' : 'bg-slate-200 dark:bg-gray-700 text-slate-600 dark:text-gray-300'">
+        Masjid
+      </button>
+    </div>
+
+    <div *ngIf="!searched" class="text-center py-8 text-slate-400 dark:text-gray-500 animate-fade-in-up" style="animation-delay: 120ms">
       <ion-icon name="arrow-up-outline" class="text-3xl mb-2"></ion-icon>
       <p class="text-sm">Ketik kata kunci lalu tekan Cari</p>
+      <p class="text-xs mt-1">Contoh: tauhid, puasa, istiqlal, hadits, UAS</p>
     </div>
 
     <div *ngIf="searched && results.length === 0" class="text-center py-12 animate-fade-in-up">
@@ -48,15 +77,32 @@
 
     <div *ngFor="let item of results; let i = index" (click)="goTo(item)"
       class="bg-white dark:bg-gray-800 rounded-2xl p-4 mb-3 shadow-sm dark:shadow-md flex items-center gap-3 cursor-pointer hover:bg-slate-50 dark:hover:bg-gray-750 transition-all animate-fade-in-up"
-      [style.animation-delay]="(i * 60) + 'ms'">
-      <div class="w-10 h-10 rounded-xl bg-sky-100 dark:bg-sky-900/30 flex items-center justify-center shrink-0">
-        <ion-icon [name]="item.icon" class="text-lg text-sky-600 dark:text-sky-400"></ion-icon>
+      [style.animation-delay]="(i * 40) + 'ms'">
+      <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" [ngClass]="iconBg(item.type)">
+        <ion-icon [name]="item.icon" class="text-lg"></ion-icon>
       </div>
       <div class="flex-1 min-w-0">
-        <h3 class="text-sm font-bold text-slate-800 dark:text-gray-100 truncate">{{ item.title }}</h3>
-        <p class="text-xs text-slate-500 dark:text-gray-400 truncate">{{ item.desc }}</p>
+        <div class="flex items-center gap-2">
+          <h3 class="text-sm font-bold text-slate-800 dark:text-gray-100 truncate">{{ item.title }}</h3>
+          <span class="text-[10px] font-semibold px-1.5 py-0.5 rounded-full shrink-0 whitespace-nowrap" [ngClass]="badgeStyle(item.type)">
+            {{ badgeLabel(item.type) }}
+          </span>
+        </div>
+        <p class="text-xs text-slate-500 dark:text-gray-400 truncate mt-0.5">{{ item.desc }}</p>
+        <p *ngIf="item.address" class="text-[10px] text-slate-400 dark:text-gray-500 truncate mt-0.5">
+          <ion-icon name="location-outline" class="text-[10px] -mt-0.5"></ion-icon> {{ item.address }}
+        </p>
       </div>
       <ion-icon name="chevron-forward-outline" class="text-slate-300 dark:text-gray-600 shrink-0"></ion-icon>
+    </div>
+
+    <div *ngIf="searched && activeFilter === 'mosque'" class="text-center mt-4 animate-fade-in-up">
+      <button (click)="cariMasjidTerdekat()"
+        class="inline-flex items-center gap-2 px-5 py-2.5 bg-amber-500 hover:bg-amber-600 text-white text-sm font-bold rounded-xl shadow-md transition-all">
+        <ion-icon name="navigate-outline"></ion-icon>
+        Cari Masjid Terdekat
+      </button>
+      <p class="text-[10px] text-slate-400 dark:text-gray-500 mt-2">Membuka Google Maps untuk mencari masjid di sekitar lokasi Anda</p>
     </div>
   </div>
 </ion-content>
