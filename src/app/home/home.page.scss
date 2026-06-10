@@ -2,7 +2,15 @@ ion-content {
   --background: #0f172a;
 }
 
+ion-menu ion-content {
+  --background: #0f172a;
+}
+
 body:not(.dark) ion-content {
+  --background: #f8fafc;
+}
+
+body:not(.dark) ion-menu ion-content {
   --background: #f8fafc;
 }
 
