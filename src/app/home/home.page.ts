@@ -12,6 +12,23 @@ import { ThemeService } from '../theme.service';
 export class HomePage {
   @ViewChild(IonMenu) menu: IonMenu;
   showAbout: boolean = false;
+  userCount: number = 0;
+
+  constructor(
+    public supabase: SupabaseService,
+    public theme: ThemeService,
+    private router: Router,
+  ) {
+    this.loadUserCount();
+  }
+
+  private async loadUserCount() {
+    try {
+      this.userCount = await this.supabase.countUsers();
+    } catch {
+      this.userCount = 0;
+    }
+  }
 
   menus = [
     { title: 'Al-Istima\'', icon: 'headset-outline', route: '/tabs/tab1', cardClass: 'card1' },
@@ -22,12 +39,6 @@ export class HomePage {
     { title: 'Sejarah Islam', icon: 'time-outline', route: '/islamic-history', cardClass: 'card6' },
     { title: 'Sunnah & Hadits', icon: 'bookmarks-outline', route: '/sunnah-hadith', cardClass: 'card7' },
   ];
-
-  constructor(
-    public supabase: SupabaseService,
-    public theme: ThemeService,
-    private router: Router,
-  ) {}
 
   get username(): string {
     return this.supabase.currentUser?.username || 'Pengunjung';

@@ -103,4 +103,12 @@ export class SupabaseService {
       .single();
     return { data, error };
   }
+
+  async countUsers(): Promise<number> {
+    const { count, error } = await this.supabase
+      .from('users')
+      .select('*', { count: 'exact', head: true });
+    if (error) throw error;
+    return count ?? 0;
+  }
 }
