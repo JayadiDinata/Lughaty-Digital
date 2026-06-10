@@ -26,6 +26,14 @@ export class LoginPage implements OnInit {
   showPasswordOnly: boolean = false;
 
   ngOnInit() {
+    this.loadSavedAccounts();
+  }
+
+  ionViewWillEnter() {
+    this.loadSavedAccounts();
+  }
+
+  loadSavedAccounts() {
     this.savedAccounts = this.supabase.getSavedAccounts();
     if (this.savedAccounts.length > 0) {
       this.showForm = false;
@@ -98,7 +106,7 @@ export class LoginPage implements OnInit {
 
   async login() {
     if (!this.email || !this.password) {
-      this.snackBar.open('Harap isi email dan password', 'Tutup', { duration: 3000 });
+      this.snackBar.open('Harap isi email dan password', 'Tutup', { duration: 3000, horizontalPosition: 'center' });
       return;
     }
 
@@ -106,17 +114,17 @@ export class LoginPage implements OnInit {
     try {
       const { data, error } = await this.supabase.login(this.email, this.password);
       if (error || !data) {
-        this.snackBar.open('Email atau password salah', 'Tutup', { duration: 4000 });
+        this.snackBar.open('Email atau password salah', 'Tutup', { duration: 4000, horizontalPosition: 'center' });
       } else {
         const user: UserData = { id: data.id, username: data.username, email: data.email };
         this.supabase.setCurrentUser(user);
         this.supabase.saveEmail(this.email);
 
-        this.snackBar.open('Login Berhasil, Selamat datang ' + data.username, 'Tutup', { duration: 3000 });
+        this.snackBar.open('Login Berhasil, Selamat datang ' + data.username, 'Tutup', { duration: 3000, horizontalPosition: 'center' });
 
         const isNew = !this.supabase.getSavedAccounts().some(a => a.email === user.email);
         if (isNew) {
-          const saveRef = this.snackBar.open('Simpan login pada perangkat ini?', 'Ya', { duration: 10000 });
+          const saveRef = this.snackBar.open('Simpan login pada perangkat ini?', 'Ya', { horizontalPosition: 'center' });
           saveRef.onAction().subscribe(() => {
             this.supabase.saveAccount(user.email, user.username);
             if (this.rememberMe) {
@@ -135,7 +143,7 @@ export class LoginPage implements OnInit {
         this.router.navigateByUrl('/tabs/home');
       }
     } catch (err: any) {
-      this.snackBar.open('Login Gagal: ' + (err.message || err), 'Tutup', { duration: 5000 });
+      this.snackBar.open('Login Gagal: ' + (err.message || err), 'Tutup', { duration: 5000, horizontalPosition: 'center' });
     } finally {
       this.loading = false;
     }
@@ -160,13 +168,13 @@ export class LoginPage implements OnInit {
 
   async addData() {
     if (this.username == '') {
-      this.snackBar.open('Harap isi username', 'Tutup', { duration: 3000 });
+      this.snackBar.open('Harap isi username', 'Tutup', { duration: 3000, horizontalPosition: 'center' });
     } else if (this.regEmail == '') {
-      this.snackBar.open('Harap isi email', 'Tutup', { duration: 3000 });
+      this.snackBar.open('Harap isi email', 'Tutup', { duration: 3000, horizontalPosition: 'center' });
     } else if (this.pass1 == '') {
-      this.snackBar.open('Harap isi password', 'Tutup', { duration: 3000 });
+      this.snackBar.open('Harap isi password', 'Tutup', { duration: 3000, horizontalPosition: 'center' });
     } else if (this.pass1 != this.pass2) {
-      this.snackBar.open('Password Tidak Sama', 'Tutup', { duration: 3000 });
+      this.snackBar.open('Password Tidak Sama', 'Tutup', { duration: 3000, horizontalPosition: 'center' });
     } else {
       this.loading = true;
       try {
@@ -182,9 +190,9 @@ export class LoginPage implements OnInit {
             this.email = this.regEmail;
             this.isLogin = true;
           }
-          this.snackBar.open('Registrasi Gagal: ' + msg, 'Tutup', { duration: 5000 });
+          this.snackBar.open('Registrasi Gagal: ' + msg, 'Tutup', { duration: 5000, horizontalPosition: 'center' });
         } else {
-          this.snackBar.open('Registrasi Berhasil, silakan login', 'Tutup', { duration: 4000 });
+          this.snackBar.open('Registrasi Berhasil, silakan login', 'Tutup', { duration: 4000, horizontalPosition: 'center' });
           this.email = this.regEmail;
           this.username = '';
           this.regEmail = '';
@@ -193,7 +201,7 @@ export class LoginPage implements OnInit {
           this.isLogin = true;
         }
       } catch (err: any) {
-        this.snackBar.open('Registrasi Gagal: ' + (err.message || err), 'Tutup', { duration: 5000 });
+        this.snackBar.open('Registrasi Gagal: ' + (err.message || err), 'Tutup', { duration: 5000, horizontalPosition: 'center' });
       } finally {
         this.loading = false;
       }

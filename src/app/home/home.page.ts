@@ -3,7 +3,6 @@ import { IonMenu } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { SupabaseService } from '../supabase.service';
 import { ThemeService } from '../theme.service';
-import { StorageService } from '../storage.service';
 
 @Component({
   selector: 'app-home',
@@ -14,15 +13,24 @@ export class HomePage {
   @ViewChild(IonMenu) menu: IonMenu;
   showAbout: boolean = false;
 
+  menus = [
+    { title: 'Al-Istima\'', icon: 'headset-outline', route: '/tabs/tab1', cardClass: 'card1' },
+    { title: 'Al-Kalam', icon: 'chatbubbles-outline', route: '/tabs/tab2', cardClass: 'card2' },
+    { title: 'Kuis Islam', icon: 'help-circle-outline', route: '/tabs/tab3', cardClass: 'card3' },
+    { title: 'Al-Kitabah', icon: 'create-outline', route: '/tabs/tab4', cardClass: 'card4' },
+    { title: 'Islamic Education', icon: 'school-outline', route: '/islamic-education', cardClass: 'card5' },
+    { title: 'Sejarah Islam', icon: 'time-outline', route: '/islamic-history', cardClass: 'card6' },
+    { title: 'Sunnah & Hadits', icon: 'bookmarks-outline', route: '/sunnah-hadith', cardClass: 'card7' },
+  ];
+
   constructor(
     public supabase: SupabaseService,
     public theme: ThemeService,
-    public progress: StorageService,
     private router: Router,
   ) {}
 
   get username(): string {
-    return this.supabase.currentUser?.username || 'Nama Pengguna';
+    return this.supabase.currentUser?.username || 'Pengunjung';
   }
 
   get isLoggedIn(): boolean {
@@ -36,15 +44,19 @@ export class HomePage {
     return 'https://ionicframework.com/docs/img/demos/avatar.svg';
   }
 
+  get greeting(): string {
+    const h = new Date().getHours();
+    if (h < 12) return 'Selamat Pagi';
+    if (h < 15) return 'Selamat Siang';
+    if (h < 18) return 'Selamat Sore';
+    return 'Selamat Malam';
+  }
+
   get arabicGreeting(): string {
     const h = new Date().getHours();
     if (h < 12) return 'صَبَاحَ الْخَيْرِ';
     if (h < 17) return 'نَهَارُكَ سَعِيدٌ';
     return 'مَسَاءَ الْخَيْرِ';
-  }
-
-  get arabicEncouragement(): string {
-    return 'أَكْمِلْ يَوْمَكَ بِالعِلْمِ';
   }
 
   openMenu() { this.menu.open(); }

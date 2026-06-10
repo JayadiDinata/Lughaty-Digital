@@ -29,9 +29,27 @@ export class TtsService {
     return this.audioCtx!;
   }
 
+  stopSynchronous(): void {
+    if (this.audioEl) {
+      try {
+        this.audioEl.pause();
+        this.audioEl.src = '';
+      } catch {}
+      this.audioEl = null;
+    }
+    try {
+      window.speechSynthesis.cancel();
+    } catch {}
+    if (this.isNative) {
+      try {
+        TextToSpeech.stop().catch(() => {});
+      } catch {}
+    }
+  }
+
   async speak(text: string, lang: string = 'en-US', _rate?: number): Promise<void> {
     if (!text) return;
-    await this.stop();
+    this.stopSynchronous();
 
     // ── Android native (APK) ──
     // Google TTS via Audio element is most reliable on Android WebView
@@ -122,13 +140,7 @@ export class TtsService {
   }
 
   async stop(): Promise<void> {
-    if (this.audioEl) {
-      this.audioEl.pause();
-      this.audioEl.src = '';
-      this.audioEl = null;
-    }
-    window.speechSynthesis.cancel();
-    if (this.isNative) { try { await TextToSpeech.stop(); } catch {} }
+    this.stopSynchronous();
     if (this.isIOSWeb) {
       while (window.speechSynthesis.speaking) {
         await new Promise(r => setTimeout(r, 10));

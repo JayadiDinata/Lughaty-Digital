@@ -145,7 +145,6 @@ export class Tab1Page implements OnDestroy {
   playFull() {
     if (!this.text.trim()) return;
     this.progress.addXp(1);
-    this.updateProgress();
     this.mode = 'full';
     this.currentWordIndex = -1;
     this.words = [];
@@ -155,7 +154,6 @@ export class Tab1Page implements OnDestroy {
   playStepByStep() {
     if (!this.text.trim()) return;
     this.progress.addXp(1);
-    this.updateProgress();
     this.mode = 'step';
     this.words = this.text.trim().split(/\s+/);
     this.currentWordIndex = -1;
@@ -288,17 +286,6 @@ export class Tab1Page implements OnDestroy {
 
   handleRefresh(event: any) {
     setTimeout(() => event.target.complete(), 1000);
-  }
-
-  private readonly SKILL_INDEX = 0;
-
-  get skillProgress(): number {
-    return this.progress.skills$.value[this.SKILL_INDEX]?.progress ?? 0;
-  }
-
-  private updateProgress() {
-    const cur = this.progress.skills$.value[this.SKILL_INDEX]?.progress ?? 0;
-    this.progress.updateSkillProgress(this.SKILL_INDEX, Math.min(100, cur + 5));
   }
 
   get darkModeIcon(): string {

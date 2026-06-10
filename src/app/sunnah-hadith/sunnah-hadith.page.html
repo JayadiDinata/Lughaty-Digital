@@ -1,0 +1,139 @@
+<ion-header class="app-header">
+  <ion-toolbar class="bg-white dark:bg-gray-800 border-b border-slate-200 dark:border-gray-700">
+    <ion-buttons slot="start">
+      <div *ngIf="!selectedSection && !selectedHadith" routerLink="/tabs/home" routerDirection="root"
+        class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-gray-700 text-slate-500 dark:text-gray-400 transition-all">
+        <ion-icon name="home-outline" class="text-xl"></ion-icon>
+      </div>
+      <div *ngIf="selectedSection || selectedHadith" (click)="selectedHadith ? backToList() : backToSections()"
+        class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-gray-700 text-slate-500 dark:text-gray-400 transition-all">
+        <ion-icon name="arrow-back-outline" class="text-xl"></ion-icon>
+      </div>
+    </ion-buttons>
+    <ion-title class="text-gold-500 dark:text-green-400 font-bold text-lg">
+      {{ selectedSection ? selectedSection.title : selectedHadith ? 'Hadits Pilihan' : 'Sunnah & Hadits' }}
+    </ion-title>
+    <ion-buttons slot="end">
+      <div (click)="toggleDarkMode()"
+        class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-gray-700 text-slate-500 dark:text-gray-400 transition-all">
+        <ion-icon [name]="darkModeIcon" class="text-xl"></ion-icon>
+      </div>
+      <div *ngIf="!selectedSection && !selectedHadith" (click)="getRandomHadith()"
+        class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-gray-700 text-gold-500 dark:text-green-400 transition-all">
+        <ion-icon name="shuffle-outline" class="text-xl"></ion-icon>
+      </div>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="[--background:#f5f7fa] dark:[--background:#0f172a]">
+  <!-- List Sections -->
+  <div class="px-4 py-5 max-w-[600px] mx-auto" *ngIf="!selectedSection && !selectedHadith">
+    <div class="text-center mb-6 animate-fade-in-up">
+      <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-600 dark:from-emerald-600 dark:to-green-700 flex items-center justify-center mx-auto mb-3 shadow-lg">
+        <ion-icon name="bookmarks-outline" class="text-3xl text-white"></ion-icon>
+      </div>
+      <h1 class="text-xl font-extrabold text-slate-800 dark:text-gray-100">Sunnah & Hadits</h1>
+      <p class="text-xs text-slate-500 dark:text-gray-400 mt-1">Pedoman hidup sesuai tuntunan Nabi Muhammad SAW</p>
+    </div>
+
+    <!-- Random Hadith Button -->
+    <button (click)="getRandomHadith()"
+      class="w-full mb-5 h-12 bg-gradient-to-r from-gold-500 to-amber-500 dark:from-green-700 dark:to-emerald-700 text-white font-bold rounded-2xl shadow-md flex items-center justify-center gap-2 animate-fade-in-up transition-all active:scale-[0.98]">
+      <ion-icon name="shuffle-outline" class="text-xl"></ion-icon>
+      Hadits Acak Hari Ini
+    </button>
+
+    <div class="space-y-3.5 animate-fade-in-up" style="animation-delay: 80ms">
+      <div *ngFor="let section of sections; let i = index"
+        (click)="selectSection(section)"
+        class="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-sm dark:shadow-md flex items-center gap-4 cursor-pointer active:scale-[0.98] transition-all animate-fade-in-up"
+        [style.animation-delay]="(i * 80) + 'ms'">
+        <div class="shrink-0 w-14 h-14 rounded-xl bg-gradient-to-br {{section.color}} flex items-center justify-center shadow-md">
+          <ion-icon [name]="section.icon" class="text-2xl text-white"></ion-icon>
+        </div>
+        <div class="flex-1 min-w-0">
+          <h3 class="text-sm font-extrabold text-slate-800 dark:text-gray-100">{{ section.title }}</h3>
+          <p class="text-xs text-slate-500 dark:text-gray-400">{{ section.subtitle }}</p>
+          <span class="text-[10px] font-semibold text-gold-500 dark:text-green-400">{{ section.items.length }} hadits</span>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="text-slate-300 dark:text-gray-600 text-xl"></ion-icon>
+      </div>
+    </div>
+
+    <div class="mt-6 p-4 bg-white dark:bg-gray-800 rounded-2xl shadow-sm dark:shadow-md animate-fade-in-up" style="animation-delay: 320ms">
+      <div class="flex items-center gap-2 mb-2">
+        <ion-icon name="bulb-outline" class="text-lg text-gold-500 dark:text-green-400"></ion-icon>
+        <span class="text-xs font-bold text-slate-700 dark:text-gray-200">Tentang Sunnah & Hadits</span>
+      </div>
+      <p class="text-[11px] text-slate-500 dark:text-gray-400 leading-relaxed">
+        Sunnah adalah segala perkataan, perbuatan, dan ketetapan Nabi Muhammad SAW. Hadits adalah riwayat yang sampai kepada kita tentang sunnah tersebut. Keduanya menjadi sumber hukum Islam kedua setelah Al-Quran dan pedoman hidup bagi umat Islam dalam segala aspek kehidupan.
+      </p>
+    </div>
+  </div>
+
+  <!-- Section Detail (List of Hadith) -->
+  <div class="px-4 py-5 max-w-[600px] mx-auto" *ngIf="selectedSection && !selectedHadith">
+    <div class="text-center mb-5 animate-fade-in-up">
+      <div class="w-14 h-14 rounded-2xl bg-gradient-to-br {{selectedSection.color}} flex items-center justify-center mx-auto mb-2 shadow-lg">
+        <ion-icon [name]="selectedSection.icon" class="text-2xl text-white"></ion-icon>
+      </div>
+      <h2 class="text-lg font-extrabold text-slate-800 dark:text-gray-100">{{ selectedSection.title }}</h2>
+      <p class="text-xs text-slate-500 dark:text-gray-400">{{ selectedSection.items.length }} hadits</p>
+    </div>
+
+    <div class="space-y-3 animate-fade-in-up" style="animation-delay: 80ms">
+      <div *ngFor="let item of selectedSection.items; let i = index"
+        (click)="selectHadith(item)"
+        class="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-sm dark:shadow-md cursor-pointer active:scale-[0.98] transition-all animate-fade-in-up"
+        [style.animation-delay]="(i * 60) + 'ms'">
+        <p class="text-lg font-arabic direction-rtl text-slate-800 dark:text-gray-100 leading-relaxed mb-2">{{ item.arabic }}</p>
+        <p class="text-xs text-slate-600 dark:text-gray-300">{{ item.translation }}</p>
+        <div class="flex items-center justify-between mt-2">
+          <span class="text-[10px] text-slate-400 dark:text-gray-500">{{ item.by }}</span>
+          <ion-icon name="chevron-forward-outline" class="text-slate-300 dark:text-gray-600 text-sm"></ion-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hadith Detail -->
+  <div class="px-4 py-5 max-w-[600px] mx-auto" *ngIf="selectedHadith && !selectedSection">
+    <div class="bg-white dark:bg-gray-800 rounded-3xl overflow-hidden shadow-lg dark:shadow-2xl animate-scale-in">
+      <div class="bg-gradient-to-br from-emerald-500 to-green-600 dark:from-emerald-700 dark:to-green-800 p-6 text-center">
+        <div class="w-12 h-12 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center mx-auto mb-3">
+          <ion-icon name="book-outline" class="text-2xl text-white"></ion-icon>
+        </div>
+        <p class="text-2xl font-arabic direction-rtl text-white leading-relaxed">{{ selectedHadith.arabic }}</p>
+      </div>
+      <div class="p-6 space-y-4">
+        <div>
+          <span class="text-[10px] font-bold text-gold-500 dark:text-green-400 uppercase tracking-widest">Terjemahan</span>
+          <p class="text-sm text-slate-700 dark:text-gray-300 leading-relaxed mt-1">{{ selectedHadith.translation }}</p>
+        </div>
+        <div class="px-3 py-2 bg-slate-100 dark:bg-gray-700 rounded-xl">
+          <span class="text-[10px] font-bold text-slate-400 dark:text-gray-500 uppercase tracking-widest">Sumber</span>
+          <p class="text-xs font-semibold text-slate-700 dark:text-gray-200 mt-0.5">{{ selectedHadith.by }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex gap-2 mt-4">
+      <button (click)="backToList()"
+        class="flex-1 h-11 bg-slate-200 dark:bg-gray-700 hover:bg-slate-300 dark:hover:bg-gray-600 font-semibold rounded-xl text-sm text-slate-700 dark:text-gray-200 flex items-center justify-center gap-2 transition-all">
+        <ion-icon name="arrow-back-outline" class="text-lg"></ion-icon>
+        Kembali
+      </button>
+      <button (click)="getRandomHadith()"
+        class="flex-1 h-11 bg-gold-500 hover:bg-gold-600 dark:bg-green-700 dark:hover:bg-green-800 font-semibold rounded-xl text-sm text-white flex items-center justify-center gap-2 transition-all">
+        <ion-icon name="shuffle-outline" class="text-lg"></ion-icon>
+        Lainnya
+      </button>
+    </div>
+  </div>
+
+  <!-- Single Hadith from Random (without section) -->
+  <div class="px-4 py-5 max-w-[600px] mx-auto" *ngIf="selectedHadith && selectedSection === null">
+    <!-- same detail template as above -->
+  </div>
+</ion-content>

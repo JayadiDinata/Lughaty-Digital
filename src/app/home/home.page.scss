@@ -1,8 +1,226 @@
 ion-content {
-  --background: #f5f7fa;
+  --background: #0f172a;
 }
 
-ion-icon {
-  font-size: 20px;
-  vertical-align: middle;
+.main_container {
+  padding-top: 2%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8em;
+  align-items: center;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  gap: 0.8em;
+  justify-content: center;
+}
+
+.row.last {
+  padding-left: calc(50% + 0.4em);
+}
+
+.card-icon {
+  font-size: 32px;
+  color: white;
+  pointer-events: none;
+}
+
+.card-label {
+  font-size: 9px;
+  font-weight: 700;
+  color: #cbd5e1;
+  text-align: center;
+  line-height: 1.2;
+  pointer-events: none;
+  max-width: 80px;
+}
+
+/* ====== CARD 1 - Gold ====== */
+.card1 {
+  width: 95px;
+  height: 105px;
+  outline: 5px solid #C4942C;
+  border: none;
+  background: rgb(30, 30, 30);
+  border-radius: 90px 5px 5px 5px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+}
+.card1:hover {
+  cursor: pointer;
+  scale: 1.08;
+  background: #C4942C;
+}
+.card1:hover .card-label {
+  color: white;
+}
+
+/* ====== CARD 2 - Sky ====== */
+.card2 {
+  width: 95px;
+  height: 105px;
+  outline: 5px solid #0EA5E9;
+  border: none;
+  background: rgb(30, 30, 30);
+  border-radius: 5px 90px 5px 5px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+}
+.card2:hover {
+  cursor: pointer;
+  scale: 1.08;
+  background: #0EA5E9;
+}
+.card2:hover .card-label {
+  color: white;
+}
+
+/* ====== CARD 3 - Purple ====== */
+.card3 {
+  width: 95px;
+  height: 105px;
+  outline: 5px solid #8B5CF6;
+  border: none;
+  background: rgb(30, 30, 30);
+  border-radius: 5px 5px 90px 5px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+}
+.card3:hover {
+  cursor: pointer;
+  scale: 1.08;
+  background: #8B5CF6;
+}
+.card3:hover .card-label {
+  color: white;
+}
+
+/* ====== CARD 4 - Orange ====== */
+.card4 {
+  width: 95px;
+  height: 105px;
+  outline: 5px solid #F59E0B;
+  border: none;
+  background: rgb(30, 30, 30);
+  border-radius: 5px 5px 5px 90px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+}
+.card4:hover {
+  cursor: pointer;
+  scale: 1.08;
+  background: #F59E0B;
+}
+.card4:hover .card-label {
+  color: white;
+}
+
+/* ====== CARD 5 - Emerald ====== */
+.card5 {
+  width: 95px;
+  height: 105px;
+  outline: 5px solid #10B981;
+  border: none;
+  background: rgb(30, 30, 30);
+  border-radius: 90px 90px 5px 5px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+}
+.card5:hover {
+  cursor: pointer;
+  scale: 1.08;
+  background: #10B981;
+}
+.card5:hover .card-label {
+  color: white;
+}
+
+/* ====== CARD 6 - Rose ====== */
+.card6 {
+  width: 95px;
+  height: 105px;
+  outline: 5px solid #EC4899;
+  border: none;
+  background: rgb(30, 30, 30);
+  border-radius: 5px 90px 90px 5px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+}
+.card6:hover {
+  cursor: pointer;
+  scale: 1.08;
+  background: #EC4899;
+}
+.card6:hover .card-label {
+  color: white;
+}
+
+/* ====== CARD 7 - Cyan ====== */
+.card7 {
+  width: 95px;
+  height: 105px;
+  outline: 5px solid #06B6D4;
+  border: none;
+  background: rgb(30, 30, 30);
+  border-radius: 5px 5px 90px 90px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+}
+.card7:hover {
+  cursor: pointer;
+  scale: 1.08;
+  background: #06B6D4;
+}
+.card7:hover .card-label {
+  color: white;
 }

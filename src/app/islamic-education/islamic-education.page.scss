@@ -1,0 +1,9 @@
+ion-content {
+  --background: #f5f7fa;
+}
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

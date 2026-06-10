@@ -516,6 +516,10 @@ body.dark .mat-mdc-snack-bar-container {
   border-radius: 12px !important;
 }
 
+.cdk-global-overlay-wrapper:has(.mat-mdc-snack-bar-container) {
+  align-items: center !important;
+}
+
 @keyframes fadeInUp {
   from { transform: translateY(20px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }

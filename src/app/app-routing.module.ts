@@ -17,6 +17,21 @@ const routes: Routes = [
     loadChildren: () =>
       import('./splash/splash.module').then((m) => m.SplashPageModule),
   },
+  {
+    path: 'islamic-education',
+    loadChildren: () =>
+      import('./islamic-education/islamic-education.module').then((m) => m.IslamicEducationPageModule),
+  },
+  {
+    path: 'islamic-history',
+    loadChildren: () =>
+      import('./islamic-history/islamic-history.module').then((m) => m.IslamicHistoryPageModule),
+  },
+  {
+    path: 'sunnah-hadith',
+    loadChildren: () =>
+      import('./sunnah-hadith/sunnah-hadith.module').then((m) => m.SunnahHadithPageModule),
+  },
 ];
 @NgModule({
   imports: [

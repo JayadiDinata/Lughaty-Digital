@@ -283,22 +283,10 @@ export class Tab4Page implements AfterViewInit, OnDestroy {
 
   playWord() {
     this.progress.addXp(1);
-    this.updateProgress();
     this.tts.stop();
     if (!this.currentWord) return;
 
     this.tts.speak(this.currentWord, 'ar-SA');
-  }
-
-  private readonly SKILL_INDEX = 3;
-
-  get skillProgress(): number {
-    return this.progress.skills$.value[this.SKILL_INDEX]?.progress ?? 0;
-  }
-
-  private updateProgress() {
-    const cur = this.progress.skills$.value[this.SKILL_INDEX]?.progress ?? 0;
-    this.progress.updateSkillProgress(this.SKILL_INDEX, Math.min(100, cur + 7));
   }
 
   get darkModeIcon(): string {

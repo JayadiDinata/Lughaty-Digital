@@ -3,7 +3,21 @@ import { Router } from '@angular/router';
 import { AnimationController } from '@ionic/angular';
 import { register } from 'swiper/element/bundle';
 import { addIcons } from 'ionicons';
-import { headsetOutline, chatbubblesOutline, home, helpOutline, createOutline, logOutOutline, menuOutline, informationCircleOutline, chevronUpOutline, chevronDownOutline, codeSlashOutline, serverOutline, phonePortraitOutline, flameOutline, checkmarkCircle, closeCircle, radioButtonOffOutline, homeOutline, play, pause, stop, arrowUpOutline, swapHorizontalOutline, searchOutline, hourglassOutline, refreshOutline, alertCircleOutline, arrowForwardOutline, moonOutline, sunnyOutline, eyeOutline, eyeOffOutline } from 'ionicons/icons';
+import {
+  headsetOutline, chatbubblesOutline, home, helpCircleOutline, createOutline,
+  logOutOutline, menuOutline, informationCircleOutline, chevronUpOutline,
+  chevronDownOutline, codeSlashOutline, serverOutline, phonePortraitOutline,
+  flameOutline, checkmarkCircle, closeCircle, radioButtonOffOutline, homeOutline,
+  play, pause, stop, arrowUpOutline, swapHorizontalOutline, searchOutline,
+  hourglassOutline, refreshOutline, alertCircleOutline, arrowForwardOutline,
+  moonOutline, sunnyOutline, eyeOutline, eyeOffOutline, schoolOutline, timeOutline,
+  bookmarksOutline, languageOutline, bulbOutline, megaphoneOutline, accessibilityOutline,
+  heartOutline, trophyOutline, shuffleOutline, videocamOffOutline, personOutline,
+  bookOutline, globeOutline, trendingUpOutline, earthOutline, flagOutline, starOutline,
+  locationOutline, peopleOutline, businessOutline, libraryOutline, cloudOutline,
+  chevronForwardOutline, chevronBackOutline, pencilOutline, backspaceOutline, playForwardOutline,
+  volumeHighOutline, playSkipBackOutline, playSkipForwardOutline, stopOutline
+} from 'ionicons/icons';
 register();
 @Component({
   selector: 'app-root',
@@ -15,7 +29,21 @@ export class AppComponent {
     public router: Router,
     private animatonCtrl: AnimationController
   ) {
-    addIcons({ headsetOutline, chatbubblesOutline, home, helpOutline, createOutline, logOutOutline, menuOutline, informationCircleOutline, chevronUpOutline, chevronDownOutline, codeSlashOutline, serverOutline, phonePortraitOutline, flameOutline, checkmarkCircle, closeCircle, radioButtonOffOutline, homeOutline, play, pause, stop, arrowUpOutline, swapHorizontalOutline, searchOutline, hourglassOutline, refreshOutline, alertCircleOutline, arrowForwardOutline, moonOutline, sunnyOutline, eyeOutline, eyeOffOutline });
+    addIcons({
+      headsetOutline, chatbubblesOutline, home, helpCircleOutline, createOutline,
+      logOutOutline, menuOutline, informationCircleOutline, chevronUpOutline,
+      chevronDownOutline, codeSlashOutline, serverOutline, phonePortraitOutline,
+      flameOutline, checkmarkCircle, closeCircle, radioButtonOffOutline, homeOutline,
+      play, pause, stop, arrowUpOutline, swapHorizontalOutline, searchOutline,
+      hourglassOutline, refreshOutline, alertCircleOutline, arrowForwardOutline,
+      moonOutline, sunnyOutline, eyeOutline, eyeOffOutline, schoolOutline, timeOutline,
+      bookmarksOutline, languageOutline, bulbOutline, megaphoneOutline, accessibilityOutline,
+      heartOutline, trophyOutline, shuffleOutline, videocamOffOutline, personOutline,
+      bookOutline, globeOutline, trendingUpOutline, earthOutline, flagOutline, starOutline,
+      locationOutline, peopleOutline, businessOutline, libraryOutline, cloudOutline,
+      chevronForwardOutline, chevronBackOutline, pencilOutline, backspaceOutline, playForwardOutline,
+      volumeHighOutline, playSkipBackOutline, playSkipForwardOutline, stopOutline
+    });
     this.initializeApp();
   }
   myCustomPageTransition = (baseEl: any, opts?: any) => {

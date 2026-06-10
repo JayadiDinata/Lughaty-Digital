@@ -21,16 +21,6 @@
 </ion-header>
 
 <ion-content class="[--background:#f8fafc] dark:[--background:#0f172a]">
-  <!-- Progress Indicator -->
-  <div class="px-4 pt-2">
-    <div class="flex items-center gap-2">
-      <div class="flex-1 h-1.5 bg-slate-200 dark:bg-gray-700 rounded-full overflow-hidden">
-        <div class="h-full bg-gradient-to-r from-amber-400 to-orange-500 dark:from-amber-500 dark:to-orange-400 rounded-full transition-all duration-500" [style.width.%]="skillProgress"></div>
-      </div>
-      <span class="text-xs font-semibold text-slate-500 dark:text-gray-400">{{ skillProgress }}%</span>
-    </div>
-  </div>
-
   <div class="px-4 py-5 pb-8 flex flex-col items-center gap-4 max-w-[500px] mx-auto animate-fade-in-up">
 
     <div class="w-full max-w-[500px] bg-white dark:bg-gray-800 rounded-2xl px-3 py-4 shadow-sm dark:shadow-md animate-scale-in">
@@ -94,7 +84,7 @@
         [class.dark:bg-green-700]="mode === 'erase'"
         [class.dark:text-green-400]="mode !== 'erase'"
         [class.dark:border-green-500]="mode !== 'erase'">
-        <ion-icon name="erase-outline" class="mr-1 text-lg"></ion-icon>
+        <ion-icon name="backspace-outline" class="mr-1 text-lg"></ion-icon>
         Hapus
       </button>
       <button (click)="resetCanvas()"

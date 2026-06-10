@@ -1,0 +1,82 @@
+<ion-header class="app-header">
+  <ion-toolbar class="bg-white dark:bg-gray-800 border-b border-slate-200 dark:border-gray-700">
+    <ion-buttons slot="start">
+      <div *ngIf="!selectedEra" routerLink="/tabs/home" routerDirection="root"
+        class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-gray-700 text-slate-500 dark:text-gray-400 transition-all">
+        <ion-icon name="home-outline" class="text-xl"></ion-icon>
+      </div>
+      <div *ngIf="selectedEra" (click)="back()"
+        class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-gray-700 text-slate-500 dark:text-gray-400 transition-all">
+        <ion-icon name="arrow-back-outline" class="text-xl"></ion-icon>
+      </div>
+    </ion-buttons>
+    <ion-title class="text-gold-500 dark:text-green-400 font-bold text-lg">{{ selectedEra ? selectedEra.title : 'Sejarah Islam' }}</ion-title>
+    <ion-buttons slot="end">
+      <div (click)="toggleDarkMode()"
+        class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-gray-700 text-slate-500 dark:text-gray-400 transition-all">
+        <ion-icon [name]="darkModeIcon" class="text-xl"></ion-icon>
+      </div>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="[--background:#f5f7fa] dark:[--background:#0f172a]">
+  <!-- List View -->
+  <div class="px-4 py-5 max-w-[600px] mx-auto" *ngIf="!selectedEra">
+    <div class="text-center mb-6 animate-fade-in-up">
+      <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 dark:from-amber-600 dark:to-orange-700 flex items-center justify-center mx-auto mb-3 shadow-lg">
+        <ion-icon name="time-outline" class="text-3xl text-white"></ion-icon>
+      </div>
+      <h1 class="text-xl font-extrabold text-slate-800 dark:text-gray-100">Sejarah Islam</h1>
+      <p class="text-xs text-slate-500 dark:text-gray-400 mt-1">Perjalanan Islam dari masa ke masa</p>
+    </div>
+
+    <!-- Timeline -->
+    <div class="relative">
+      <div class="absolute left-[23px] top-0 bottom-0 w-0.5 bg-gradient-to-b from-gold-500 via-amber-500 to-orange-500 dark:from-green-500 dark:via-emerald-500 dark:to-teal-500 rounded-full"></div>
+
+      <div *ngFor="let era of eras; let i = index"
+        (click)="selectEra(era)"
+        class="flex items-start gap-4 mb-4 cursor-pointer animate-fade-in-up"
+        [style.animation-delay]="(i * 60) + 'ms'">
+        <div class="shrink-0 w-[48px] h-[48px] rounded-xl bg-gradient-to-br {{era.color}} flex items-center justify-center shadow-md z-10">
+          <ion-icon [name]="era.icon" class="text-xl text-white"></ion-icon>
+        </div>
+        <div class="flex-1 bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-sm dark:shadow-md active:scale-[0.98] transition-all">
+          <h3 class="text-sm font-extrabold text-slate-800 dark:text-gray-100">{{ era.title }}</h3>
+          <span class="text-[10px] font-semibold text-gold-500 dark:text-green-400">{{ era.period }}</span>
+          <p class="text-xs text-slate-500 dark:text-gray-400 mt-1.5 line-clamp-2">{{ era.content }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Detail View -->
+  <div class="px-4 py-5 max-w-[600px] mx-auto" *ngIf="selectedEra">
+    <div class="bg-white dark:bg-gray-800 rounded-3xl overflow-hidden shadow-lg dark:shadow-2xl animate-fade-in-up">
+      <div class="h-48 bg-gradient-to-br {{selectedEra.color}} flex items-center justify-center relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20">
+          <div class="absolute top-5 left-5 w-32 h-32 rounded-full bg-white"></div>
+          <div class="absolute -bottom-10 -right-10 w-48 h-48 rounded-full bg-white"></div>
+          <div class="absolute top-20 right-20 w-16 h-16 rounded-full bg-white"></div>
+        </div>
+        <div class="text-center relative z-10">
+          <div class="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center mx-auto mb-3">
+            <ion-icon [name]="selectedEra.icon" class="text-3xl text-white"></ion-icon>
+          </div>
+          <h2 class="text-2xl font-extrabold text-white">{{ selectedEra.title }}</h2>
+          <span class="text-sm font-semibold text-white/80">{{ selectedEra.period }}</span>
+        </div>
+      </div>
+      <div class="p-6">
+        <p class="text-sm text-slate-700 dark:text-gray-300 leading-relaxed">{{ selectedEra.content }}</p>
+      </div>
+    </div>
+
+    <button (click)="back()"
+      class="w-full mt-4 h-12 bg-slate-200 dark:bg-gray-700 hover:bg-slate-300 dark:hover:bg-gray-600 font-semibold rounded-xl text-sm text-slate-700 dark:text-gray-200 flex items-center justify-center gap-2 transition-all">
+      <ion-icon name="arrow-back-outline" class="text-lg"></ion-icon>
+      Kembali ke Daftar
+    </button>
+  </div>
+</ion-content>

@@ -34,7 +34,7 @@ export class Tab2Page implements OnDestroy {
     }
   }
 
-  handleRefresh(event) {
+  handleRefresh(event: any) {
     setTimeout(() => {
       event.target.complete();
     }, 1000);
@@ -50,7 +50,6 @@ export class Tab2Page implements OnDestroy {
     if (!text) return;
 
     this.progress.addXp(1);
-    this.updateProgress();
     this.tts.stop();
     if (this.playingLine) {
       this.playingLine.classList.remove('playing');
@@ -71,17 +70,6 @@ export class Tab2Page implements OnDestroy {
 
     // Safety timeout
     setTimeout(() => done(), 5000);
-  }
-
-  private readonly SKILL_INDEX = 1;
-
-  get skillProgress(): number {
-    return this.progress.skills$.value[this.SKILL_INDEX]?.progress ?? 0;
-  }
-
-  private updateProgress() {
-    const cur = this.progress.skills$.value[this.SKILL_INDEX]?.progress ?? 0;
-    this.progress.updateSkillProgress(this.SKILL_INDEX, Math.min(100, cur + 2));
   }
 
   get darkModeIcon(): string {
