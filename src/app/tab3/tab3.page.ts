@@ -1,5 +1,4 @@
 import { Component, OnDestroy } from '@angular/core';
-import { AlertController } from '@ionic/angular';
 import { ThemeService } from '../theme.service';
 
 interface QuizCategory {
@@ -27,7 +26,7 @@ export class Tab3Page implements OnDestroy {
   totalQuestions: number = 0;
   showResult: boolean = false;
 
-  constructor(private alertCtrl: AlertController, public theme: ThemeService) {
+  constructor(public theme: ThemeService) {
     this.initCategories();
   }
 
@@ -426,39 +425,47 @@ export class Tab3Page implements OnDestroy {
     return 'radio-button-off-outline';
   }
 
-  async pilihJawaban(jawaban: string) {
+  get answers(): { key: string; text: string }[] {
+    const q = this.currentQuestion;
+    if (!q) return [];
+    return ['A', 'B', 'C', 'D'].map(k => ({ key: k, text: q[k] }));
+  }
+
+  get isLastQuestion(): boolean {
+    return this.currentCategory
+      ? this.currentQuestionIndex >= this.currentCategory.questions.length - 1
+      : false;
+  }
+
+  get hasWrongAnswer(): boolean {
+    return Object.values(this.touchedAnswers).includes('wrong');
+  }
+
+  pilihJawaban(jawaban: string) {
     if (!this.currentCategory || this.answered) return;
     const q = this.currentQuestion;
     if (!q || this.touchedAnswers[jawaban]) return;
 
     const benar = jawaban === q.kunci;
     this.touchedAnswers[jawaban] = benar ? 'correct' : 'wrong';
+    this.touchedAnswers[q.kunci] = 'correct';
     this.answered = true;
 
     if (benar) {
       this.totalScore++;
     }
+  }
 
-    setTimeout(async () => {
-      if (this.currentQuestionIndex < this.currentCategory!.questions.length - 1) {
-        this.currentQuestionIndex++;
-        this.touchedAnswers = {};
-        this.answered = false;
-      } else {
-        this.showResult = true;
-        const alert = await this.alertCtrl.create({
-          header: 'Selesai!',
-          message: `Kamu menjawab benar ${this.totalScore} dari ${this.currentCategory!.questions.length} soal di kategori "${this.currentCategory!.title}"`,
-          buttons: [{
-            text: 'Kembali',
-            handler: () => {
-              this.backToCategories();
-            }
-          }]
-        });
-        await alert.present();
-      }
-    }, 800);
+  nextQuestion() {
+    if (!this.currentCategory) return;
+
+    if (!this.isLastQuestion) {
+      this.currentQuestionIndex++;
+      this.touchedAnswers = {};
+      this.answered = false;
+    } else {
+      this.showResult = true;
+    }
   }
 
   handleRefresh(event: any) {

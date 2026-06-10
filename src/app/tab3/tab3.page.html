@@ -72,21 +72,40 @@
 
     <!-- Answers -->
     <div class="flex flex-col gap-2.5 animate-fade-in-up">
-      <div *ngFor="let opt of ['A','B','C','D']; let i = index"
-        (click)="pilihJawaban(opt)"
-        class="flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-medium cursor-pointer transition-all active:scale-[0.98] shadow-sm animate-fade-in-left"
+      <div *ngFor="let opt of answers; let i = index"
+        (click)="!answered && pilihJawaban(opt.key)"
+        class="flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-medium transition-all shadow-sm animate-fade-in-left"
+        [class.cursor-pointer]="!answered"
+        [class.cursor-default]="answered"
+        [class.active:scale-[0.98]]="!answered"
         [style.animation-delay]="(i * 80 + 100) + 'ms'"
-        [class.bg-white]="!touchedAnswers[opt]"
-        [class.dark:bg-gray-800]="!touchedAnswers[opt]"
-        [class]="touchedAnswers[opt] === 'correct' ? 'bg-green-50 dark:bg-green-900/20' : touchedAnswers[opt] === 'wrong' ? 'bg-red-50 dark:bg-red-900/20' : ''">
-        <ion-icon [name]="getIcon(opt)"
+        [class.bg-white]="!touchedAnswers[opt.key]"
+        [class.dark:bg-gray-800]="!touchedAnswers[opt.key]"
+        [class]="touchedAnswers[opt.key] === 'correct' ? 'bg-green-50 dark:bg-green-900/20' : touchedAnswers[opt.key] === 'wrong' ? 'bg-red-50 dark:bg-red-900/20' : ''">
+        <ion-icon [name]="getIcon(opt.key)"
           class="text-2xl"
-          [class.text-green-500]="touchedAnswers[opt] === 'correct'"
-          [class.text-red-500]="touchedAnswers[opt] === 'wrong'"
-          [class.text-slate-400]="!touchedAnswers[opt]">
+          [class.text-green-500]="touchedAnswers[opt.key] === 'correct'"
+          [class.text-red-500]="touchedAnswers[opt.key] === 'wrong'"
+          [class.text-slate-400]="!touchedAnswers[opt.key]">
         </ion-icon>
-        <span class="text-slate-700 dark:text-gray-200">{{ opt }}. {{ currentQuestion[opt] }}</span>
+        <span class="text-slate-700 dark:text-gray-200">{{ opt.key }}. {{ opt.text }}</span>
       </div>
+    </div>
+
+    <!-- Feedback & Next Button -->
+    <div *ngIf="answered" class="mt-5 animate-fade-in-up">
+      <div class="text-center mb-3"
+        [class.text-green-600]="!hasWrongAnswer"
+        [class.text-red-500]="hasWrongAnswer">
+        <span *ngIf="!hasWrongAnswer" class="text-sm font-bold">✅ Benar!</span>
+        <span *ngIf="hasWrongAnswer" class="text-sm font-bold">
+          ❌ Salah! Jawaban benar: {{ currentQuestion.kunci }}. {{ currentQuestion[currentQuestion.kunci] }}
+        </span>
+      </div>
+      <button (click)="nextQuestion()"
+        class="w-full py-3 bg-gold-500 hover:bg-gold-600 dark:bg-green-700 dark:hover:bg-green-800 text-white font-bold rounded-xl text-sm transition-all">
+        {{ isLastQuestion ? 'Lihat Hasil' : 'Lanjut' }}
+      </button>
     </div>
   </div>
 
