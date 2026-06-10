@@ -51,17 +51,17 @@ export class TtsService {
     if (!text) return;
     this.stopSynchronous();
 
+    const rate = _rate ?? 1;
+
     // ── Android native (APK) ──
-    // Google TTS via Audio element is most reliable on Android WebView
     if (this.isNative && this.isAndroid) {
       if (await this.tryGoogleTTS(text, lang)) return;
       try {
-        await TextToSpeech.speak({ text, lang, rate: _rate ?? 1, pitch: 1, volume: 1 });
+        await TextToSpeech.speak({ text, lang, rate, pitch: 1, volume: 1 });
         return;
       } catch {}
-      // Web Speech API last resort on Android
       if ('speechSynthesis' in window) {
-        await this.speakWebSpeech(text, lang, _rate);
+        await this.speakWebSpeech(text, lang, rate);
         return;
       }
       return;
@@ -69,12 +69,14 @@ export class TtsService {
 
     // ── iOS native (Capacitor app) ──
     if (this.isNative && this.isIOS) {
+      await this.primeSpeech();
       try {
-        await TextToSpeech.speak({ text, lang, rate: _rate ?? 1, pitch: 1, volume: 1 });
+        await TextToSpeech.speak({ text, lang, rate, pitch: 1, volume: 1 });
         return;
       } catch {}
+      if (await this.tryGoogleTTS(text, lang)) return;
       if ('speechSynthesis' in window) {
-        await this.speakWebSpeech(text, lang, _rate);
+        await this.speakWebSpeech(text, lang, rate);
         return;
       }
       return;
@@ -82,9 +84,9 @@ export class TtsService {
 
     // ── iOS web (Safari) ──
     if (this.isIOSWeb) {
+      await this.primeSpeech();
       if ('speechSynthesis' in window) {
-        await this.primeSpeech();
-        await this.speakWebSpeech(text, lang, _rate);
+        await this.speakWebSpeech(text, lang, rate);
         return;
       }
       await this.tryGoogleTTS(text, lang);
@@ -93,7 +95,7 @@ export class TtsService {
 
     // ── Desktop / other browsers ──
     if ('speechSynthesis' in window) {
-      await this.speakWebSpeech(text, lang, _rate);
+      await this.speakWebSpeech(text, lang, rate);
       return;
     }
     await this.tryGoogleTTS(text, lang);
@@ -116,10 +118,13 @@ export class TtsService {
   private async primeSpeech(): Promise<void> {
     if (this.speechPrimed) return;
     try {
-      const p = new SpeechSynthesisUtterance('');
-      p.volume = 0;
-      window.speechSynthesis.speak(p);
-      this.speechPrimed = true;
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.getVoices();
+        const p = new SpeechSynthesisUtterance('.');
+        p.volume = 0;
+        window.speechSynthesis.speak(p);
+        this.speechPrimed = true;
+      }
     } catch {}
   }
 
@@ -131,7 +136,8 @@ export class TtsService {
       utterance.onend = () => resolve();
       utterance.onerror = () => resolve();
       window.speechSynthesis.speak(utterance);
-      setTimeout(() => resolve(), 5000);
+      const timeout = Math.min(30000, Math.max(5000, text.length * 60));
+      setTimeout(() => resolve(), timeout);
     });
   }
 
