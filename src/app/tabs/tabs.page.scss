@@ -1,3 +1,20 @@
+.tab-bar-custom {
+  overflow-x: auto;
+  justify-content: flex-start;
+  padding: 4px 4px 0;
+  gap: 0;
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
+ion-tab-button {
+  flex: 1 0 12.5%;
+  min-width: 44px;
+  max-width: 70px;
+  padding: 4px 2px;
+  position: relative;
+}
+
 ion-tab-button::before {
   content: '';
   position: absolute;
@@ -5,7 +22,7 @@ ion-tab-button::before {
   left: 50%;
   transform: translateX(-50%);
   width: 0;
-  height: 3px;
+  height: 2px;
   background: #C4942C;
   border-radius: 0 0 4px 4px;
   transition: width 0.2s;
@@ -16,7 +33,7 @@ body.dark ion-tab-button::before {
 }
 
 ion-tab-button.tab-selected::before {
-  width: 24px;
+  width: 18px;
 }
 
 ion-tab-button:active ion-icon {

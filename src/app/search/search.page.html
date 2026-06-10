@@ -1,0 +1,62 @@
+<ion-header class="app-header">
+  <ion-toolbar class="bg-white dark:bg-gray-800 border-b border-slate-200 dark:border-gray-700">
+    <ion-buttons slot="start">
+      <div routerLink="/tabs/home" routerDirection="root"
+        class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-gray-700 text-slate-500 dark:text-gray-400 transition-all">
+        <ion-icon name="home-outline" class="text-xl"></ion-icon>
+      </div>
+    </ion-buttons>
+    <ion-title class="text-gold-500 dark:text-green-400 font-bold text-lg">Pencarian</ion-title>
+    <ion-buttons slot="end">
+      <div (click)="toggleDarkMode()"
+        class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-gray-700 text-slate-500 dark:text-gray-400 transition-all">
+        <ion-icon [name]="darkModeIcon" class="text-xl"></ion-icon>
+      </div>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="[--background:#f5f7fa] dark:[--background:#0f172a]">
+  <div class="px-4 py-5 max-w-[600px] mx-auto">
+    <div class="text-center mb-5 animate-fade-in-up">
+      <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 dark:from-sky-600 dark:to-blue-700 flex items-center justify-center mx-auto mb-3 shadow-lg">
+        <ion-icon name="search-outline" class="text-3xl text-white"></ion-icon>
+      </div>
+      <h1 class="text-xl font-extrabold text-slate-800 dark:text-gray-100">Pencarian</h1>
+      <p class="text-xs text-slate-500 dark:text-gray-400 mt-1">Cari materi penyiaran dan dakwah Islam</p>
+    </div>
+
+    <div class="relative mb-5 animate-fade-in-up" style="animation-delay: 80ms">
+      <ion-icon name="search-outline" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-gray-500 text-lg pointer-events-none"></ion-icon>
+      <input [(ngModel)]="query" (keyup.enter)="search()" placeholder="Cari..."
+        class="w-full pl-10 pr-4 py-3 bg-white dark:bg-gray-800 rounded-xl text-sm text-slate-800 dark:text-gray-200 border border-slate-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-sky-400 dark:focus:ring-blue-500 transition-all">
+      <button (click)="search()"
+        class="absolute right-1.5 top-1/2 -translate-y-1/2 px-4 py-1.5 bg-sky-500 hover:bg-sky-600 dark:bg-blue-600 dark:hover:bg-blue-700 text-white text-xs font-bold rounded-lg transition-all">
+        Cari
+      </button>
+    </div>
+
+    <div *ngIf="!searched" class="text-center py-12 text-slate-400 dark:text-gray-500 animate-fade-in-up" style="animation-delay: 120ms">
+      <ion-icon name="arrow-up-outline" class="text-3xl mb-2"></ion-icon>
+      <p class="text-sm">Ketik kata kunci lalu tekan Cari</p>
+    </div>
+
+    <div *ngIf="searched && results.length === 0" class="text-center py-12 animate-fade-in-up">
+      <ion-icon name="search-off-outline" class="text-5xl text-slate-300 dark:text-gray-600 mb-3"></ion-icon>
+      <p class="text-sm text-slate-400 dark:text-gray-500">Tidak ditemukan</p>
+    </div>
+
+    <div *ngFor="let item of results; let i = index" (click)="goTo(item)"
+      class="bg-white dark:bg-gray-800 rounded-2xl p-4 mb-3 shadow-sm dark:shadow-md flex items-center gap-3 cursor-pointer hover:bg-slate-50 dark:hover:bg-gray-750 transition-all animate-fade-in-up"
+      [style.animation-delay]="(i * 60) + 'ms'">
+      <div class="w-10 h-10 rounded-xl bg-sky-100 dark:bg-sky-900/30 flex items-center justify-center shrink-0">
+        <ion-icon [name]="item.icon" class="text-lg text-sky-600 dark:text-sky-400"></ion-icon>
+      </div>
+      <div class="flex-1 min-w-0">
+        <h3 class="text-sm font-bold text-slate-800 dark:text-gray-100 truncate">{{ item.title }}</h3>
+        <p class="text-xs text-slate-500 dark:text-gray-400 truncate">{{ item.desc }}</p>
+      </div>
+      <ion-icon name="chevron-forward-outline" class="text-slate-300 dark:text-gray-600 shrink-0"></ion-icon>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,408 @@
+/* === Avatar === */
+.avatar-section {
+  display: flex;
+  justify-content: center;
+  padding: 24px 0 8px;
+  position: relative;
+  z-index: 1;
+}
+
+.avatar-container {
+  position: relative;
+  width: 80px;
+  height: 100px;
+}
+
+.avatar-body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatar-head {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #C4942C, #e8b84b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: float 3s ease-in-out infinite;
+  z-index: 2;
+  position: relative;
+}
+
+.avatar-container.thinking .avatar-head {
+  animation: think-float 0.8s ease-in-out infinite;
+}
+
+.avatar-container.talking .avatar-head {
+  animation: talk-float 0.4s ease-in-out infinite;
+}
+
+.avatar-face {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.avatar-eyes {
+  display: flex;
+  gap: 8px;
+}
+
+.eye {
+  width: 8px;
+  height: 8px;
+  background: #1e293b;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.pupil {
+  width: 3px;
+  height: 3px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  animation: look-around 4s ease-in-out infinite;
+}
+
+.avatar-container.talking .pupil {
+  animation: look-around 2s ease-in-out infinite;
+}
+
+.avatar-mouth {
+  width: 12px;
+  height: 3px;
+  background: #7c5a1a;
+  border-radius: 0 0 6px 6px;
+  transition: all 0.15s;
+}
+
+.avatar-mouth.talking {
+  width: 14px;
+  height: 5px;
+  border-radius: 50%;
+  animation: talk-mouth 0.3s ease-in-out infinite alternate;
+}
+
+.avatar-torso {
+  width: 40px;
+  height: 30px;
+  background: linear-gradient(180deg, #C4942C, #a3781e);
+  border-radius: 20px 20px 10px 10px;
+  margin-top: -4px;
+  position: relative;
+  z-index: 1;
+}
+
+.avatar-arms {
+  position: absolute;
+  width: 100%;
+  top: 45px;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.arm {
+  width: 12px;
+  height: 28px;
+  border-radius: 6px;
+  background: #C4942C;
+  transform-origin: top center;
+}
+
+.left-arm {
+  margin-left: -14px;
+  animation: swing-left 2s ease-in-out infinite;
+}
+
+.right-arm {
+  margin-right: -14px;
+  animation: swing-right 2s ease-in-out infinite;
+}
+
+.avatar-container.talking .left-arm {
+  animation: swing-left 0.6s ease-in-out infinite;
+}
+.avatar-container.talking .right-arm {
+  animation: swing-right 0.6s ease-in-out infinite;
+}
+
+.avatar-glow {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(196,148,44,0.2) 0%, transparent 70%);
+  animation: glow-pulse 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.avatar-container.talking .avatar-glow {
+  animation: glow-pulse 0.6s ease-in-out infinite;
+  background: radial-gradient(circle, rgba(196,148,44,0.35) 0%, transparent 70%);
+}
+
+.typing-dots {
+  position: absolute;
+  bottom: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 4px;
+
+  span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #C4942C;
+    animation: dot-pulse 1.2s ease-in-out infinite;
+
+    &:nth-child(2) { animation-delay: 0.2s; }
+    &:nth-child(3) { animation-delay: 0.4s; }
+  }
+}
+
+/* === Chat Messages === */
+.chat-container {
+  padding: 0 16px 12px;
+  max-height: calc(100vh - 380px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.message {
+  display: flex;
+  animation: fadeInUp 0.3s ease-out both;
+}
+
+.message.user {
+  justify-content: flex-end;
+}
+
+.message.bot {
+  justify-content: flex-start;
+}
+
+.bubble {
+  max-width: 80%;
+  padding: 12px 16px;
+  border-radius: 18px;
+  font-size: 13px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.message.user .bubble {
+  background: #C4942C;
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+.message.bot .bubble {
+  background: white;
+  color: #334155;
+  border-bottom-left-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+body.dark .message.bot .bubble {
+  background: #1e293b;
+  color: #e2e8f0;
+}
+
+.typing-bubble {
+  display: flex;
+  gap: 4px;
+  padding: 14px 20px !important;
+  align-items: center;
+
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #94a3b8;
+    animation: dot-pulse 1.2s ease-in-out infinite;
+
+    &:nth-child(2) { animation-delay: 0.2s; }
+    &:nth-child(3) { animation-delay: 0.4s; }
+  }
+}
+
+/* === Suggestions === */
+.suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 4px 16px 8px;
+  justify-content: center;
+}
+
+.suggestion-chip {
+  padding: 6px 14px;
+  border-radius: 16px;
+  font-size: 11px;
+  font-weight: 600;
+  background: #e2e8f0;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid #cbd5e1;
+  white-space: nowrap;
+
+  &:hover {
+    background: #C4942C;
+    color: white;
+    border-color: #C4942C;
+  }
+}
+
+body.dark .suggestion-chip {
+  background: #1e293b;
+  color: #94a3b8;
+  border-color: #334155;
+
+  &:hover {
+    background: #C4942C;
+    color: white;
+    border-color: #C4942C;
+  }
+}
+
+/* === Input Bar === */
+.input-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px 16px;
+  position: sticky;
+  bottom: 0;
+  background: #f5f7fa;
+}
+
+body.dark .input-bar {
+  background: #0f172a;
+}
+
+.chat-input {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 24px;
+  border: 1px solid #e2e8f0;
+  font-size: 13px;
+  outline: none;
+  background: white;
+  color: #1e293b;
+  transition: all 0.2s;
+
+  &:focus {
+    border-color: #C4942C;
+    box-shadow: 0 0 0 3px rgba(196,148,44,0.15);
+  }
+}
+
+body.dark .chat-input {
+  background: #1e293b;
+  color: #e2e8f0;
+  border-color: #334155;
+
+  &:focus {
+    border-color: #C4942C;
+  }
+}
+
+.send-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: #C4942C;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+
+  &:hover:not(:disabled) {
+    background: #a3781e;
+    scale: 1.05;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+/* === Animations === */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes think-float {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-8px) rotate(2deg); }
+}
+
+@keyframes talk-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+@keyframes talk-mouth {
+  0% { height: 3px; border-radius: 0 0 6px 6px; }
+  100% { height: 6px; border-radius: 50%; }
+}
+
+@keyframes look-around {
+  0%, 60%, 100% { transform: translateX(0); }
+  20% { transform: translateX(1px); }
+  80% { transform: translateX(-1px); }
+}
+
+@keyframes swing-left {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
+}
+
+@keyframes swing-right {
+  0%, 100% { transform: rotate(5deg); }
+  50% { transform: rotate(-5deg); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.1); opacity: 1; }
+}
+
+@keyframes dot-pulse {
+  0%, 60%, 100% { transform: scale(0.6); opacity: 0.4; }
+  30% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}

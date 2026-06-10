@@ -11,7 +11,6 @@ import { ThemeService } from '../theme.service';
 })
 export class HomePage {
   @ViewChild(IonMenu) menu: IonMenu;
-  showAbout: boolean = false;
   userCount: number = 0;
 
   constructor(
@@ -31,13 +30,13 @@ export class HomePage {
   }
 
   menus = [
-    { title: 'Al-Istima\'', icon: 'headset-outline', route: '/tabs/tab1', cardClass: 'card1' },
-    { title: 'Al-Kalam', icon: 'chatbubbles-outline', route: '/tabs/tab2', cardClass: 'card2' },
-    { title: 'Kuis Islam', icon: 'help-circle-outline', route: '/tabs/tab3', cardClass: 'card3' },
-    { title: 'Al-Kitabah', icon: 'create-outline', route: '/tabs/tab4', cardClass: 'card4' },
-    { title: 'Islamic Education', icon: 'school-outline', route: '/islamic-education', cardClass: 'card5' },
-    { title: 'Sejarah Islam', icon: 'time-outline', route: '/islamic-history', cardClass: 'card6' },
-    { title: 'Sunnah & Hadits', icon: 'bookmarks-outline', route: '/sunnah-hadith', cardClass: 'card7' },
+    { title: 'Al-Istima\'', icon: 'headset-outline', route: '/tabs/tab1' },
+    { title: 'Al-Kalam', icon: 'chatbubbles-outline', route: '/tabs/tab2' },
+    { title: 'Kuis Islam', icon: 'help-circle-outline', route: '/tabs/tab3' },
+    { title: 'Al-Kitabah', icon: 'create-outline', route: '/tabs/tab4' },
+    { title: 'Islamic Education', icon: 'school-outline', route: '/islamic-education' },
+    { title: 'Sejarah Islam', icon: 'time-outline', route: '/islamic-history' },
+    { title: 'Sunnah & Hadits', icon: 'bookmarks-outline', route: '/sunnah-hadith' },
   ];
 
   get username(): string {
@@ -71,8 +70,6 @@ export class HomePage {
   }
 
   openMenu() { this.menu.open(); }
-
-  toggleAbout() { this.showAbout = !this.showAbout; }
 
   get darkModeIcon(): string {
     return this.theme.isDark ? 'sunny-outline' : 'moon-outline';

@@ -1,0 +1,73 @@
+<ion-header class="app-header">
+  <ion-toolbar class="bg-white dark:bg-gray-800 border-b border-slate-200 dark:border-gray-700">
+    <ion-buttons slot="start">
+      <div routerLink="/tabs/home" routerDirection="root"
+        class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-gray-700 text-slate-500 dark:text-gray-400 transition-all">
+        <ion-icon name="home-outline" class="text-xl"></ion-icon>
+      </div>
+    </ion-buttons>
+    <ion-title class="text-gold-500 dark:text-green-400 font-bold text-lg">Chat AI</ion-title>
+    <ion-buttons slot="end">
+      <div (click)="toggleDarkMode()"
+        class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-gray-700 text-slate-500 dark:text-gray-400 transition-all">
+        <ion-icon [name]="darkModeIcon" class="text-xl"></ion-icon>
+      </div>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="[--background:#f5f7fa] dark:[--background:#0f172a]">
+  <!-- Avatar Section -->
+  <div class="avatar-section">
+    <div class="avatar-container" [class.talking]="avatarEmotion === 'talk'" [class.thinking]="avatarEmotion === 'think'">
+      <div class="avatar-body">
+        <div class="avatar-head">
+          <div class="avatar-face">
+            <div class="avatar-eyes">
+              <div class="eye left-eye"><div class="pupil"></div></div>
+              <div class="eye right-eye"><div class="pupil"></div></div>
+            </div>
+            <div class="avatar-mouth" [class.talking]="avatarEmotion === 'talk'"></div>
+          </div>
+        </div>
+        <div class="avatar-torso"></div>
+        <div class="avatar-arms">
+          <div class="arm left-arm"></div>
+          <div class="arm right-arm"></div>
+        </div>
+      </div>
+      <div class="avatar-glow"></div>
+      <div class="typing-dots" *ngIf="isTyping">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chat Messages -->
+  <div #scrollMe class="chat-container">
+    <div *ngFor="let msg of messages; let i = index" class="message {{ msg.from }}" [style.animationDelay]="(i * 50) + 'ms'">
+      <div class="bubble">{{ msg.text }}</div>
+    </div>
+    <div *ngIf="isTyping" class="message bot">
+      <div class="bubble typing-bubble">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Suggestions -->
+  <div class="suggestions" *ngIf="messages.length <= 1 && !isTyping">
+    <div class="suggestion-chip" *ngFor="let s of suggestions" (click)="suggest(s)">
+      {{ s }}
+    </div>
+  </div>
+
+  <!-- Input -->
+  <div class="input-bar">
+    <input [(ngModel)]="input" (keyup.enter)="send()" placeholder="Tanya tentang penyiaran Islam..."
+      class="chat-input">
+    <button (click)="send()" class="send-btn" [disabled]="!input.trim()">
+      <ion-icon name="send-outline"></ion-icon>
+    </button>
+  </div>
+</ion-content>

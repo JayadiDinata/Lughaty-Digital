@@ -16,50 +16,6 @@
     </div>
 
     <div class="px-3 space-y-1 animate-fade-in-left">
-      <button (click)="toggleAbout()"
-        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-700 dark:text-gray-200 hover:bg-slate-100 dark:hover:bg-gray-700 transition-all">
-        <ion-icon name="information-circle-outline" class="text-xl text-slate-400 dark:text-gray-400"></ion-icon>
-        <span class="flex-1 text-left">Tentang Aplikasi</span>
-        <ion-icon [name]="showAbout ? 'chevron-up-outline' : 'chevron-down-outline'" class="text-slate-400"></ion-icon>
-      </button>
-
-      <div *ngIf="showAbout" class="px-1 space-y-2 mb-2">
-        <div class="bg-slate-100 dark:bg-gray-700 rounded-xl p-3.5">
-          <h2 class="text-sm font-bold text-gold-500 dark:text-green-400 mb-2">Lughaty Digital</h2>
-          <p class="text-xs text-slate-600 dark:text-gray-300 leading-relaxed mb-2">Aplikasi Penyiaran Islam Digital - Media Komunikasi Dakwah Digital berbasis aplikasi interaktif.</p>
-          <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-300">
-            <ion-icon name="people-outline" class="text-gold-500 dark:text-green-400 shrink-0"></ion-icon>
-            <span><strong>{{ userCount }}</strong> Pengguna Terdaftar</span>
-          </div>
-        </div>
-        <div class="bg-slate-100 dark:bg-gray-700 rounded-xl p-3.5">
-          <h2 class="text-sm font-bold text-gold-500 dark:text-green-400 mb-2">Teknologi</h2>
-          <div class="space-y-1.5">
-            <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-300"><ion-icon name="code-slash-outline" class="text-gold-500 dark:text-green-400 shrink-0"></ion-icon><span>Ionic 7 + Angular 17</span></div>
-            <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-300"><ion-icon name="server-outline" class="text-gold-500 dark:text-green-400 shrink-0"></ion-icon><span>Supabase Database</span></div>
-            <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-300"><ion-icon name="phone-portrait-outline" class="text-gold-500 dark:text-green-400 shrink-0"></ion-icon><span>Capacitor 5</span></div>
-          </div>
-        </div>
-        <div class="bg-slate-100 dark:bg-gray-700 rounded-xl p-3.5">
-          <h2 class="text-sm font-bold text-gold-500 dark:text-green-400 mb-2">Fitur</h2>
-          <div class="space-y-1.5">
-            <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-300"><ion-icon name="headset-outline" class="text-gold-500 dark:text-green-400 shrink-0"></ion-icon><span>Al-Istima - Mendengar</span></div>
-            <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-300"><ion-icon name="chatbubbles-outline" class="text-gold-500 dark:text-green-400 shrink-0"></ion-icon><span>Al-Kalam - Berbicara</span></div>
-            <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-300"><ion-icon name="help-circle-outline" class="text-gold-500 dark:text-green-400 shrink-0"></ion-icon><span>Kuis Penyiaran Islam</span></div>
-            <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-300"><ion-icon name="create-outline" class="text-gold-500 dark:text-green-400 shrink-0"></ion-icon><span>Al-Kitabah - Menulis</span></div>
-            <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-300"><ion-icon name="school-outline" class="text-gold-500 dark:text-green-400 shrink-0"></ion-icon><span>Islamic Education</span></div>
-            <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-300"><ion-icon name="time-outline" class="text-gold-500 dark:text-green-400 shrink-0"></ion-icon><span>Sejarah Islam</span></div>
-            <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-300"><ion-icon name="bookmarks-outline" class="text-gold-500 dark:text-green-400 shrink-0"></ion-icon><span>Sunnah & Hadits</span></div>
-          </div>
-        </div>
-        <div class="bg-slate-100 dark:bg-gray-700 rounded-xl p-3.5">
-          <h2 class="text-sm font-bold text-gold-500 dark:text-green-400 mb-2">Pengembang</h2>
-          <p class="text-xs text-slate-600 dark:text-gray-300 mb-1">Mahasiswa Pascasarjana Universitas Ibn Khaldun</p>
-          <p class="text-xs text-slate-600 dark:text-gray-300">Fakultas Agama Islam - Magister Komunikasi Penyiaran Islam</p>
-          <p class="text-[11px] text-slate-400 dark:text-gray-500 mt-1">Versi 1.0.0</p>
-        </div>
-      </div>
-
       <button (click)="toggleDarkMode()"
         class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-700 dark:text-gray-200 hover:bg-slate-100 dark:hover:bg-gray-700 transition-all">
         <ion-icon [name]="darkModeIcon" class="text-xl text-slate-400 dark:text-gray-400"></ion-icon>
@@ -95,41 +51,27 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-content class="[--background:#0f172a]">
+  <ion-content>
     <!-- Greeting -->
-    <div class="px-4 pt-6 pb-4 text-center animate-fade-in-up">
+    <div class="px-4 pt-6 pb-2 text-center animate-fade-in-up">
       <p class="text-lg font-arabic text-gold-400 mb-0.5">{{ arabicGreeting }}</p>
-      <h2 class="text-xl font-extrabold text-white">{{ greeting }}, {{ username }}</h2>
-      <p class="text-[11px] text-slate-400 mt-1">Aplikasi Penyiaran Islam Digital</p>
+      <h2 class="text-xl font-extrabold text-white dark:text-slate-900">{{ greeting }}, {{ username }}</h2>
+      <p class="text-[11px] text-slate-400 dark:text-slate-500 mt-1">Aplikasi Penyiaran Islam Digital</p>
     </div>
 
-    <!-- Menu Cards -->
+    <!-- Grid Cards -->
     <div class="main_container animate-fade-in-up" style="animation-delay: 80ms">
-      <div class="main">
-        <div class="row">
-          <button *ngFor="let m of [menus[0], menus[1], menus[2]]" [routerLink]="m.route" class="{{m.cardClass}}">
-            <ion-icon [name]="m.icon" class="card-icon"></ion-icon>
-            <span class="card-label">{{ m.title }}</span>
-          </button>
-        </div>
-        <div class="row">
-          <button *ngFor="let m of [menus[3], menus[4], menus[5]]" [routerLink]="m.route" class="{{m.cardClass}}">
-            <ion-icon [name]="m.icon" class="card-icon"></ion-icon>
-            <span class="card-label">{{ m.title }}</span>
-          </button>
-        </div>
-        <div class="row last">
-          <button *ngFor="let m of [menus[6]]" [routerLink]="m.route" class="{{m.cardClass}}">
-            <ion-icon [name]="m.icon" class="card-icon"></ion-icon>
-            <span class="card-label">{{ m.title }}</span>
-          </button>
-        </div>
+      <div class="parent">
+        <button *ngFor="let m of menus; let i = index" [class]="'div' + (i + 1)" [routerLink]="m.route">
+          <ion-icon [name]="m.icon" class="card-icon"></ion-icon>
+          <span class="card-label">{{ m.title }}</span>
+        </button>
       </div>
     </div>
 
     <!-- Footer Quote -->
-    <div class="mx-4 mt-5 mb-6 p-4 bg-slate-800/60 backdrop-blur-sm rounded-2xl text-center animate-fade-in-up" style="animation-delay: 300ms">
-      <p class="text-xs text-slate-400 italic leading-relaxed">
+    <div class="mx-4 mt-5 mb-6 p-4 bg-slate-800/60 dark:bg-white/80 backdrop-blur-sm rounded-2xl text-center animate-fade-in-up" style="animation-delay: 300ms">
+      <p class="text-xs text-slate-400 dark:text-slate-600 italic leading-relaxed">
         "Sampaikanlah dariku walau hanya satu ayat" (HR. Bukhari)
       </p>
     </div>

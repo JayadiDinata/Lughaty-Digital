@@ -32,6 +32,21 @@ const routes: Routes = [
         loadChildren: () =>
           import('../home/home.module').then((m) => m.HomePageModule),
       },
+      {
+        path: 'about',
+        loadChildren: () =>
+          import('../about/about.module').then((m) => m.AboutPageModule),
+      },
+      {
+        path: 'search',
+        loadChildren: () =>
+          import('../search/search.module').then((m) => m.SearchPageModule),
+      },
+      {
+        path: 'chat',
+        loadChildren: () =>
+          import('../chat/chat.module').then((m) => m.ChatPageModule),
+      },
     ],
   },
   {

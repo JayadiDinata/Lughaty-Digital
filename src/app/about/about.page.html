@@ -1,0 +1,79 @@
+<ion-header class="app-header">
+  <ion-toolbar class="bg-white dark:bg-gray-800 border-b border-slate-200 dark:border-gray-700">
+    <ion-buttons slot="start">
+      <div routerLink="/tabs/home" routerDirection="root"
+        class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-gray-700 text-slate-500 dark:text-gray-400 transition-all">
+        <ion-icon name="home-outline" class="text-xl"></ion-icon>
+      </div>
+    </ion-buttons>
+    <ion-title class="text-gold-500 dark:text-green-400 font-bold text-lg">Tentang Aplikasi</ion-title>
+    <ion-buttons slot="end">
+      <div (click)="toggleDarkMode()"
+        class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-gray-700 text-slate-500 dark:text-gray-400 transition-all">
+        <ion-icon [name]="darkModeIcon" class="text-xl"></ion-icon>
+      </div>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="[--background:#f5f7fa] dark:[--background:#0f172a]">
+  <div class="px-4 py-5 max-w-[600px] mx-auto space-y-4 animate-fade-in-up">
+    <!-- Logo & Nama -->
+    <div class="text-center mb-2">
+      <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-gold-500 to-amber-600 dark:from-green-600 dark:to-emerald-700 flex items-center justify-center mx-auto mb-3 shadow-lg">
+        <span class="text-3xl font-bold text-white">L</span>
+      </div>
+      <h1 class="text-xl font-extrabold text-slate-800 dark:text-gray-100">Lughaty Digital</h1>
+      <p class="text-xs text-slate-500 dark:text-gray-400">Aplikasi Penyiaran Islam Digital</p>
+    </div>
+
+    <!-- Deskripsi -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-sm dark:shadow-md">
+      <h2 class="text-sm font-bold text-gold-500 dark:text-green-400 mb-2">Deskripsi</h2>
+      <p class="text-xs text-slate-600 dark:text-gray-300 leading-relaxed">Aplikasi Penyiaran Islam Digital - Media Komunikasi Dakwah Digital berbasis aplikasi interaktif. Dikembangkan sebagai media dakwah dan pembelajaran ilmu agama Islam yang dapat diakses kapan saja dan di mana saja.</p>
+    </div>
+
+    <!-- Pengguna -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-sm dark:shadow-md">
+      <h2 class="text-sm font-bold text-gold-500 dark:text-green-400 mb-2">Pengguna</h2>
+      <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-300">
+        <ion-icon name="people-outline" class="text-gold-500 dark:text-green-400 shrink-0 text-lg"></ion-icon>
+        <span><strong>{{ userCount }}</strong> Pengguna Terdaftar</span>
+      </div>
+    </div>
+
+    <!-- Teknologi -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-sm dark:shadow-md">
+      <h2 class="text-sm font-bold text-gold-500 dark:text-green-400 mb-2">Teknologi</h2>
+      <div class="space-y-2">
+        <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-300"><ion-icon name="code-slash-outline" class="text-gold-500 dark:text-green-400 shrink-0"></ion-icon><span>Ionic 7 + Angular 17</span></div>
+        <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-300"><ion-icon name="server-outline" class="text-gold-500 dark:text-green-400 shrink-0"></ion-icon><span>Neon PostgreSQL</span></div>
+        <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-300"><ion-icon name="phone-portrait-outline" class="text-gold-500 dark:text-green-400 shrink-0"></ion-icon><span>Capacitor 5</span></div>
+      </div>
+    </div>
+
+    <!-- Fitur -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-sm dark:shadow-md">
+      <h2 class="text-sm font-bold text-gold-500 dark:text-green-400 mb-2">Fitur</h2>
+      <div class="space-y-2">
+        <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-300"><ion-icon name="headset-outline" class="text-gold-500 dark:text-green-400 shrink-0"></ion-icon><span>Al-Istima - Mendengar</span></div>
+        <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-300"><ion-icon name="chatbubbles-outline" class="text-gold-500 dark:text-green-400 shrink-0"></ion-icon><span>Al-Kalam - Berbicara</span></div>
+        <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-300"><ion-icon name="help-circle-outline" class="text-gold-500 dark:text-green-400 shrink-0"></ion-icon><span>Kuis Penyiaran Islam</span></div>
+        <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-300"><ion-icon name="create-outline" class="text-gold-500 dark:text-green-400 shrink-0"></ion-icon><span>Al-Kitabah - Menulis</span></div>
+        <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-300"><ion-icon name="school-outline" class="text-gold-500 dark:text-green-400 shrink-0"></ion-icon><span>Islamic Education</span></div>
+        <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-300"><ion-icon name="time-outline" class="text-gold-500 dark:text-green-400 shrink-0"></ion-icon><span>Sejarah Islam</span></div>
+        <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-300"><ion-icon name="bookmarks-outline" class="text-gold-500 dark:text-green-400 shrink-0"></ion-icon><span>Sunnah & Hadits</span></div>
+        <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-300"><ion-icon name="search-outline" class="text-gold-500 dark:text-green-400 shrink-0"></ion-icon><span>Pencarian Penyiaran Islam</span></div>
+        <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-gray-300"><ion-icon name="chatbubble-ellipses-outline" class="text-gold-500 dark:text-green-400 shrink-0"></ion-icon><span>Chat AI Islam</span></div>
+      </div>
+    </div>
+
+    <!-- Pengembang -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-sm dark:shadow-md">
+      <h2 class="text-sm font-bold text-gold-500 dark:text-green-400 mb-2">Pengembang</h2>
+      <p class="text-xs text-slate-600 dark:text-gray-300 mb-1">Mahasiswa Pascasarjana Universitas Ibn Khaldun</p>
+      <p class="text-xs text-slate-600 dark:text-gray-300">Fakultas Agama Islam - Magister Komunikasi Penyiaran Islam</p>
+      <p class="text-[11px] text-slate-400 dark:text-gray-500 mt-2">Versi 1.0.0</p>
+    </div>
+  </div>
+</ion-content>

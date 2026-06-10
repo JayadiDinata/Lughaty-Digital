@@ -2,50 +2,26 @@ ion-content {
   --background: #0f172a;
 }
 
+body:not(.dark) ion-content {
+  --background: #f8fafc;
+}
+
 .main_container {
-  padding-top: 2%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 20px 12px;
 }
 
-.main {
-  display: flex;
-  flex-direction: column;
-  gap: 0.8em;
-  align-items: center;
+.parent {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: 10px;
+  max-width: 520px;
+  margin: 0 auto;
 }
 
-.row {
-  display: flex;
-  flex-direction: row;
-  gap: 0.8em;
-  justify-content: center;
-}
-
-.row.last {
-  padding-left: calc(50% + 0.4em);
-}
-
-.card-icon {
-  font-size: 32px;
-  color: white;
-  pointer-events: none;
-}
-
-.card-label {
-  font-size: 9px;
-  font-weight: 700;
-  color: #cbd5e1;
-  text-align: center;
-  line-height: 1.2;
-  pointer-events: none;
-  max-width: 80px;
-}
-
-.card1, .card2, .card3, .card4, .card5, .card6, .card7 {
-  width: 95px;
-  height: 105px;
+.div1, .div2, .div3, .div4, .div5, .div6, .div7 {
+  width: 100%;
+  aspect-ratio: 1;
   border: none;
   background: rgb(30, 30, 30);
   border-radius: 16px;
@@ -55,35 +31,86 @@ ion-content {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 3px;
   cursor: pointer;
 }
-.card1:hover, .card2:hover, .card3:hover, .card4:hover, .card5:hover, .card6:hover, .card7:hover {
-  cursor: pointer;
-  scale: 1.08;
+
+body:not(.dark) .div1, body:not(.dark) .div2, body:not(.dark) .div3,
+body:not(.dark) .div4, body:not(.dark) .div5, body:not(.dark) .div6,
+body:not(.dark) .div7 {
+  background: white;
 }
-.card1:hover .card-label,
-.card2:hover .card-label,
-.card3:hover .card-label,
-.card4:hover .card-label,
-.card5:hover .card-label,
-.card6:hover .card-label,
-.card7:hover .card-label {
+
+.div1:hover, .div2:hover, .div3:hover, .div4:hover, .div5:hover, .div6:hover, .div7:hover {
+  scale: 1.06;
+}
+
+.card-icon {
+  font-size: 22px;
+  color: white;
+  pointer-events: none;
+  transition: color 0.2s;
+}
+
+body:not(.dark) .card-icon {
+  color: #1e293b;
+}
+
+.div1:hover .card-icon,
+.div2:hover .card-icon,
+.div3:hover .card-icon,
+.div4:hover .card-icon,
+.div5:hover .card-icon,
+.div6:hover .card-icon,
+.div7:hover .card-icon {
   color: white;
 }
 
-.card1 { outline: 5px solid #C4942C; }
-.card2 { outline: 5px solid #0EA5E9; }
-.card3 { outline: 5px solid #8B5CF6; }
-.card4 { outline: 5px solid #F59E0B; }
-.card5 { outline: 5px solid #10B981; }
-.card6 { outline: 5px solid #EC4899; }
-.card7 { outline: 5px solid #06B6D4; }
+.card-label {
+  font-size: 7px;
+  font-weight: 700;
+  color: #cbd5e1;
+  text-align: center;
+  line-height: 1.15;
+  pointer-events: none;
+  max-width: 56px;
+  transition: color 0.2s;
+}
 
-.card1:hover { background: #C4942C; }
-.card2:hover { background: #0EA5E9; }
-.card3:hover { background: #8B5CF6; }
-.card4:hover { background: #F59E0B; }
-.card5:hover { background: #10B981; }
-.card6:hover { background: #EC4899; }
-.card7:hover { background: #06B6D4; }
+body:not(.dark) .card-label {
+  color: #64748b;
+}
+
+.div1:hover .card-label,
+.div2:hover .card-label,
+.div3:hover .card-label,
+.div4:hover .card-label,
+.div5:hover .card-label,
+.div6:hover .card-label,
+.div7:hover .card-label {
+  color: white;
+}
+
+.div1:hover, .div1:hover .card-icon, .div1:hover .card-label { background: #C4942C; }
+.div2:hover, .div2:hover .card-icon, .div2:hover .card-label { background: #0EA5E9; }
+.div3:hover, .div3:hover .card-icon, .div3:hover .card-label { background: #8B5CF6; }
+.div4:hover, .div4:hover .card-icon, .div4:hover .card-label { background: #F59E0B; }
+.div5:hover, .div5:hover .card-icon, .div5:hover .card-label { background: #10B981; }
+.div6:hover, .div6:hover .card-icon, .div6:hover .card-label { background: #EC4899; }
+.div7:hover, .div7:hover .card-icon, .div7:hover .card-label { background: #06B6D4; }
+
+.div1 { outline: 4px solid #C4942C; }
+.div2 { outline: 4px solid #0EA5E9; }
+.div3 { outline: 4px solid #8B5CF6; }
+.div4 { outline: 4px solid #F59E0B; }
+.div5 { outline: 4px solid #10B981; }
+.div6 { outline: 4px solid #EC4899; }
+.div7 { outline: 4px solid #06B6D4; }
+
+.div4 { grid-row-start: 2; }
+.div5 { grid-row-start: 2; }
+.div6 { grid-row-start: 2; }
+.div7 {
+  grid-column: span 3 / span 3;
+  grid-row-start: 3;
+}
