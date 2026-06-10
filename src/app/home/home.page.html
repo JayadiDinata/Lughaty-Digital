@@ -62,7 +62,7 @@
     <!-- Grid Cards -->
     <div class="main_container animate-fade-in-up" style="animation-delay: 80ms">
       <div class="parent">
-        <button *ngFor="let m of menus; let i = index" [class]="'div' + (i + 1)" [routerLink]="m.route">
+        <button *ngFor="let m of menus; let i = index" class="dashboard-card" [attr.data-color]="i" [routerLink]="m.route">
           <ion-icon [name]="m.icon" class="card-icon"></ion-icon>
           <span class="card-label">{{ m.title }}</span>
         </button>
