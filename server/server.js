@@ -1,0 +1,74 @@
+const express = require('express');
+const cors = require('cors');
+const { Pool } = require('pg');
+
+const pool = new Pool({
+  connectionString: 'postgresql://neondb_owner:npg_c92avTimgzkB@ep-winter-queen-aqukbdlw-pooler.c-8.us-east-1.aws.neon.tech/neondb?sslmode=verify-full',
+  ssl: { rejectUnauthorized: false },
+});
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+app.post('/api/register', async (req, res) => {
+  const { username, email, password } = req.body;
+  try {
+    const result = await pool.query(
+      'INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING id, username, email',
+      [username, email, password]
+    );
+    res.json({ data: result.rows[0], error: null });
+  } catch (err) {
+    if (err.code === '23505') {
+      res.json({ data: null, error: { message: 'Email sudah terdaftar, silakan login' } });
+    } else {
+      res.status(500).json({ data: null, error: { message: err.message } });
+    }
+  }
+});
+
+app.post('/api/login', async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const result = await pool.query(
+      'SELECT id, username, email FROM users WHERE email = $1 AND password = $2',
+      [email, password]
+    );
+    if (result.rows.length === 0) {
+      res.json({ data: null, error: { message: 'Email atau password salah' } });
+    } else {
+      res.json({ data: result.rows[0], error: null });
+    }
+  } catch (err) {
+    res.status(500).json({ data: null, error: { message: err.message } });
+  }
+});
+
+app.get('/api/users/count', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT COUNT(*) as count FROM users');
+    res.json({ count: parseInt(result.rows[0].count, 10) });
+  } catch (err) {
+    res.status(500).json({ count: 0 });
+  }
+});
+
+const PORT = process.env.PORT || 3000;
+
+pool.query(`
+  CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    username TEXT NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL
+  )
+`).then(() => {
+  console.log('Table "users" ready');
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}).catch(err => {
+  console.error('Failed to create table:', err);
+  process.exit(1);
+});

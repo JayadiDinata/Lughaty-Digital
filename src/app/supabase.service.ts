@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
+import { environment } from '../environments/environment';
 
 export interface UserData {
   id: number;
@@ -19,9 +22,8 @@ export class SupabaseService {
   private readonly SESSION_KEY = 'lughaty_session';
   private readonly EMAIL_KEY = 'lughaty_saved_email';
   private readonly ACCOUNTS_KEY = 'lughaty_accounts';
-  private readonly USERS_KEY = 'lughaty_users';
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   get currentUser(): UserData | null {
     return this._currentUser;
@@ -74,51 +76,38 @@ export class SupabaseService {
     localStorage.setItem(this.ACCOUNTS_KEY, JSON.stringify(accounts));
   }
 
-  private getUsers(): UserData[] {
-    try {
-      const raw = localStorage.getItem(this.USERS_KEY);
-      if (raw) return JSON.parse(raw) as UserData[];
-    } catch {}
-    return [];
-  }
-
-  private saveUsers(users: UserData[]): void {
-    localStorage.setItem(this.USERS_KEY, JSON.stringify(users));
-  }
-
-  private nextId(users: UserData[]): number {
-    return users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1;
-  }
-
   async register(username: string, email: string, password: string) {
-    const users = this.getUsers();
-    const existing = users.find(u => u.email === email);
-    if (existing) {
-      return { data: null, error: { message: 'duplicate: Email sudah terdaftar' } };
+    try {
+      return await firstValueFrom(
+        this.http.post<{ data: UserData | null; error: { message: string } | null }>(
+          `${environment.apiUrl}/register`, { username, email, password }
+        )
+      );
+    } catch (err: any) {
+      return { data: null, error: { message: err.message || 'Gagal registrasi' } };
     }
-    const entry: UserData & { password: string } = {
-      id: this.nextId(users),
-      username,
-      email,
-      password,
-    };
-    users.push(entry);
-    this.saveUsers(users);
-    const data: UserData = { id: entry.id, username: entry.username, email: entry.email };
-    return { data, error: null };
   }
 
   async login(email: string, password: string) {
-    const users = this.getUsers() as (UserData & { password: string })[];
-    const entry = users.find(u => u.email === email && u.password === password);
-    if (!entry) {
-      return { data: null, error: { message: 'Email atau password salah' } };
+    try {
+      return await firstValueFrom(
+        this.http.post<{ data: UserData | null; error: { message: string } | null }>(
+          `${environment.apiUrl}/login`, { email, password }
+        )
+      );
+    } catch (err: any) {
+      return { data: null, error: { message: err.message || 'Gagal login' } };
     }
-    const data: UserData = { id: entry.id, username: entry.username, email: entry.email };
-    return { data, error: null };
   }
 
   async countUsers(): Promise<number> {
-    return this.getUsers().length;
+    try {
+      const res = await firstValueFrom(
+        this.http.get<{ count: number }>(`${environment.apiUrl}/users/count`)
+      );
+      return res.count;
+    } catch {
+      return 0;
+    }
   }
 }
