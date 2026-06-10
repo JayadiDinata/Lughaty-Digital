@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import { environment } from '../environments/environment';
 
 export interface UserData {
   id: number;
@@ -17,15 +15,13 @@ export interface SavedAccount {
   providedIn: 'root'
 })
 export class SupabaseService {
-  private supabase: SupabaseClient;
   private _currentUser: UserData | null = null;
   private readonly SESSION_KEY = 'lughaty_session';
   private readonly EMAIL_KEY = 'lughaty_saved_email';
   private readonly ACCOUNTS_KEY = 'lughaty_accounts';
+  private readonly USERS_KEY = 'lughaty_users';
 
-  constructor() {
-    this.supabase = createClient(environment.supabase.url, environment.supabase.anonKey);
-  }
+  constructor() {}
 
   get currentUser(): UserData | null {
     return this._currentUser;
@@ -35,17 +31,14 @@ export class SupabaseService {
     this._currentUser = user;
   }
 
-  /** Always saves email for pre-fill; call saveUserSession() separately for full auto-login */
   saveEmail(email: string): void {
     localStorage.setItem(this.EMAIL_KEY, email);
   }
 
-  /** Persists full user session for auto-login on next app open */
   saveUserSession(user: UserData): void {
     localStorage.setItem(this.SESSION_KEY, JSON.stringify(user));
   }
 
-  /** Returns saved user (if any) and saved email */
   loadSession(): { user: UserData | null; savedEmail: string } {
     const savedEmail = localStorage.getItem(this.EMAIL_KEY) || '';
     try {
@@ -58,12 +51,10 @@ export class SupabaseService {
     return { user: null, savedEmail };
   }
 
-  /** Clears full user session (on logout) */
   clearSession(): void {
     localStorage.removeItem(this.SESSION_KEY);
   }
 
-  /** Returns list of saved accounts (email + username) for the account picker */
   getSavedAccounts(): SavedAccount[] {
     try {
       const raw = localStorage.getItem(this.ACCOUNTS_KEY);
@@ -72,43 +63,62 @@ export class SupabaseService {
     return [];
   }
 
-  /** Save or move account to top of list (max 5) */
   saveAccount(email: string, username: string): void {
     const accounts = this.getSavedAccounts().filter(a => a.email !== email);
     accounts.unshift({ email, username });
     localStorage.setItem(this.ACCOUNTS_KEY, JSON.stringify(accounts.slice(0, 5)));
   }
 
-  /** Remove a specific saved account */
   removeAccount(email: string): void {
     const accounts = this.getSavedAccounts().filter(a => a.email !== email);
     localStorage.setItem(this.ACCOUNTS_KEY, JSON.stringify(accounts));
   }
 
+  private getUsers(): UserData[] {
+    try {
+      const raw = localStorage.getItem(this.USERS_KEY);
+      if (raw) return JSON.parse(raw) as UserData[];
+    } catch {}
+    return [];
+  }
+
+  private saveUsers(users: UserData[]): void {
+    localStorage.setItem(this.USERS_KEY, JSON.stringify(users));
+  }
+
+  private nextId(users: UserData[]): number {
+    return users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1;
+  }
+
   async register(username: string, email: string, password: string) {
-    const { data, error } = await this.supabase
-      .from('users')
-      .insert({ username, email, password })
-      .select()
-      .single();
-    return { data, error };
+    const users = this.getUsers();
+    const existing = users.find(u => u.email === email);
+    if (existing) {
+      return { data: null, error: { message: 'duplicate: Email sudah terdaftar' } };
+    }
+    const entry: UserData & { password: string } = {
+      id: this.nextId(users),
+      username,
+      email,
+      password,
+    };
+    users.push(entry);
+    this.saveUsers(users);
+    const data: UserData = { id: entry.id, username: entry.username, email: entry.email };
+    return { data, error: null };
   }
 
   async login(email: string, password: string) {
-    const { data, error } = await this.supabase
-      .from('users')
-      .select('*')
-      .eq('email', email)
-      .eq('password', password)
-      .single();
-    return { data, error };
+    const users = this.getUsers() as (UserData & { password: string })[];
+    const entry = users.find(u => u.email === email && u.password === password);
+    if (!entry) {
+      return { data: null, error: { message: 'Email atau password salah' } };
+    }
+    const data: UserData = { id: entry.id, username: entry.username, email: entry.email };
+    return { data, error: null };
   }
 
   async countUsers(): Promise<number> {
-    const { count, error } = await this.supabase
-      .from('users')
-      .select('*', { count: 'exact', head: true });
-    if (error) throw error;
-    return count ?? 0;
+    return this.getUsers().length;
   }
 }
