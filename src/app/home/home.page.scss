@@ -4,10 +4,14 @@
 
 .parent {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 6px;
-  max-width: 280px;
+  max-width: 210px;
   margin: 0 auto;
+}
+
+.dashboard-card:last-child {
+  grid-column: 2;
 }
 
 .dashboard-card {
