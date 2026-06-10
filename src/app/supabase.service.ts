@@ -76,6 +76,15 @@ export class SupabaseService {
     localStorage.setItem(this.ACCOUNTS_KEY, JSON.stringify(accounts));
   }
 
+  private handleHttpError(err: any): string {
+    if (err.status === 0) {
+      return 'Tidak dapat terhubung ke server. Pastikan server backend berjalan di http://localhost:3000';
+    }
+    if (err.error?.message) return err.error.message;
+    if (err.message) return err.message;
+    return 'Terjadi kesalahan, coba lagi';
+  }
+
   async register(username: string, email: string, password: string) {
     try {
       return await firstValueFrom(
@@ -84,7 +93,7 @@ export class SupabaseService {
         )
       );
     } catch (err: any) {
-      return { data: null, error: { message: err.message || 'Gagal registrasi' } };
+      return { data: null, error: { message: this.handleHttpError(err) } };
     }
   }
 
@@ -96,7 +105,7 @@ export class SupabaseService {
         )
       );
     } catch (err: any) {
-      return { data: null, error: { message: err.message || 'Gagal login' } };
+      return { data: null, error: { message: this.handleHttpError(err) } };
     }
   }
 
