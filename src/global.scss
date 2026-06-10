@@ -19,6 +19,16 @@ ion-content {
   --background: #f8fafc;
 }
 
+app-home ion-content,
+app-home ion-menu ion-content {
+  --background: #0f172a;
+}
+
+body:not(.dark) app-home ion-content,
+body:not(.dark) app-home ion-menu ion-content {
+  --background: #ffffff;
+}
+
 ion-toolbar {
   --border-width: 0 0 1px 0;
   --border-color: #e2e8f0;
