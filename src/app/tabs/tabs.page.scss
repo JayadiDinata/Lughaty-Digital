@@ -1,16 +1,5 @@
-.tab-bar-custom {
-  overflow-x: auto;
-  justify-content: flex-start;
-  padding: 4px 4px 0;
-  gap: 0;
-  scrollbar-width: none;
-  &::-webkit-scrollbar { display: none; }
-}
-
 ion-tab-button {
-  flex: 1 0 12.5%;
-  min-width: 44px;
-  max-width: 70px;
+  flex: 1;
   padding: 4px 2px;
   position: relative;
 }
