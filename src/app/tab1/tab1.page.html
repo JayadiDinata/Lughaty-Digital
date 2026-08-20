@@ -40,6 +40,58 @@
       <p class="text-xs text-slate-400 dark:text-gray-500 mt-2 font-medium">Keterampilan Mendengar</p>
     </div>
 
+    <!-- VIDEO SECTION -->
+    <div class="flex items-center gap-2 w-full max-w-[500px] text-lg font-extrabold text-slate-900 dark:text-gray-100 animate-fade-in-up" style="animation-delay: 40ms">
+      <ion-icon name="videocam-outline" class="text-[22px] text-gold-500 dark:text-green-400"></ion-icon>
+      <span>Video Pembelajaran</span>
+    </div>
+
+    <div class="w-full max-w-[500px] animate-fade-in-up" style="animation-delay: 60ms">
+      <!-- Video 1 -->
+      <div class="video-card bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm dark:shadow-md mb-3">
+        <div class="relative" *ngIf="!videoPlaying1">
+          <div class="video-thumb" (click)="playVideo(1)">
+            <video src="assets/vid/IMG_3153.MP4" preload="metadata" muted class="w-full aspect-video object-cover"></video>
+            <div class="play-overlay">
+              <div class="play-btn">
+                <ion-icon name="play" class="text-white text-3xl"></ion-icon>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="videoPlaying1" class="relative">
+          <video #videoEl1 src="assets/vid/IMG_3153.MP4" controls playsinline class="w-full aspect-video object-cover"
+            (ended)="videoPlaying1 = false"></video>
+        </div>
+        <div class="px-4 py-3">
+          <p class="text-sm font-semibold text-slate-800 dark:text-gray-200">Pengenalan kosakata Arab</p>
+          <p class="text-[11px] text-slate-400 dark:text-gray-500 mt-0.5">Dengarkan dan hafalkan pelafalan yang benar</p>
+        </div>
+      </div>
+
+      <!-- Video 2 -->
+      <div class="video-card bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm dark:shadow-md">
+        <div class="relative" *ngIf="!videoPlaying2">
+          <div class="video-thumb" (click)="playVideo(2)">
+            <video src="assets/vid/IMG_3157.MP4" preload="metadata" muted class="w-full aspect-video object-cover"></video>
+            <div class="play-overlay">
+              <div class="play-btn">
+                <ion-icon name="play" class="text-white text-3xl"></ion-icon>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="videoPlaying2" class="relative">
+          <video #videoEl2 src="assets/vid/IMG_3157.MP4" controls playsinline class="w-full aspect-video object-cover"
+            (ended)="videoPlaying2 = false"></video>
+        </div>
+        <div class="px-4 py-3">
+          <p class="text-sm font-semibold text-slate-800 dark:text-gray-200">Latihan mendengar percakapan</p>
+          <p class="text-[11px] text-slate-400 dark:text-gray-500 mt-0.5">Simak percakapan sehari-hari dalam bahasa Arab</p>
+        </div>
+      </div>
+    </div>
+
     <!-- TRANSLATOR SECTION -->
     <div class="flex items-center gap-2 w-full max-w-[500px] text-lg font-extrabold text-slate-900 dark:text-gray-100 animate-fade-in-up" style="animation-delay: 80ms">
       <ion-icon name="search-outline" class="text-[22px] text-gold-500 dark:text-green-400"></ion-icon>

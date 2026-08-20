@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { TranslateService } from '../translate.service';
 import { TtsService } from '../tts.service';
 import { ThemeService } from '../theme.service';
@@ -88,6 +88,22 @@ export class Tab1Page implements OnDestroy {
   loading: boolean = false;
   error: string = '';
   online: boolean = navigator.onLine;
+
+  // Video
+  videoPlaying1 = false;
+  videoPlaying2 = false;
+  @ViewChild('videoEl1') videoEl1!: ElementRef<HTMLVideoElement>;
+  @ViewChild('videoEl2') videoEl2!: ElementRef<HTMLVideoElement>;
+
+  playVideo(n: number) {
+    this.tts.stop();
+    if (n === 1) { this.videoPlaying1 = true; }
+    else { this.videoPlaying2 = true; }
+    setTimeout(() => {
+      const el = n === 1 ? this.videoEl1?.nativeElement : this.videoEl2?.nativeElement;
+      el?.play();
+    }, 100);
+  }
 
   constructor(private translateSvc: TranslateService, private tts: TtsService, public theme: ThemeService, private progress: StorageService) {
     this.tts.stop();
